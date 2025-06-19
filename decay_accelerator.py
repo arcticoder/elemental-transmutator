@@ -138,7 +138,7 @@ class DecayAccelerator:
                     final_yields[self.config.target_isotope] = 0
                 final_yields[self.config.target_isotope] += converted_nuclei
                 
-                print(f"\n{isotope} → {self.config.target_isotope}:")
+                print(f"\n{isotope} -> {self.config.target_isotope}:")
                 print(f"  Initial nuclei: {initial_nuclei:.2e}")
                 print(f"  Decay efficiency: {decay_efficiency:.2%}")
                 print(f"  Converted nuclei: {converted_nuclei:.2e}")

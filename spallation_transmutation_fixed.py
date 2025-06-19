@@ -40,18 +40,19 @@ class SpallationTransmuter:
         
         # Load element-specific configuration if available
         self._load_element_config()
-          # Parse isotope information
+        
+        # Parse isotope information
         self.feedstock_z, self.feedstock_a = self._parse_isotope(self.config.feedstock_isotope)
         self.target_z, self.target_a = self._parse_isotope(self.config.target_isotope)
-        
-        # Calculate LV enhancement factors first
-        self.lv_factors = self._calculate_lv_enhancements()
         
         # Pre-calculate cross-sections for efficiency
         self.cross_sections = self._calculate_cross_sections(
             self.feedstock_z, self.feedstock_a,
             self.target_z, self.target_a
         )
+        
+        # LV enhancement factors
+        self.lv_factors = self._calculate_lv_enhancements()
         
         self.logger.info(f"SpallationTransmuter initialized:")
         self.logger.info(f"  Beam: {self.config.beam_energy/1e6:.1f} MeV {self.config.beam_type}")

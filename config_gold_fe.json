@@ -1,6 +1,6 @@
 {
   "target_isotope": "Au-197",
-  "feedstock_isotope": "Pb-208",
+  "feedstock_isotope": "Fe-56",
   "beam_profile": {
     "type": "deuteron",
     "energy_MeV": 100,
@@ -14,7 +14,7 @@
   "duration_s": 120,
   "decay_time_s": 2,
   "economic_params": {
-    "feedstock_cost_per_kg": 2,
+    "feedstock_cost_per_kg": 0.12,
     "target_market_price_per_kg": 108360,
     "energy_cost_per_kwh": 0.10,
     "facility_overhead_per_hour": 1000

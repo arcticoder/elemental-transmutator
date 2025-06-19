@@ -9,10 +9,11 @@ Supports any target isotope (Au, Pt, Pd, etc.) from configurable feedstock.
 
 import json
 import logging
+import numpy as np
 
 # Simple direct imports
 import spallation_transmutation
-import decay_accelerator  
+import decay_accelerator
 import atomic_binder
 import energy_ledger
 
@@ -41,12 +42,11 @@ def main():
     duration_s = cfg.get("duration_s", 60)
     decay_time_s = cfg.get("decay_time_s", 1)
     
-    logger.info(f"Starting transmutation: {feedstock_isotope} → {target_isotope}")
+    logger.info(f"Starting transmutation: {feedstock_isotope} -> {target_isotope}")
       # Initialize energy ledger
     ledger = energy_ledger.EnergyLedger()
-    
-    # Step 1: Spallation Transmutation
-    spallation_config = spallation_transmutation.SpallationConfig(
+      # Step 1: Spallation Transmutation
+    spallation_config = spallation_transmutation.TransmutationConfig(
         target_isotope=target_isotope,
         feedstock_isotope=feedstock_isotope,
         mu_lv=lv_params.get("mu", 1e-17),
@@ -55,11 +55,15 @@ def main():
         beam_type=beam_profile.get("type", "deuteron"),
         beam_energy=beam_profile.get("energy_MeV", 80) * 1e6,  # Convert to eV
         beam_flux=beam_profile.get("flux", 1e14),
-        beam_duration=duration_s
-    )
+        irradiation_time_s=duration_s
+    )    
+    transmuter = spallation_transmutation.SpallationTransmuter(spallation_config)
     
-    transmuter = spallation_transmutation.SpallationTransmuter(spallation_config, ledger)
-    yields = transmuter.simulate(duration=duration_s)
+    # Run transmutation simulation on 1g sample
+    sample_mass_g = 1.0  # Standard sample size
+    spallation_result = transmuter.transmute_sample(sample_mass_g, duration_s)
+      # Extract the total yield for subsequent processing
+    total_yield_mass_g = spallation_result['summary']['total_yield_mass_g']
     
     # Step 2: Decay Acceleration (if needed)
     if decay_time_s > 0:
@@ -72,35 +76,36 @@ def main():
         )
         
         decayer = decay_accelerator.DecayAccelerator(decay_config, ledger)
-        final_nuclei = decayer.simulate_decay(yields, t=decay_time_s)
+        # For decay acceleration, use the yield mass as input nuclei
+        final_nuclei = decayer.simulate_decay({'nuclei': total_yield_mass_g * 6.022e23 / 197}, t=decay_time_s)
     else:
-        final_nuclei = yields
+        final_nuclei = {'nuclei': total_yield_mass_g * 6.022e23 / 197}  # Convert mass to nuclei count
     
     # Step 3: Atomic Binding
     binder = atomic_binder.AtomicBinder(lv_params, target_isotope)
-    atoms = binder.bind(final_nuclei)
-    
-    # Final results
+    atoms = binder.bind(final_nuclei)    # Final results
     print(f"\n{'='*50}")
     print(f"TRANSMUTATION COMPLETE")
     print(f"{'='*50}")
     print(f"Target element: {target_isotope}")
-    print(f"Total mass produced: {atoms.mass*1e6:.3f} mg")
-    print(f"Atoms bound: {atoms.atoms_bound:.2e}")
-    print(f"Binding efficiency: {atoms.binding_efficiency:.2%}")
+    print(f"Input mass: {sample_mass_g:.3f} g")
+    print(f"Output mass: {total_yield_mass_g*1000:.6f} mg")
+    print(f"Conversion efficiency: {spallation_result['summary']['conversion_efficiency']:.6f}%")
+    print(f"LV enhancement: {spallation_result['summary']['lv_total_enhancement']:.2f}×")
     
     # Economic analysis
     economic_params = cfg.get("economic_params", {})
     if economic_params:
         target_price = economic_params.get("target_market_price_per_kg", 62000000)  # Au price
-        revenue = atoms.mass * target_price
+        revenue = total_yield_mass_g * target_price / 1000  # Convert g to kg
         
         feedstock_cost = economic_params.get("feedstock_cost_per_kg", 0.12)
-        feedstock_mass = spallation_config.target_mass
-        material_cost = feedstock_mass * feedstock_cost        
+        material_cost = sample_mass_g * feedstock_cost / 1000  # Convert g to kg
+        
         energy_cost_kwh = economic_params.get("energy_cost_per_kwh", 0.10)
-        total_energy = sum(t.amount for t in ledger.transactions if t.energy_type.value == "input_drive")
-        energy_used_kwh = total_energy / 3.6e6  # Convert J to kWh
+        # Estimate energy cost based on beam parameters
+        beam_power_mw = (spallation_config.beam_energy / 1e6) * (spallation_config.beam_flux * np.pi * (spallation_config.beam_width_m/2)**2) * 1.6e-19 / 1e6
+        energy_used_kwh = beam_power_mw * 1000 * (duration_s / 3600)  # Convert MW to kW and s to h
         energy_cost = energy_used_kwh * energy_cost_kwh
         
         overhead = economic_params.get("facility_overhead_per_hour", 1000)
@@ -119,15 +124,15 @@ def main():
         print(f"  - Overhead: ${overhead_cost:,.2f}")
         print(f"Profit: ${profit:,.2f}")
         print(f"ROI: {roi:.1f}%")
-    
-    # Save results
+      # Save results
     results = {
         "target_isotope": target_isotope,
         "feedstock_isotope": feedstock_isotope,
-        "mass_produced_kg": atoms.mass,
-        "atoms_bound": atoms.atoms_bound,
-        "binding_efficiency": atoms.binding_efficiency,
-        "energy_input_j": total_energy,
+        "sample_mass_g": sample_mass_g,
+        "output_mass_g": total_yield_mass_g,
+        "conversion_efficiency": spallation_result['summary']['conversion_efficiency'],
+        "lv_enhancement": spallation_result['summary']['lv_total_enhancement'],
+        "energy_used_kwh": energy_used_kwh if 'energy_used_kwh' in locals() else 0,
         "config_used": cfg
     }
     
