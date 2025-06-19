@@ -10,7 +10,7 @@ Handles electron capture and atomic assembly for any target element.
 import numpy as np
 import json
 import logging
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, Tuple
 from dataclasses import dataclass
 
 @dataclass
@@ -45,7 +45,7 @@ class AtomicBinder:
         except Exception as e:
             self.logger.warning(f"Error loading config.json: {e}")
     
-    def _parse_isotope(self, isotope: str) -> tuple[int, int]:
+    def _parse_isotope(self, isotope: str) -> Tuple[int, int]:
         """Parse isotope string to get atomic number (Z) and mass number (A)."""
         element_map = {
             "Fe": 26, "Ag": 47, "Au": 79, "Pt": 78, "Pd": 46, "Rh": 45,

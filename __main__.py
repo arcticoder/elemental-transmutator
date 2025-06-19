@@ -9,10 +9,12 @@ Supports any target isotope (Au, Pt, Pd, etc.) from configurable feedstock.
 
 import json
 import logging
-from spallation_transmutation import SpallationTransmuter, SpallationConfig
-from decay_accelerator import DecayAccelerator, DecayConfig
-from atomic_binder import AtomicBinder
-from energy_ledger import EnergyLedger
+
+# Simple direct imports
+import spallation_transmutation
+import decay_accelerator  
+import atomic_binder
+import energy_ledger
 
 def main():
     """Main transmutation pipeline."""
@@ -40,12 +42,11 @@ def main():
     decay_time_s = cfg.get("decay_time_s", 1)
     
     logger.info(f"Starting transmutation: {feedstock_isotope} → {target_isotope}")
-    
-    # Initialize energy ledger
-    ledger = EnergyLedger()
+      # Initialize energy ledger
+    ledger = energy_ledger.EnergyLedger()
     
     # Step 1: Spallation Transmutation
-    spallation_config = SpallationConfig(
+    spallation_config = spallation_transmutation.SpallationConfig(
         target_isotope=target_isotope,
         feedstock_isotope=feedstock_isotope,
         mu_lv=lv_params.get("mu", 1e-17),
@@ -57,12 +58,12 @@ def main():
         beam_duration=duration_s
     )
     
-    transmuter = SpallationTransmuter(spallation_config, ledger)
+    transmuter = spallation_transmutation.SpallationTransmuter(spallation_config, ledger)
     yields = transmuter.simulate(duration=duration_s)
     
     # Step 2: Decay Acceleration (if needed)
     if decay_time_s > 0:
-        decay_config = DecayConfig(
+        decay_config = decay_accelerator.DecayConfig(
             target_isotope=target_isotope,
             mu_lv=lv_params.get("mu", 1e-17),
             alpha_lv=lv_params.get("alpha", 1e-14),
@@ -70,13 +71,13 @@ def main():
             acceleration_time=decay_time_s
         )
         
-        decayer = DecayAccelerator(decay_config, ledger)
+        decayer = decay_accelerator.DecayAccelerator(decay_config, ledger)
         final_nuclei = decayer.simulate_decay(yields, t=decay_time_s)
     else:
         final_nuclei = yields
     
     # Step 3: Atomic Binding
-    binder = AtomicBinder(lv_params, target_isotope)
+    binder = atomic_binder.AtomicBinder(lv_params, target_isotope)
     atoms = binder.bind(final_nuclei)
     
     # Final results
@@ -96,10 +97,10 @@ def main():
         
         feedstock_cost = economic_params.get("feedstock_cost_per_kg", 0.12)
         feedstock_mass = spallation_config.target_mass
-        material_cost = feedstock_mass * feedstock_cost
-        
+        material_cost = feedstock_mass * feedstock_cost        
         energy_cost_kwh = economic_params.get("energy_cost_per_kwh", 0.10)
-        energy_used_kwh = ledger.get_total_energy_input() / 3.6e6  # Convert J to kWh
+        total_energy = sum(t.amount for t in ledger.transactions if t.energy_type.value == "input_drive")
+        energy_used_kwh = total_energy / 3.6e6  # Convert J to kWh
         energy_cost = energy_used_kwh * energy_cost_kwh
         
         overhead = economic_params.get("facility_overhead_per_hour", 1000)
@@ -126,7 +127,7 @@ def main():
         "mass_produced_kg": atoms.mass,
         "atoms_bound": atoms.atoms_bound,
         "binding_efficiency": atoms.binding_efficiency,
-        "energy_input_j": ledger.get_total_energy_input(),
+        "energy_input_j": total_energy,
         "config_used": cfg
     }
     
