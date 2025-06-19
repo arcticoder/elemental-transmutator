@@ -1,16 +1,16 @@
 {
-  "target_isotope": "Au-197",
+  "target_isotope": "Pt-195",
   "feedstock_isotope": "Fe-56",
-  "mass_produced_kg": 5.014356007458935e-14,
-  "atoms_bound": 153284978345,
+  "mass_produced_kg": 1.0614182469751362e-13,
+  "atoms_bound": 327795205012,
   "binding_efficiency": 0.99,
-  "energy_input_j": 76904.64,
+  "energy_input_j": 192261.6,
   "config_used": {
-    "target_isotope": "Au-197",
+    "target_isotope": "Pt-195",
     "feedstock_isotope": "Fe-56",
     "beam_profile": {
       "type": "deuteron",
-      "energy_MeV": 80,
+      "energy_MeV": 100,
       "flux": 100000000000000.0
     },
     "lv_params": {
@@ -18,11 +18,11 @@
       "alpha": 1e-14,
       "beta": 1e-11
     },
-    "duration_s": 60,
-    "decay_time_s": 1,
+    "duration_s": 120,
+    "decay_time_s": 2,
     "economic_params": {
       "feedstock_cost_per_kg": 0.12,
-      "target_market_price_per_kg": 62000000,
+      "target_market_price_per_kg": 30000000,
       "energy_cost_per_kwh": 0.1,
       "facility_overhead_per_hour": 1000
     },
