@@ -13,6 +13,7 @@ import numpy as np
 
 # Simple direct imports
 import spallation_transmutation
+import photonuclear_transmutation
 import decay_accelerator
 import atomic_binder
 import energy_ledger
@@ -43,27 +44,53 @@ def main():
     decay_time_s = cfg.get("decay_time_s", 1)
     
     logger.info(f"Starting transmutation: {feedstock_isotope} -> {target_isotope}")
-      # Initialize energy ledger
-    ledger = energy_ledger.EnergyLedger()
-      # Step 1: Spallation Transmutation
-    spallation_config = spallation_transmutation.TransmutationConfig(
-        target_isotope=target_isotope,
-        feedstock_isotope=feedstock_isotope,
-        mu_lv=lv_params.get("mu", 1e-17),
-        alpha_lv=lv_params.get("alpha", 1e-14),
-        beta_lv=lv_params.get("beta", 1e-11),
-        beam_type=beam_profile.get("type", "deuteron"),
-        beam_energy=beam_profile.get("energy_MeV", 80) * 1e6,  # Convert to eV
-        beam_flux=beam_profile.get("flux", 1e14),
-        irradiation_time_s=duration_s
-    )    
-    transmuter = spallation_transmutation.SpallationTransmuter(spallation_config)
     
-    # Run transmutation simulation on 1g sample
+    # Initialize energy ledger
+    ledger = energy_ledger.EnergyLedger()
+    
+    # Step 1: Choose transmutation method based on config
+    use_photonuclear = cfg.get("use_photonuclear", False)
     sample_mass_g = 1.0  # Standard sample size
-    spallation_result = transmuter.transmute_sample(sample_mass_g, duration_s)
-      # Extract the total yield for subsequent processing
-    total_yield_mass_g = spallation_result['summary']['total_yield_mass_g']
+    
+    if use_photonuclear:
+        logger.info("Using photonuclear (GDR) transmutation pathway")
+        
+        # Create photonuclear config
+        photon_config = photonuclear_transmutation.PhotonuclearConfig(
+            target_isotope=target_isotope,
+            feedstock_isotope=feedstock_isotope,
+            mu_lv=lv_params.get("mu", 2.5e-12),
+            alpha_lv=lv_params.get("alpha", 0.85),
+            beta_lv=lv_params.get("beta", 0.65),
+            gamma_energy_MeV=cfg.get("photon_beam", {}).get("energy_MeV", 15.0),
+            photon_flux=cfg.get("photon_beam", {}).get("flux", 1e13),
+            beam_duration_s=duration_s
+        )
+        
+        transmuter = photonuclear_transmutation.PhotonuclearTransmuter(photon_config)
+        transmutation_result = transmuter.transmute_sample(sample_mass_g, duration_s)
+        
+    else:
+        logger.info("Using spallation transmutation pathway")
+        
+        # Create spallation config
+        spallation_config = spallation_transmutation.TransmutationConfig(
+            target_isotope=target_isotope,
+            feedstock_isotope=feedstock_isotope,
+            mu_lv=lv_params.get("mu", 1e-17),
+            alpha_lv=lv_params.get("alpha", 1e-14),
+            beta_lv=lv_params.get("beta", 1e-11),
+            beam_type=beam_profile.get("type", "deuteron"),
+            beam_energy=beam_profile.get("energy_MeV", 80) * 1e6,  # Convert to eV
+            beam_flux=beam_profile.get("flux", 1e14),
+            irradiation_time_s=duration_s
+        )
+        
+        transmuter = spallation_transmutation.SpallationTransmuter(spallation_config)
+        transmutation_result = transmuter.transmute_sample(sample_mass_g, duration_s)
+    
+    # Extract the total yield for subsequent processing
+    total_yield_mass_g = transmutation_result['summary']['total_yield_mass_g']
     
     # Step 2: Decay Acceleration (if needed)
     if decay_time_s > 0:
@@ -90,8 +117,8 @@ def main():
     print(f"Target element: {target_isotope}")
     print(f"Input mass: {sample_mass_g:.3f} g")
     print(f"Output mass: {total_yield_mass_g*1000:.6f} mg")
-    print(f"Conversion efficiency: {spallation_result['summary']['conversion_efficiency']:.6f}%")
-    print(f"LV enhancement: {spallation_result['summary']['lv_total_enhancement']:.2f}×")
+    print(f"Conversion efficiency: {transmutation_result['summary']['conversion_efficiency']:.6f}%")
+    print(f"LV enhancement: {transmutation_result['summary']['lv_total_enhancement']:.2f}×")
     
     # Economic analysis
     economic_params = cfg.get("economic_params", {})
@@ -103,10 +130,30 @@ def main():
         material_cost = sample_mass_g * feedstock_cost / 1000  # Convert g to kg
         
         energy_cost_kwh = economic_params.get("energy_cost_per_kwh", 0.10)
-        # Estimate energy cost based on beam parameters
-        beam_power_mw = (spallation_config.beam_energy / 1e6) * (spallation_config.beam_flux * np.pi * (spallation_config.beam_width_m/2)**2) * 1.6e-19 / 1e6
-        energy_used_kwh = beam_power_mw * 1000 * (duration_s / 3600)  # Convert MW to kW and s to h
-        energy_cost = energy_used_kwh * energy_cost_kwh
+        
+        # Check if LV self-powered mode is enabled
+        use_lv_self_powered = cfg.get("use_lv_self_powered", False)
+        
+        if use_lv_self_powered:
+            # Zero energy cost for LV self-powered operation
+            energy_used_kwh = 0.0
+            energy_cost = 0.0
+            logger.info("Using LV self-powered mode: Zero energy cost")
+        else:
+            # Estimate energy cost based on transmutation method
+            if use_photonuclear:
+                # Photon beam power estimation
+                photon_energy_j = cfg.get("photon_beam", {}).get("energy_MeV", 15.0) * 1.6e-13  # Convert MeV to J
+                photon_flux = cfg.get("photon_beam", {}).get("flux", 1e13)
+                beam_area_m2 = np.pi * 0.01**2  # Assume 1 cm radius beam
+                beam_power_w = photon_energy_j * photon_flux * beam_area_m2
+                energy_used_kwh = beam_power_w * (duration_s / 3600) / 1000  # Convert to kWh
+            else:
+                # Spallation beam power estimation  
+                beam_power_mw = 0.1  # Assume 100 kW for simplicity
+                energy_used_kwh = beam_power_mw * 1000 * (duration_s / 3600)  # Convert MW to kW and s to h
+            
+            energy_cost = energy_used_kwh * energy_cost_kwh
         
         overhead = economic_params.get("facility_overhead_per_hour", 1000)
         time_hours = duration_s / 3600
@@ -129,9 +176,8 @@ def main():
         "target_isotope": target_isotope,
         "feedstock_isotope": feedstock_isotope,
         "sample_mass_g": sample_mass_g,
-        "output_mass_g": total_yield_mass_g,
-        "conversion_efficiency": spallation_result['summary']['conversion_efficiency'],
-        "lv_enhancement": spallation_result['summary']['lv_total_enhancement'],
+        "output_mass_g": total_yield_mass_g,        "conversion_efficiency": transmutation_result['summary']['conversion_efficiency'],
+        "lv_enhancement": transmutation_result['summary']['lv_total_enhancement'],
         "energy_used_kwh": energy_used_kwh if 'energy_used_kwh' in locals() else 0,
         "config_used": cfg
     }

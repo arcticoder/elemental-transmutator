@@ -25,6 +25,12 @@ class GoldProfitabilityScanner:
             "Pt-197": "config_gold_pt.json",
             "Pb-208": "config_gold_pb.json"
         }
+          # Add photonuclear configs for comparison
+        self.photonuclear_configs = {
+            "Pt-195-GDR": "config_gold_photonuclear.json",
+            "Hg-202-GDR-24h": "config_gold_hg_photonuclear.json", 
+            "Pb-208-GDR-48h": "config_gold_pb_photonuclear.json"
+        }
         
         self.results = []
         
@@ -124,7 +130,14 @@ class GoldProfitabilityScanner:
         print(f"Target: Au-197 | Gold Price: ${self.gold_price_per_g:.2f}/g")
         print(f"{'='*80}")
         
+        # Test conventional spallation feedstocks
         for feedstock, config_file in self.feedstock_configs.items():
+            result = self.run_single_analysis(feedstock, config_file)
+            if result:
+                self.results.append(result)
+        
+        # Test photonuclear (GDR) options
+        for feedstock, config_file in self.photonuclear_configs.items():
             result = self.run_single_analysis(feedstock, config_file)
             if result:
                 self.results.append(result)

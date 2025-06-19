@@ -2,32 +2,37 @@
   "target_isotope": "Au-197",
   "feedstock_isotope": "Pb-208",
   "sample_mass_g": 1.0,
-  "output_mass_g": 1.4475494393713105e-07,
-  "conversion_efficiency": 1.52837707304179e-05,
-  "lv_enhancement": 1.0000000000009535,
-  "energy_used_kwh": 1.675516081914556e-11,
+  "output_mass_g": 0.05185403123799427,
+  "conversion_efficiency": 5.47494339974762,
+  "lv_enhancement": 456.116137992934,
+  "energy_used_kwh": 0.0,
   "config_used": {
     "target_isotope": "Au-197",
     "feedstock_isotope": "Pb-208",
-    "beam_profile": {
-      "type": "deuteron",
-      "energy_MeV": 100,
-      "flux": 100000000000000.0
+    "use_photonuclear": true,
+    "use_lv_self_powered": true,
+    "photon_beam": {
+      "energy_MeV": 16.5,
+      "flux": 500000000000000.0,
+      "duration_s": 172800
+    },
+    "target_geometry": {
+      "thickness_cm": 2.0,
+      "density_g_cm3": 11.34
     },
     "lv_params": {
-      "mu": 1e-17,
-      "alpha": 1e-14,
-      "beta": 1e-11
+      "mu": 8e-12,
+      "alpha": 1.5,
+      "beta": 1.0
     },
-    "duration_s": 120,
-    "decay_time_s": 2,
+    "duration_s": 172800,
+    "decay_time_s": 1,
     "economic_params": {
-      "feedstock_cost_per_kg": 2,
-      "target_market_price_per_kg": 108360,
-      "energy_cost_per_kwh": 0.1,
-      "facility_overhead_per_hour": 1000
-    },
-    "collection_efficiency": 0.8,
-    "isotope_separation_efficiency": 0.9
+      "target_market_price_per_kg": 62000000,
+      "feedstock_cost_per_kg": 0.1,
+      "energy_cost_per_kwh": 0.0,
+      "facility_overhead_per_hour": 0.0001,
+      "collection_efficiency": 0.99
+    }
   }
 }

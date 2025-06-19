@@ -49,6 +49,10 @@ class EnergyType(Enum):
     OUTPUT_USEFUL = "output_useful"                # Net useful energy output
     FEEDBACK_RECYCLE = "feedback_recycle"          # Energy recycled to inputs
     
+    # New: LV Self-Powered Mode
+    LV_SELF_POWERED = "lv_self_powered"           # Zero net energy cost mode
+    PHOTON_BEAM_GENERATION = "photon_beam_generation"  # Energy for γ-ray generation
+    
     # Matter-to-Energy Conversion Types
     INPUT_MATTER_CONVERSION = "input_matter_conversion"  # Energy from matter annihilation
     LOSSES_SAFETY = "losses_safety"                      # Safety system energy costs

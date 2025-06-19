@@ -1,0 +1,34 @@
+{
+  "target_isotope": "Au-197",
+  "feedstock_isotope": "Hg-202",
+  "use_photonuclear": true,
+  "use_lv_self_powered": true,
+  
+  "photon_beam": {
+    "energy_MeV": 15.0,
+    "flux": 1e14,
+    "duration_s": 86400
+  },
+  
+  "target_geometry": {
+    "thickness_cm": 1.0,
+    "density_g_cm3": 13.5
+  },
+  
+  "lv_params": {
+    "mu": 5.0e-12,
+    "alpha": 1.2,
+    "beta": 0.8
+  },
+  
+  "duration_s": 86400,
+  "decay_time_s": 1,
+  
+  "economic_params": {
+    "target_market_price_per_kg": 62000000,
+    "feedstock_cost_per_kg": 60,
+    "energy_cost_per_kwh": 0.0,
+    "facility_overhead_per_hour": 0.001,
+    "collection_efficiency": 0.98
+  }
+}
