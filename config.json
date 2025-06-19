@@ -1,0 +1,24 @@
+{
+  "target_isotope": "Au-197",
+  "feedstock_isotope": "Fe-56",
+  "beam_profile": {
+    "type": "deuteron",
+    "energy_MeV": 80,
+    "flux": 1e14
+  },
+  "lv_params": {
+    "mu": 1e-17,
+    "alpha": 1e-14,
+    "beta": 1e-11
+  },
+  "duration_s": 60,
+  "decay_time_s": 1,
+  "economic_params": {
+    "feedstock_cost_per_kg": 0.12,
+    "target_market_price_per_kg": 62000000,
+    "energy_cost_per_kwh": 0.10,
+    "facility_overhead_per_hour": 1000
+  },
+  "collection_efficiency": 0.8,
+  "isotope_separation_efficiency": 0.9
+}

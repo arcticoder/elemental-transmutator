@@ -1,0 +1,539 @@
+{
+  "timestamp": "20250618_104755",
+  "data_points": [
+    {
+      "timestamp": "2024-12-01T00:00:00",
+      "measurement_type": "cross_section",
+      "target_isotope": "Cu-63",
+      "beam_energy": 259.30859737204656,
+      "measured_value": 6.4801307338170795e-28,
+      "uncertainty": 4.9679993343091636e-29,
+      "systematic_error": 1.296026146763416e-29,
+      "experimental_conditions": {
+        "temperature": 300,
+        "pressure": 1.0
+      },
+      "detector_calibration": {
+        "efficiency": 0.15
+      },
+      "environmental_factors": {
+        "humidity": 0.45
+      },
+      "operator_id": "operator_1",
+      "run_id": "exp_000"
+    },
+    {
+      "timestamp": "2024-12-02T01:00:00",
+      "measurement_type": "cross_section",
+      "target_isotope": "Fe-56",
+      "beam_energy": 131.2037280884873,
+      "measured_value": 8.300425972368773e-28,
+      "uncertainty": 6.984203729248561e-29,
+      "systematic_error": 1.6600851944737548e-29,
+      "experimental_conditions": {
+        "temperature": 300,
+        "pressure": 1.0
+      },
+      "detector_calibration": {
+        "efficiency": 0.15
+      },
+      "environmental_factors": {
+        "humidity": 0.45
+      },
+      "operator_id": "operator_2",
+      "run_id": "exp_001"
+    },
+    {
+      "timestamp": "2024-12-03T02:00:00",
+      "measurement_type": "cross_section",
+      "target_isotope": "Cu-63",
+      "beam_energy": 119.99498316360058,
+      "measured_value": 7.660269770402084e-28,
+      "uncertainty": 7.303120095659175e-29,
+      "systematic_error": 1.532053954080417e-29,
+      "experimental_conditions": {
+        "temperature": 300,
+        "pressure": 1.0
+      },
+      "detector_calibration": {
+        "efficiency": 0.15
+      },
+      "environmental_factors": {
+        "humidity": 0.45
+      },
+      "operator_id": "operator_3",
+      "run_id": "exp_002"
+    },
+    {
+      "timestamp": "2024-12-04T03:00:00",
+      "measurement_type": "cross_section",
+      "target_isotope": "Cu-63",
+      "beam_energy": 104.11689885916049,
+      "measured_value": 9.413930672025725e-28,
+      "uncertainty": 7.840240320207344e-29,
+      "systematic_error": 1.882786134405145e-29,
+      "experimental_conditions": {
+        "temperature": 300,
+        "pressure": 1.0
+      },
+      "detector_calibration": {
+        "efficiency": 0.15
+      },
+      "environmental_factors": {
+        "humidity": 0.45
+      },
+      "operator_id": "operator_1",
+      "run_id": "exp_003"
+    },
+    {
+      "timestamp": "2024-12-05T04:00:00",
+      "measurement_type": "cross_section",
+      "target_isotope": "Ni-58",
+      "beam_energy": 244.39975445336495,
+      "measured_value": 6.407977781759432e-28,
+      "uncertainty": 5.117284991822554e-29,
+      "systematic_error": 1.2815955563518864e-29,
+      "experimental_conditions": {
+        "temperature": 300,
+        "pressure": 1.0
+      },
+      "detector_calibration": {
+        "efficiency": 0.15
+      },
+      "environmental_factors": {
+        "humidity": 0.45
+      },
+      "operator_id": "operator_2",
+      "run_id": "exp_004"
+    },
+    {
+      "timestamp": "2024-12-06T05:00:00",
+      "measurement_type": "cross_section",
+      "target_isotope": "Cu-63",
+      "beam_energy": 127.89877213040836,
+      "measured_value": 8.539716949108053e-28,
+      "uncertainty": 7.073865522677188e-29,
+      "systematic_error": 1.7079433898216106e-29,
+      "experimental_conditions": {
+        "temperature": 300,
+        "pressure": 1.0
+      },
+      "detector_calibration": {
+        "efficiency": 0.15
+      },
+      "environmental_factors": {
+        "humidity": 0.45
+      },
+      "operator_id": "operator_3",
+      "run_id": "exp_005"
+    },
+    {
+      "timestamp": "2024-12-07T06:00:00",
+      "measurement_type": "cross_section",
+      "target_isotope": "Cu-63",
+      "beam_energy": 191.2139968434072,
+      "measured_value": 6.867522258867533e-28,
+      "uncertainty": 5.78535678604006e-29,
+      "systematic_error": 1.3735044517735066e-29,
+      "experimental_conditions": {
+        "temperature": 300,
+        "pressure": 1.0
+      },
+      "detector_calibration": {
+        "efficiency": 0.15
+      },
+      "environmental_factors": {
+        "humidity": 0.45
+      },
+      "operator_id": "operator_1",
+      "run_id": "exp_006"
+    },
+    {
+      "timestamp": "2024-12-08T07:00:00",
+      "measurement_type": "cross_section",
+      "target_isotope": "Cu-63",
+      "beam_energy": 296.6461771613576,
+      "measured_value": 6.083679498617331e-28,
+      "uncertainty": 4.644838400686509e-29,
+      "systematic_error": 1.2167358997234663e-29,
+      "experimental_conditions": {
+        "temperature": 300,
+        "pressure": 1.0
+      },
+      "detector_calibration": {
+        "efficiency": 0.15
+      },
+      "environmental_factors": {
+        "humidity": 0.45
+      },
+      "operator_id": "operator_2",
+      "run_id": "exp_007"
+    },
+    {
+      "timestamp": "2024-12-09T08:00:00",
+      "measurement_type": "cross_section",
+      "target_isotope": "Fe-56",
+      "beam_energy": 109.29008254399955,
+      "measured_value": 8.684752609037996e-28,
+      "uncertainty": 7.652434306284789e-29,
+      "systematic_error": 1.7369505218075993e-29,
+      "experimental_conditions": {
+        "temperature": 300,
+        "pressure": 1.0
+      },
+      "detector_calibration": {
+        "efficiency": 0.15
+      },
+      "environmental_factors": {
+        "humidity": 0.45
+      },
+      "operator_id": "operator_3",
+      "run_id": "exp_008"
+    },
+    {
+      "timestamp": "2024-12-10T09:00:00",
+      "measurement_type": "cross_section",
+      "target_isotope": "Cu-63",
+      "beam_energy": 102.6529922319733,
+      "measured_value": 1.0166581880959999e-27,
+      "uncertainty": 7.895946197615349e-29,
+      "systematic_error": 2.0333163761919998e-29,
+      "experimental_conditions": {
+        "temperature": 300,
+        "pressure": 1.0
+      },
+      "detector_calibration": {
+        "efficiency": 0.15
+      },
+      "environmental_factors": {
+        "humidity": 0.45
+      },
+      "operator_id": "operator_1",
+      "run_id": "exp_009"
+    },
+    {
+      "timestamp": "2024-12-11T10:00:00",
+      "measurement_type": "cross_section",
+      "target_isotope": "Fe-56",
+      "beam_energy": 293.12640661491184,
+      "measured_value": 5.560325449824149e-28,
+      "uncertainty": 4.672642071338335e-29,
+      "systematic_error": 1.1120650899648298e-29,
+      "experimental_conditions": {
+        "temperature": 300,
+        "pressure": 1.0
+      },
+      "detector_calibration": {
+        "efficiency": 0.15
+      },
+      "environmental_factors": {
+        "humidity": 0.45
+      },
+      "operator_id": "operator_2",
+      "run_id": "exp_010"
+    },
+    {
+      "timestamp": "2024-12-12T11:00:00",
+      "measurement_type": "cross_section",
+      "target_isotope": "Fe-56",
+      "beam_energy": 146.1787651244298,
+      "measured_value": 8.897898595926703e-28,
+      "uncertainty": 6.616797482893783e-29,
+      "systematic_error": 1.7795797191853408e-29,
+      "experimental_conditions": {
+        "temperature": 300,
+        "pressure": 1.0
+      },
+      "detector_calibration": {
+        "efficiency": 0.15
+      },
+      "environmental_factors": {
+        "humidity": 0.45
+      },
+      "operator_id": "operator_3",
+      "run_id": "exp_011"
+    },
+    {
+      "timestamp": "2024-12-13T12:00:00",
+      "measurement_type": "cross_section",
+      "target_isotope": "Cu-63",
+      "beam_energy": 236.65270376509164,
+      "measured_value": 7.088223100096194e-28,
+      "uncertainty": 5.200370088646029e-29,
+      "systematic_error": 1.4176446200192387e-29,
+      "experimental_conditions": {
+        "temperature": 300,
+        "pressure": 1.0
+      },
+      "detector_calibration": {
+        "efficiency": 0.15
+      },
+      "environmental_factors": {
+        "humidity": 0.45
+      },
+      "operator_id": "operator_1",
+      "run_id": "exp_012"
+    },
+    {
+      "timestamp": "2024-12-14T13:00:00",
+      "measurement_type": "cross_section",
+      "target_isotope": "Cu-63",
+      "beam_energy": 281.8640804157564,
+      "measured_value": 6.134143064646922e-28,
+      "uncertainty": 4.7650791585776754e-29,
+      "systematic_error": 1.2268286129293844e-29,
+      "experimental_conditions": {
+        "temperature": 300,
+        "pressure": 1.0
+      },
+      "detector_calibration": {
+        "efficiency": 0.15
+      },
+      "environmental_factors": {
+        "humidity": 0.45
+      },
+      "operator_id": "operator_2",
+      "run_id": "exp_013"
+    },
+    {
+      "timestamp": "2024-12-15T14:00:00",
+      "measurement_type": "cross_section",
+      "target_isotope": "Ni-58",
+      "beam_energy": 232.5044568707964,
+      "measured_value": 6.667776963121847e-28,
+      "uncertainty": 5.246556400009384e-29,
+      "systematic_error": 1.3335553926243694e-29,
+      "experimental_conditions": {
+        "temperature": 300,
+        "pressure": 1.0
+      },
+      "detector_calibration": {
+        "efficiency": 0.15
+      },
+      "environmental_factors": {
+        "humidity": 0.45
+      },
+      "operator_id": "operator_3",
+      "run_id": "exp_014"
+    },
+    {
+      "timestamp": "2024-12-16T15:00:00",
+      "measurement_type": "cross_section",
+      "target_isotope": "Ni-58",
+      "beam_energy": 213.5400655639983,
+      "measured_value": 5.7703811986169e-28,
+      "uncertainty": 5.474573629512354e-29,
+      "systematic_error": 1.15407623972338e-29,
+      "experimental_conditions": {
+        "temperature": 300,
+        "pressure": 1.0
+      },
+      "detector_calibration": {
+        "efficiency": 0.15
+      },
+      "environmental_factors": {
+        "humidity": 0.45
+      },
+      "operator_id": "operator_1",
+      "run_id": "exp_015"
+    },
+    {
+      "timestamp": "2024-12-17T16:00:00",
+      "measurement_type": "cross_section",
+      "target_isotope": "Fe-56",
+      "beam_energy": 293.9169255529117,
+      "measured_value": 5.9349669691091535e-28,
+      "uncertainty": 4.666354071581588e-29,
+      "systematic_error": 1.1869933938218307e-29,
+      "experimental_conditions": {
+        "temperature": 300,
+        "pressure": 1.0
+      },
+      "detector_calibration": {
+        "efficiency": 0.15
+      },
+      "environmental_factors": {
+        "humidity": 0.45
+      },
+      "operator_id": "operator_2",
+      "run_id": "exp_016"
+    },
+    {
+      "timestamp": "2024-12-18T17:00:00",
+      "measurement_type": "cross_section",
+      "target_isotope": "Cu-63",
+      "beam_energy": 117.6985004103839,
+      "measured_value": 9.867742148674547e-28,
+      "uncertainty": 7.374023583259146e-29,
+      "systematic_error": 1.9735484297349094e-29,
+      "experimental_conditions": {
+        "temperature": 300,
+        "pressure": 1.0
+      },
+      "detector_calibration": {
+        "efficiency": 0.15
+      },
+      "environmental_factors": {
+        "humidity": 0.45
+      },
+      "operator_id": "operator_3",
+      "run_id": "exp_017"
+    },
+    {
+      "timestamp": "2024-12-19T18:00:00",
+      "measurement_type": "cross_section",
+      "target_isotope": "Cu-63",
+      "beam_energy": 204.16685200516474,
+      "measured_value": 7.146060330805458e-28,
+      "uncertainty": 5.598831156536108e-29,
+      "systematic_error": 1.4292120661610916e-29,
+      "experimental_conditions": {
+        "temperature": 300,
+        "pressure": 1.0
+      },
+      "detector_calibration": {
+        "efficiency": 0.15
+      },
+      "environmental_factors": {
+        "humidity": 0.45
+      },
+      "operator_id": "operator_1",
+      "run_id": "exp_018"
+    },
+    {
+      "timestamp": "2024-12-20T19:00:00",
+      "measurement_type": "cross_section",
+      "target_isotope": "Ni-58",
+      "beam_energy": 293.05106145282764,
+      "measured_value": 6.608792884083182e-28,
+      "uncertainty": 4.673242714697465e-29,
+      "systematic_error": 1.3217585768166364e-29,
+      "experimental_conditions": {
+        "temperature": 300,
+        "pressure": 1.0
+      },
+      "detector_calibration": {
+        "efficiency": 0.15
+      },
+      "environmental_factors": {
+        "humidity": 0.45
+      },
+      "operator_id": "operator_2",
+      "run_id": "exp_019"
+    },
+    {
+      "timestamp": "2024-12-21T20:00:00",
+      "measurement_type": "cross_section",
+      "target_isotope": "Fe-56",
+      "beam_energy": 128.18484499495253,
+      "measured_value": 9.24378566589644e-28,
+      "uncertainty": 7.065967665150025e-29,
+      "systematic_error": 1.8487571331792881e-29,
+      "experimental_conditions": {
+        "temperature": 300,
+        "pressure": 1.0
+      },
+      "detector_calibration": {
+        "efficiency": 0.15
+      },
+      "environmental_factors": {
+        "humidity": 0.45
+      },
+      "operator_id": "operator_3",
+      "run_id": "exp_020"
+    },
+    {
+      "timestamp": "2024-12-22T21:00:00",
+      "measurement_type": "cross_section",
+      "target_isotope": "Cu-63",
+      "beam_energy": 258.0351081062411,
+      "measured_value": 6.667424874255034e-28,
+      "uncertainty": 4.9802436118205583e-29,
+      "systematic_error": 1.3334849748510068e-29,
+      "experimental_conditions": {
+        "temperature": 300,
+        "pressure": 1.0
+      },
+      "detector_calibration": {
+        "efficiency": 0.15
+      },
+      "environmental_factors": {
+        "humidity": 0.45
+      },
+      "operator_id": "operator_1",
+      "run_id": "exp_021"
+    },
+    {
+      "timestamp": "2024-12-23T22:00:00",
+      "measurement_type": "cross_section",
+      "target_isotope": "Cu-63",
+      "beam_energy": 114.80893034681807,
+      "measured_value": 8.70622417661488e-28,
+      "uncertainty": 7.466243533788122e-29,
+      "systematic_error": 1.7412448353229762e-29,
+      "experimental_conditions": {
+        "temperature": 300,
+        "pressure": 1.0
+      },
+      "detector_calibration": {
+        "efficiency": 0.15
+      },
+      "environmental_factors": {
+        "humidity": 0.45
+      },
+      "operator_id": "operator_2",
+      "run_id": "exp_022"
+    },
+    {
+      "timestamp": "2024-12-24T23:00:00",
+      "measurement_type": "cross_section",
+      "target_isotope": "Cu-63",
+      "beam_energy": 270.00771555795984,
+      "measured_value": 5.935176865493638e-28,
+      "uncertainty": 4.868575393550963e-29,
+      "systematic_error": 1.1870353730987276e-29,
+      "experimental_conditions": {
+        "temperature": 300,
+        "pressure": 1.0
+      },
+      "detector_calibration": {
+        "efficiency": 0.15
+      },
+      "environmental_factors": {
+        "humidity": 0.45
+      },
+      "operator_id": "operator_3",
+      "run_id": "exp_023"
+    },
+    {
+      "timestamp": "2024-12-25T00:00:00",
+      "measurement_type": "cross_section",
+      "target_isotope": "Ni-58",
+      "beam_energy": 119.08202329808226,
+      "measured_value": 1.024071727626897e-27,
+      "uncertainty": 7.331061865761132e-29,
+      "systematic_error": 2.048143455253794e-29,
+      "experimental_conditions": {
+        "temperature": 300,
+        "pressure": 1.0
+      },
+      "detector_calibration": {
+        "efficiency": 0.15
+      },
+      "environmental_factors": {
+        "humidity": 0.45
+      },
+      "operator_id": "operator_1",
+      "run_id": "exp_024"
+    }
+  ],
+  "fit_results": {},
+  "reference_parameters": {
+    "lv_xi": 3.2e-18,
+    "lv_eta": 1.1e-19,
+    "beam_focusing_efficiency": 0.85,
+    "target_density_factor": 1.0,
+    "detector_efficiency": 0.15,
+    "cross_section_scaling": 1.0
+  }
+}

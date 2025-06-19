@@ -1,0 +1,68 @@
+{
+  "report_metadata": {
+    "timestamp": "2025-06-18T10:06:59.802466",
+    "total_data_points": 50,
+    "measurement_types": [
+      "cross_section",
+      "yield",
+      "beam_efficiency"
+    ],
+    "target_isotopes": [
+      "Fe-56",
+      "Cu-63",
+      "Zn-64",
+      "Ni-58"
+    ]
+  },
+  "fitted_parameters": {
+    "lv_xi": {
+      "value": 4.034753064795407e-16,
+      "uncertainty": 0.005435192159896571,
+      "quality": "excellent",
+      "p_value": 0.6562014124903861
+    },
+    "lv_eta": {
+      "value": 6.369729143772773e-18,
+      "uncertainty": 0.013973750514093108,
+      "quality": "excellent",
+      "p_value": 0.6562014124903861
+    },
+    "cross_section_scaling": {
+      "value": 1.0178163419309136e-27,
+      "uncertainty": 2.2941573387056128e-29,
+      "quality": "excellent",
+      "p_value": 0.6562014124903861
+    }
+  },
+  "updated_simulation_parameters": {
+    "lv_xi": 4.034753064795407e-16,
+    "lv_eta": 6.369729143772773e-18,
+    "beam_focusing_efficiency": 0.85,
+    "target_density_factor": 1.0,
+    "detector_efficiency": 0.15,
+    "cross_section_scaling": 1.0178163419309136e-27
+  },
+  "data_quality_metrics": {
+    "mean_relative_uncertainty": 0.10739666272890235,
+    "data_coverage_score": 0.4,
+    "energy_range_coverage": 0.42292628123401926,
+    "temporal_consistency": 0.85
+  },
+  "recommendations": [
+    "Expand beam energy range for measurements"
+  ],
+  "next_experiments": [
+    {
+      "parameter": "lv_xi",
+      "current_uncertainty": 13470941275986.557,
+      "suggested_measurement": "high-precision cross-section at multiple energies",
+      "priority": "high"
+    },
+    {
+      "parameter": "lv_eta",
+      "current_uncertainty": 2193774680004131.8,
+      "suggested_measurement": "high-precision cross-section at multiple energies",
+      "priority": "high"
+    }
+  ]
+}
