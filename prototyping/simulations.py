@@ -180,7 +180,7 @@ const G4double targetHeight = 2 * targetRadius;
             macro_content = self.generate_geant4_macro(params, f"{sim_name}_output")
             macro_file = sim_path / f"{sim_name}.mac"
             
-            with open(macro_file, 'w') as f:
+            with open(macro_file, 'w', encoding='utf-8') as f:
                 f.write(macro_content)
             
             # For rapid prototyping, use analytical calculation instead of full Geant4
@@ -208,7 +208,7 @@ const G4double targetHeight = 2 * targetRadius;
                 }
             }
             
-            with open(sim_path / "metadata.json", 'w') as f:
+            with open(sim_path / "metadata.json", 'w', encoding='utf-8') as f:
                 json.dump(metadata, f, indent=2)
             
             self.logger.info(f"Simulation completed: {results.gold_atoms_produced} Au atoms")
@@ -334,7 +334,7 @@ const G4double targetHeight = 2 * targetRadius;
         
         # Save sweep results
         sweep_file = self.sim_dir / f"parameter_sweep_{int(time.time())}.json"
-        with open(sweep_file, 'w') as f:
+        with open(sweep_file, 'w', encoding='utf-8') as f:
             json.dump(results, f, indent=2)
         
         self.logger.info(f"Parameter sweep completed: {len(results)} successful runs")

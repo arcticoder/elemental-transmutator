@@ -269,7 +269,7 @@ class VendorSpecGenerator:
         Path("experiment_specs").mkdir(exist_ok=True)
         
         # Save complete specification
-        with open("experiment_specs/complete_specification.json", 'w') as f:
+        with open("experiment_specs/complete_specification.json", 'w', encoding='utf-8') as f:
             json.dump(specs, f, indent=2)
         
         # Generate vendor-specific RFQ (Request for Quote) documents
@@ -324,7 +324,7 @@ Please provide quote including:
 Contact: [Your contact information]
 """
         
-        with open("experiment_specs/irradiation_rfq.txt", 'w') as f:
+        with open("experiment_specs/irradiation_rfq.txt", 'w', encoding='utf-8') as f:
             f.write(rfq)
     
     def _generate_analysis_rfq(self, specs: Dict):
@@ -376,7 +376,7 @@ Please provide quote including:
 Contact: [Your contact information]
 """
         
-        with open("experiment_specs/analysis_rfq.txt", 'w') as f:
+        with open("experiment_specs/analysis_rfq.txt", 'w', encoding='utf-8') as f:
             f.write(rfq)
 
 def main():

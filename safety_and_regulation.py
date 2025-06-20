@@ -652,7 +652,7 @@ def main():
     }
     
     # Save comprehensive report
-    with open('safety_regulatory_analysis.json', 'w') as f:
+    with open('safety_regulatory_analysis.json', 'w', encoding='utf-8') as f:
         json.dump(safety_report, f, indent=2, default=str)
     
     # Print summary conclusions

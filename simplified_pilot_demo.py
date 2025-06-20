@@ -381,7 +381,7 @@ def run_simplified_pilot_demo():
     
     # Save report
     report_file = f"pilot_plant_assessment_{timestamp}.json"
-    with open(report_file, 'w') as f:
+    with open(report_file, 'w', encoding='utf-8') as f:
         json.dump(pilot_report, f, indent=2, default=str)
     
     print(f"✅ Assessment report saved: {report_file}")

@@ -491,7 +491,7 @@ class NetworkScanner:
             "all_results": [asdict(r) for r in self.results]
         }
         
-        with open(filename, 'w') as f:
+        with open(filename, 'w', encoding='utf-8') as f:
             json.dump(export_data, f, indent=2, default=str)
         
         print(f"📁 Results exported to {filename}")

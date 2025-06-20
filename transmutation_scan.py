@@ -286,7 +286,7 @@ class TransmutationScanner:
             "efficiency_matrix": results.efficiency_matrix.tolist() if results.efficiency_matrix is not None else None
         }
         
-        with open(filename, 'w') as f:
+        with open(filename, 'w', encoding='utf-8') as f:
             json.dump(export_data, f, indent=2)
         
         print(f"📁 Scan results exported to {filename}")

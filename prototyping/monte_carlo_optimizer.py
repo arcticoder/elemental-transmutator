@@ -238,7 +238,7 @@ class MonteCarloOptimizer:
         
         Path("experiment_specs").mkdir(exist_ok=True)
         
-        with open(f"experiment_specs/{filename}", 'w') as f:
+        with open(f"experiment_specs/{filename}", 'w', encoding='utf-8') as f:
             json.dump(recipe_dict, f, indent=2)
         
         self.logger.info(f"Recipe saved to experiment_specs/{filename}")

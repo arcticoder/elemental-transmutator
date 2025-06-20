@@ -502,7 +502,7 @@ class PhotonuclearDemo:
             
             # Save report
             report_path = Path(f"demo_report_{self.session_id}.json")
-            with open(report_path, 'w') as f:
+            with open(report_path, 'w', encoding='utf-8') as f:
                 json.dump(report, f, indent=2, default=str)
             
             self.logger.info(f"Final report saved: {report_path}")

@@ -595,7 +595,7 @@ class EnergyLedger:
             'summary': self.generate_comprehensive_report()
         }
         
-        with open(filepath, 'w') as f:
+        with open(filepath, 'w', encoding='utf-8') as f:
             json.dump(export_data, f, indent=2)
         
         self.logger.info(f"Ledger data exported to {filepath}")

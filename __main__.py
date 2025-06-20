@@ -182,7 +182,7 @@ def main():
         "config_used": cfg
     }
     
-    with open("transmutation_results.json", "w") as f:
+    with open("transmutation_results.json", "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2)
     
     logger.info("Results saved to transmutation_results.json")

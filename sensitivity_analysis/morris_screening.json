@@ -1,0 +1,155 @@
+{
+  "method": "Morris",
+  "total_samples": 5376,
+  "parameters": [
+    "beam_energy_mev",
+    "beam_intensity",
+    "pulse_width_ns",
+    "pulse_frequency_hz",
+    "pb208_fraction",
+    "bi209_fraction",
+    "tl203_fraction",
+    "tl205_fraction",
+    "hg202_fraction",
+    "hg200_fraction",
+    "be9_fraction",
+    "d2_fraction",
+    "target_mass_g",
+    "target_density_g_cm3",
+    "target_thickness_cm",
+    "moderator_thickness_cm",
+    "temperature_k",
+    "pressure_atm",
+    "total_dose_kgy",
+    "dose_rate_kgy_h"
+  ],
+  "first_order_indices": {
+    "beam_energy_mev": -1594668.1720063007,
+    "beam_intensity": 2601199.914092827,
+    "pulse_width_ns": -1699889.9325273603,
+    "pulse_frequency_hz": 0.0,
+    "pb208_fraction": 147759.11588821182,
+    "bi209_fraction": -145839.41246845885,
+    "tl203_fraction": 563731.4124583554,
+    "tl205_fraction": -300980.8323350957,
+    "hg202_fraction": 281652.66751052084,
+    "hg200_fraction": -508452.23112982285,
+    "be9_fraction": -255685.43195303105,
+    "d2_fraction": -96346.73557952658,
+    "target_mass_g": 2236001.98774325,
+    "target_density_g_cm3": 0.0,
+    "target_thickness_cm": 0.0,
+    "moderator_thickness_cm": 0.0,
+    "temperature_k": 0.0,
+    "pressure_atm": 0.0,
+    "total_dose_kgy": 2319453.735622362,
+    "dose_rate_kgy_h": -3296651.046255165
+  },
+  "total_order_indices": {
+    "beam_energy_mev": 2162841.1953901425,
+    "beam_intensity": 2601199.914092827,
+    "pulse_width_ns": 1699889.9325273603,
+    "pulse_frequency_hz": 0.0,
+    "pb208_fraction": 175385.15686643182,
+    "bi209_fraction": 146660.7038901281,
+    "tl203_fraction": 564062.9639187126,
+    "tl205_fraction": 300986.05656277755,
+    "hg202_fraction": 286618.4168168651,
+    "hg200_fraction": 581090.9060646823,
+    "be9_fraction": 255685.43195303105,
+    "d2_fraction": 96346.73576060148,
+    "target_mass_g": 2236001.98774325,
+    "target_density_g_cm3": 0.0,
+    "target_thickness_cm": 0.0,
+    "moderator_thickness_cm": 0.0,
+    "temperature_k": 0.0,
+    "pressure_atm": 0.0,
+    "total_dose_kgy": 2319453.735622362,
+    "dose_rate_kgy_h": 3296651.046255165
+  },
+  "parameter_rankings": [
+    [
+      "dose_rate_kgy_h",
+      3296651.046255165
+    ],
+    [
+      "beam_intensity",
+      2601199.914092827
+    ],
+    [
+      "total_dose_kgy",
+      2319453.735622362
+    ],
+    [
+      "target_mass_g",
+      2236001.98774325
+    ],
+    [
+      "beam_energy_mev",
+      2162841.1953901425
+    ],
+    [
+      "pulse_width_ns",
+      1699889.9325273603
+    ],
+    [
+      "hg200_fraction",
+      581090.9060646823
+    ],
+    [
+      "tl203_fraction",
+      564062.9639187126
+    ],
+    [
+      "tl205_fraction",
+      300986.05656277755
+    ],
+    [
+      "hg202_fraction",
+      286618.4168168651
+    ],
+    [
+      "be9_fraction",
+      255685.43195303105
+    ],
+    [
+      "pb208_fraction",
+      175385.15686643182
+    ],
+    [
+      "bi209_fraction",
+      146660.7038901281
+    ],
+    [
+      "d2_fraction",
+      96346.73576060148
+    ],
+    [
+      "pulse_frequency_hz",
+      0.0
+    ],
+    [
+      "target_density_g_cm3",
+      0.0
+    ],
+    [
+      "target_thickness_cm",
+      0.0
+    ],
+    [
+      "moderator_thickness_cm",
+      0.0
+    ],
+    [
+      "temperature_k",
+      0.0
+    ],
+    [
+      "pressure_atm",
+      0.0
+    ]
+  ],
+  "confidence_intervals": {},
+  "analysis_time_s": 0.38254594802856445,
+  "analysis_timestamp": "2025-06-19 23:01:59"
+}
