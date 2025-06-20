@@ -164,11 +164,10 @@ class GammaBeamController:
             # Monitor beam formation
             self.logger.info("Monitoring beam formation...")
             time.sleep(5)  # Allow beam to stabilize
-            
-            # Verify beam parameters
+              # Verify beam parameters
             if self._verify_beam_parameters():
                 self.state = BeamState.ON
-                self.logger.info(f"Gamma beam ON: {self.target_energy:.1f} MeV, {self.target_flux:.2e} γ/cm²/s")
+                self.logger.info(f"Gamma beam ON: {self.target_energy:.1f} MeV, {self.target_flux:.2e} gamma/cm2/s")
                 return True
             else:
                 self.logger.error("Beam parameters out of tolerance")

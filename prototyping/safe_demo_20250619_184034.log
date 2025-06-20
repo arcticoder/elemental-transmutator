@@ -1,0 +1,90 @@
+2025-06-19 18:40:34,115 - INFO - === PHOTONUCLEAR GOLD PRODUCTION SAFE DEMO ===
+2025-06-19 18:40:34,116 - INFO - Initializing hardware systems...
+2025-06-19 18:40:34,116 - INFO - GammaBeamController initialized for 16.5 MeV beam
+2025-06-19 18:40:34,131 - INFO - Database initialized: safe_demo_target.db
+2025-06-19 18:40:34,132 - INFO - TargetCellMonitor initialized
+2025-06-19 18:40:34,164 - INFO - Database initialized: safe_demo_data.db
+2025-06-19 18:40:34,164 - INFO - DataLogger initialized
+2025-06-19 18:40:34,164 - INFO - Registered subsystem: gamma_beam
+2025-06-19 18:40:34,165 - INFO - Registered subsystem: target_cell
+2025-06-19 18:40:34,165 - INFO - Hardware initialization complete
+2025-06-19 18:40:34,173 - INFO - Data collection started for 2 subsystems
+2025-06-19 18:40:34,173 - INFO - Experiment session started: EXP_20250619_184034
+2025-06-19 18:40:34,173 - INFO - Data logging started: EXP_20250619_184034
+2025-06-19 18:40:34,173 - INFO - Running safety checks...
+2025-06-19 18:40:34,173 - INFO - Safety checks passed
+2025-06-19 18:40:34,173 - INFO - Loading 1.0 g Pb-208 target...
+2025-06-19 18:40:34,173 - INFO - Loading 1.000 g of Pb-208 target...
+2025-06-19 18:40:39,174 - INFO - Target loaded successfully
+2025-06-19 18:40:39,175 - INFO - Quick thermal conditioning...
+2025-06-19 18:40:39,176 - INFO - Starting coolant circulation...
+2025-06-19 18:40:39,176 - INFO - Waiting for thermal equilibrium...
+2025-06-19 18:45:39,223 - WARNING - Thermal equilibrium not reached within timeout
+2025-06-19 18:46:39,224 - INFO - Target preparation complete
+2025-06-19 18:46:39,225 - INFO - Starting gamma beam system...
+2025-06-19 18:46:39,226 - INFO - Powering on gamma beam system...
+2025-06-19 18:46:39,228 - INFO - System warming up... ETA: 0.5 minutes
+2025-06-19 18:47:09,230 - INFO - Warmup progress: 100.0%
+2025-06-19 18:47:09,231 - INFO - System ready for beam operation
+2025-06-19 18:47:09,232 - INFO - Ramping laser to full power...
+2025-06-19 18:47:11,233 - INFO - Activating electron beam...
+2025-06-19 18:47:13,234 - INFO - Monitoring beam formation...
+2025-06-19 18:47:18,235 - INFO - Gamma beam ON: 16.5 MeV, 5.00e+13 gamma/cm2/s
+2025-06-19 18:47:18,237 - INFO - Gamma beam active: 16.53 MeV, 97.7% stable
+2025-06-19 18:47:18,237 - INFO - Starting accelerated irradiation...
+2025-06-19 18:47:18,238 - INFO - Starting irradiation monitoring...
+2025-06-19 18:47:18,240 - INFO - Irradiation monitoring active
+2025-06-19 18:47:18,245 - INFO - Irradiation will run for 6.0 minutes
+2025-06-19 18:47:48,251 - INFO - Status: 0.5min elapsed, 5.5min remaining
+2025-06-19 18:47:48,255 - INFO -   Conversion: 0.0000% | Temp: 151.8C
+2025-06-19 18:47:48,256 - INFO -   Beam stability: 98.9% | Au-197: 629775095 Bq
+2025-06-19 18:47:48,257 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 18:48:18,261 - INFO - Status: 1.0min elapsed, 5.0min remaining
+2025-06-19 18:48:18,261 - INFO -   Conversion: 0.0000% | Temp: 147.8C
+2025-06-19 18:48:18,262 - INFO -   Beam stability: 97.1% | Au-197: 1281266572 Bq
+2025-06-19 18:48:18,263 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 18:48:48,266 - INFO - Status: 1.5min elapsed, 4.5min remaining
+2025-06-19 18:48:48,267 - INFO -   Conversion: 0.0000% | Temp: 144.3C
+2025-06-19 18:48:48,268 - INFO -   Beam stability: 96.2% | Au-197: 1911041667 Bq
+2025-06-19 18:48:48,268 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 18:49:18,272 - INFO - Status: 2.0min elapsed, 4.0min remaining
+2025-06-19 18:49:18,272 - INFO -   Conversion: 0.0000% | Temp: 151.8C
+2025-06-19 18:49:18,273 - INFO -   Beam stability: 97.4% | Au-197: 2562533144 Bq
+2025-06-19 18:49:18,274 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 18:49:48,277 - INFO - Status: 2.5min elapsed, 3.5min remaining
+2025-06-19 18:49:48,278 - INFO -   Conversion: 0.0000% | Temp: 151.5C
+2025-06-19 18:49:48,278 - INFO -   Beam stability: 98.3% | Au-197: 3192308239 Bq
+2025-06-19 18:49:48,279 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 18:50:18,284 - INFO - Status: 3.0min elapsed, 3.0min remaining
+2025-06-19 18:50:18,284 - INFO -   Conversion: 0.0000% | Temp: 151.2C
+2025-06-19 18:50:18,285 - INFO -   Beam stability: 99.6% | Au-197: 3822083334 Bq
+2025-06-19 18:50:18,285 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 18:50:48,293 - INFO - Status: 3.5min elapsed, 2.5min remaining
+2025-06-19 18:50:48,294 - INFO -   Conversion: 0.0000% | Temp: 146.9C
+2025-06-19 18:50:48,295 - INFO -   Beam stability: 98.4% | Au-197: 4473574811 Bq
+2025-06-19 18:50:48,296 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 18:51:18,374 - INFO - Status: 4.0min elapsed, 2.0min remaining
+2025-06-19 18:51:18,375 - INFO -   Conversion: 0.0000% | Temp: 148.5C
+2025-06-19 18:51:18,376 - INFO -   Beam stability: 97.7% | Au-197: 5103349906 Bq
+2025-06-19 18:51:18,377 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 18:51:48,382 - INFO - Status: 4.5min elapsed, 1.5min remaining
+2025-06-19 18:51:48,383 - INFO -   Conversion: 0.0000% | Temp: 147.2C
+2025-06-19 18:51:48,383 - INFO -   Beam stability: 98.3% | Au-197: 5754841383 Bq
+2025-06-19 18:51:48,384 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 19:38:38,490 - INFO - Stopping irradiation...
+2025-06-19 19:38:38,491 - INFO - Total irradiation time: 0.86 hours
+2025-06-19 19:38:38,491 - INFO - Turning off gamma beam...
+2025-06-19 19:38:47,493 - INFO - Gamma beam OFF
+2025-06-19 19:38:47,493 - INFO - Irradiation sequence complete
+2025-06-19 19:38:47,494 - INFO - Analyzing results...
+2025-06-19 19:38:47,494 - INFO - Brief cooling period...
+2025-06-19 19:39:17,495 - INFO - Unloading target...
+2025-06-19 19:39:18,141 - INFO - Target unloaded successfully
+2025-06-19 19:39:18,141 - INFO - Results analysis complete
+2025-06-19 19:39:18,142 - INFO - Powering down gamma beam system...
+2025-06-19 19:39:18,508 - INFO - System powered down successfully
+2025-06-19 19:39:19,523 - INFO - Data collection stopped
+2025-06-19 19:39:19,788 - INFO - Session data backed up: safe_demo_backups\EXP_20250619_184034_20250619_193919.csv
+2025-06-19 19:39:19,789 - INFO - Experiment session ended: EXP_20250619_184034
+2025-06-19 19:39:19,790 - INFO - Data logging ended: 16238 points
+2025-06-19 19:39:19,790 - INFO - === DEMONSTRATION COMPLETED SUCCESSFULLY ===
