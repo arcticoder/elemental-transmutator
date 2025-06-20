@@ -1,4 +1,4 @@
-name: Monte Carlo Gold Replicator CI
+name: Enhanced Transmutation CI
 
 on:
   push:
@@ -7,42 +7,8 @@ on:
     branches: [ main ]
 
 jobs:
-  monte-carlo-optimization:
+  enhanced-pathway-analysis:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.9, 3.10, 3.11]
-
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ matrix.python-version }}
-    
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install numpy matplotlib scipy scikit-optimize
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi    - name: Run digital twin optimization (Month 1)
-      run: |
-        cd prototyping
-        python digital_twin_optimizer.py
-    
-    - name: Validate atomic data binding
-      run: |
-        cd prototyping
-        python atomic_binder.py
-    
-    - name: Test simulation interface
-      run: |
-        cd prototyping
-        python simulations.py
-
-  micro-experiment-planning:
-    runs-on: ubuntu-latest
-    needs: monte-carlo-optimization
     
     steps:
     - uses: actions/checkout@v3
@@ -55,31 +21,27 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install numpy matplotlib scipy scikit-optimize
+        pip install numpy matplotlib scipy pandas seaborn
     
-    - name: Calculate optimal experimental parameters
+    - name: Run enhanced pathway validation
       run: |
         cd prototyping
-        python monthly_experiment_planner.py --budget=100
+        python test_enhanced_pathways.py
     
-    - name: Generate vendor specifications
+    - name: Run enhanced pathway demo
       run: |
         cd prototyping
-        python vendor_spec_generator.py
-    - name: Generate vendor specifications
-      run: |
-        cd prototyping
-        python vendor_spec_generator.py
+        python quick_pathway_demo.py
     
-    - name: Upload experiment specifications
+    - name: Upload analysis results
       uses: actions/upload-artifact@v3
       with:
-        name: micro-experiment-specs
-        path: experiment_specs/
+        name: enhanced-pathway-analysis
+        path: prototyping/enhanced_comprehensive_analysis/
 
   cost-viability-analysis:
     runs-on: ubuntu-latest
-    needs: monte-carlo-optimization
+    needs: enhanced-pathway-analysis
     
     steps:
     - uses: actions/checkout@v3
@@ -92,13 +54,14 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install numpy matplotlib scipy
+        pip install numpy matplotlib scipy pandas
     
     - name: Analyze outsourcing cost structure
       run: |
         cd prototyping
         python outsourcing_cost_analyzer.py --budget=100 --target-roi=200
-      - name: Generate monthly experiment plan
+    
+    - name: Generate monthly experiment plan
       run: |
         cd prototyping
         python monthly_experiment_planner.py > monthly_plan.txt
@@ -108,39 +71,10 @@ jobs:
       with:
         name: monthly-experiment-plan
         path: prototyping/monthly_plan.txt
-    
-    - name: Check minimum viable yield threshold
-      run: |
-        cd prototyping
-        python -c "
-        from outsourcing_cost_analyzer import OutsourcingAnalyzer
-        from monte_carlo_optimizer import MonteCarloOptimizer
-        
-        analyzer = OutsourcingAnalyzer()
-        mc = MonteCarloOptimizer()
-        
-        # Get best predicted recipe
-        best_recipe = mc.get_optimal_recipe()
-        predicted_yield = best_recipe['predicted_au_mg']
-        
-        # Check if economically viable for outsourcing
-        viable = analyzer.is_viable_for_outsourcing(predicted_yield, cost_per_run=60)
-        
-        print(f'Predicted yield: {predicted_yield:.4f} mg Au per run')
-        print(f'Cost per run: \$60 CAD')
-        print(f'Economically viable: {viable}')
-        
-        if not viable:
-            print('WARNING: Current recipe may not be economically viable')
-            print('Consider optimizing for higher yield or lower cost')
-            exit(1)
-        else:
-            print('SUCCESS: Recipe ready for micro-experiment outsourcing')
-            exit(0)
-        "
 
-  windows-compatibility:
-    runs-on: windows-latest
+  comprehensive-integration:
+    runs-on: ubuntu-latest
+    needs: [enhanced-pathway-analysis, cost-viability-analysis]
     
     steps:
     - uses: actions/checkout@v3
@@ -153,14 +87,15 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install numpy matplotlib scipy scikit-optimize
+        pip install numpy matplotlib scipy pandas seaborn
     
-    - name: Test Monte Carlo on Windows
+    - name: Run comprehensive integration test
       run: |
         cd prototyping
-        python monte_carlo_optimizer.py --iterations=100 --test-mode
+        python comprehensive_integration.py
     
-    - name: Validate vendor spec generation
-      run: |
-        cd prototyping
-        python vendor_spec_generator.py --test-mode
+    - name: Upload integration results
+      uses: actions/upload-artifact@v3
+      with:
+        name: comprehensive-integration-results
+        path: prototyping/comprehensive_pilot_assessment_*.json

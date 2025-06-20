@@ -69,16 +69,21 @@ class Geant4Interface:
         if not self.geant4_dir.exists():
             self.logger.warning(f"Geant4 not found at {self.geant4_dir}, using analytical mode")
             return
-        
-        # Check for key executables (optional for analytical mode)
-        if not (self.geant4_bin / "geant4-config.exe").exists():
-            self.logger.warning("geant4-config.exe not found, using analytical mode")
+          # Check for key executables (optional for analytical mode)
+        import sys
+        if sys.platform.startswith("win"):
+            config_name = "geant4-config.cmd"
+        else:
+            config_name = "geant4-config"
+            
+        if not (self.geant4_bin / config_name).exists():
+            self.logger.info(f"{config_name} not found, using analytical mode")
             return
         
         # Test basic Geant4 environment
         try:
             result = subprocess.run([
-                str(self.geant4_bin / "geant4-config.exe"), "--version"
+                str(self.geant4_bin / config_name), "--version"
             ], capture_output=True, text=True, timeout=10)
             
             if result.returncode == 0:

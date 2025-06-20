@@ -92,10 +92,13 @@ class TestEnhancedPathways(unittest.TestCase):
             'product_value_per_g', 'profit_per_g', 'profit_margin',
             'conversion_mg_per_g', 'economic_fom', 'viable'
         ]
-        
-        for metric in required_metrics:
+          for metric in required_metrics:
             self.assertIn(metric, economics, f"Missing metric: {metric}")
-            self.assertIsInstance(economics[metric], (int, float, bool))
+            # Convert numpy types to native Python types for testing
+            value = economics[metric]
+            if hasattr(value, 'item'):  # numpy scalar
+                value = value.item()
+            self.assertIsInstance(value, (int, float, bool))
     
     def test_pathway_ranking(self):
         """Test pathway ranking by economics."""
