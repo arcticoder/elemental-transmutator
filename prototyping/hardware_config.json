@@ -1,0 +1,172 @@
+{
+  "system_id": "Au_Replicator_Prototype_v1",
+  "timestamp": "2025-06-19T08:30:00Z",
+  "operator": "LV_Research_Team",
+  
+  "lv_energy_converter": {
+    "mode": "LV_self_powered",
+    "startup_power_kw": 10.0,
+    "continuous_output_kw": 15.0,
+    "net_gain_kw": 5.0,
+    "field_strength_tesla": 0.1,
+    "vacuum_level_torr": 1e-10,
+    "cooldown_time_s": 7200,
+    "safety_interlocks": ["magnetic_quench", "vacuum_loss", "temperature_alarm"]
+  },
+  
+  "gamma_source": {
+    "type": "inverse_compton_scattering",
+    "energy_MeV": 16.5,
+    "flux_per_cm2_s": 1e13,
+    "beam_diameter_cm": 1.0,
+    "pulse_rate_hz": 1e6,
+    "pulse_energy_mj": 1.6e-6,
+    "laser_wavelength_nm": 800,
+    "laser_power_kw": 1.0,
+    "electron_energy_MeV": 100,
+    "electron_current_ma": 10,
+    "warmup_s": 3600,
+    "stability_percent": 2.0,
+    "beam_on_interlock": ["personnel_clear", "shielding_closed", "target_ready"]
+  },
+  
+  "target_cell": {
+    "material": "Pb-208",
+    "purity_percent": 99.9,
+    "mass_g": 1.0,
+    "geometry": {
+      "shape": "cylinder",
+      "diameter_mm": 5.0,
+      "height_mm": 5.0
+    },
+    "container": {
+      "material": "quartz",
+      "path_length_cm": 1.0,
+      "cooling": "water_circulation",
+      "max_temperature_c": 100
+    },
+    "position": {
+      "x_mm": 0,
+      "y_mm": 0,
+      "z_mm": 0
+    }
+  },
+  
+  "shielding": {
+    "primary_shield": {
+      "material": "lead",
+      "thickness_cm": 5.0
+    },
+    "secondary_shield": {
+      "material": "concrete", 
+      "thickness_cm": 30.0
+    },
+    "dose_rate_limit_usv_h": 1.0,
+    "monitoring_points": [
+      {"location": "operator_position", "distance_m": 1.0},
+      {"location": "entrance", "distance_m": 2.0},
+      {"location": "control_room", "distance_m": 5.0}
+    ]
+  },
+  
+  "decay_acceleration": {
+    "lv_params": {
+      "mu": 8.0e-12,
+      "alpha": 1.5,
+      "beta": 1.0
+    },
+    "magnetic_field_tesla": 20.0,
+    "coil_type": "superconducting_nbti",
+    "temperature_k": 4.2,
+    "enhancement_factor": 1.2e39,
+    "processing_volume_cm3": 1.0,
+    "residence_time_s": 1.0,
+    "conversion_efficiency": 0.95
+  },
+  
+  "collection_system": {
+    "method": "electrochemical_deposition",
+    "electrolyte": "aqua_regia",
+    "cathode_material": "gold",
+    "voltage_v": 1.5,
+    "current_ma": 100,
+    "collection_efficiency": 0.995,
+    "processing_time_s": 3600
+  },
+  
+  "analysis_equipment": {
+    "icp_ms": {
+      "model": "Agilent_8900",
+      "detection_limit_ppb": 0.1,
+      "isotope_resolution": "Au-197/Au-198"
+    },
+    "analytical_balance": {
+      "model": "Sartorius_MSE2.7S",
+      "resolution_ug": 0.1,
+      "capacity_mg": 2100
+    },
+    "xrf_analyzer": {
+      "model": "Oxford_X-MET8000",
+      "elements": ["Au", "Pb", "Pt", "Hg"],
+      "accuracy_percent": 0.1
+    }
+  },
+  
+  "process_timeline": {
+    "total_runtime_h": 48,
+    "irradiation_s": 172800,
+    "decay_acceleration_s": 1,
+    "collection_s": 3600,
+    "analysis_s": 1800,
+    "cooldown_s": 3600
+  },
+  
+  "expected_results": {
+    "input_mass_g": 1.0,
+    "expected_output_mg": 51.9,
+    "conversion_efficiency_percent": 5.19,
+    "purity_percent": 99.5,
+    "estimated_value_usd": 3214.95,
+    "roi_percent": 114571.5
+  },
+  
+  "safety_systems": {
+    "radiation_monitoring": {
+      "detectors": ["ion_chamber", "geiger_counter", "neutron_detector"],
+      "alarm_threshold_usv_h": 5.0,
+      "automatic_shutdown": true
+    },
+    "personnel_safety": {
+      "access_control": "key_card_system",
+      "area_monitors": ["motion_detectors", "emergency_stops"],
+      "ppe_required": ["dosimeter", "lab_coat", "safety_glasses"]
+    },
+    "environmental": {
+      "ventilation_cfm": 1000,
+      "fume_hood": true,
+      "waste_collection": "segregated_containers"
+    }
+  },
+  
+  "data_logging": {
+    "sample_rate_hz": 10,
+    "parameters": [
+      "gamma_flux",
+      "target_temperature", 
+      "magnetic_field",
+      "dose_rate",
+      "power_consumption",
+      "coolant_flow",
+      "vacuum_pressure"
+    ],
+    "storage_format": "csv",
+    "backup_interval_s": 300
+  },
+  
+  "quality_control": {
+    "calibration_interval_h": 24,
+    "background_measurement_s": 300,
+    "blank_runs": 3,
+    "standard_reference_materials": ["NIST_SRM_683", "Au_wire_99.99"]
+  }
+}

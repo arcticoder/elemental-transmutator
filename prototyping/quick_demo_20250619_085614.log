@@ -1,0 +1,20 @@
+2025-06-19 08:56:14,410 - INFO - PhotonuclearDemo initialized
+2025-06-19 08:56:14,410 - INFO - QuickDemo initialized for 6-hour demonstration
+2025-06-19 08:56:14,411 - INFO - ============================================================
+2025-06-19 08:56:14,411 - INFO - PHOTONUCLEAR GOLD PRODUCTION DEMONSTRATION
+2025-06-19 08:56:14,411 - INFO - ============================================================
+2025-06-19 08:56:14,411 - INFO - Initializing hardware subsystems...
+2025-06-19 08:56:14,411 - INFO - GammaBeamController initialized for 16.5 MeV beam
+2025-06-19 08:56:14,422 - INFO - Database initialized: quick_demo_target.db
+2025-06-19 08:56:14,423 - INFO - TargetCellMonitor initialized
+2025-06-19 08:56:14,455 - INFO - Database initialized: quick_demo_data.db
+2025-06-19 08:56:14,455 - INFO - DataLogger initialized
+2025-06-19 08:56:14,455 - INFO - Registered subsystem: gamma_beam
+2025-06-19 08:56:14,455 - INFO - Registered subsystem: target_cell
+2025-06-19 08:56:14,456 - INFO - No config.json found, using default configuration
+2025-06-19 08:56:14,456 - INFO - PhotonuclearTransmuter initialized:
+2025-06-19 08:56:14,462 - INFO -   Feedstock: Pt-195
+2025-06-19 08:56:14,462 - INFO -   Target: Au-197
+2025-06-19 08:56:14,462 - INFO -   GDR cross-section: 36217.4 mb
+2025-06-19 08:56:14,462 - INFO -   LV enhancement: 81.92×
+2025-06-19 08:56:14,462 - ERROR - Hardware initialization failed: AtomicBinder.__init__() missing 2 required positional arguments: 'lv_params' and 'target_isotope'

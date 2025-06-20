@@ -1,0 +1,39 @@
+{
+  "pb208_mass_g": 1.0,
+  "irradiation_hours": 6.0,
+  "target_conversion_percent": 2.0,
+  "operator": "quick_demo",
+  "gamma_source": {
+    "energy_MeV": 16.5,
+    "flux_per_cm2_s": 50000000000000.0,
+    "laser_power_kw": 1.0,
+    "warmup_s": 600
+  },
+  "target_cell": {
+    "target_temperature_c": 150,
+    "coolant_flow_lpm": 3.0,
+    "max_pressure_bar": 5.0,
+    "max_dose_rate_gy_h": 25.0,
+    "database_path": "quick_demo_target.db"
+  },
+  "data_logging": {
+    "database_path": "quick_demo_data.db",
+    "backup_directory": "quick_demo_backups",
+    "sampling_rates": {
+      "gamma_beam": 2.0,
+      "target_cell": 1.0,
+      "safety_system": 5.0
+    },
+    "alert_thresholds": {
+      "target_cell.target_temperature_c": {
+        "max": 200
+      },
+      "gamma_beam.stability_percent": {
+        "min": 85
+      }
+    }
+  },
+  "cooling_time_minutes": 10,
+  "max_temperature_c": 200.0,
+  "max_dose_rate_gy_h": 25.0
+}
