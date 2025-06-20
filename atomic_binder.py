@@ -359,7 +359,7 @@ class EnhancedAtomicDataBinder:
                     'product': 'Au-197'
                 }
             ],
-            total_probability=0.88 * 0.55 * 2.4,  # Neutron multiplicity helps
+            total_probability=min(0.88 * 0.55 * 2.4, 1.0),  # Clamp to max 1.0
             economic_figure_of_merit=0.35
         )
         
@@ -456,19 +456,21 @@ class EnhancedAtomicDataBinder:
         
         # Economic figure of merit (mg Au/g feedstock per $ cost)
         conversion_efficiency = pathway.total_probability * 1000  # Convert to mg/g
-        economic_fom = conversion_efficiency / total_cost_per_gram if total_cost_per_gram > 0 else 0
-        
-        return {
-            'feedstock_cost_per_g': initial_cost,
-            'energy_cost_per_g': energy_cost_per_gram,
-            'total_cost_per_g': total_cost_per_gram,
-            'product_value_per_g': final_value,
-            'profit_per_g': profit_per_gram,
-            'profit_margin': profit_margin,
-            'conversion_mg_per_g': conversion_efficiency,
-            'economic_fom': economic_fom,
-            'viable': economic_fom >= 0.1 and profit_margin > 0.05
+        economic_fom = conversion_efficiency / total_cost_per_gram if total_cost_per_gram > 0 else 0        
+        # Convert all values to native Python types to avoid numpy type issues
+        result = {
+            'feedstock_cost_per_g': float(initial_cost),
+            'energy_cost_per_g': float(energy_cost_per_gram),
+            'total_cost_per_g': float(total_cost_per_gram),
+            'product_value_per_g': float(final_value),
+            'profit_per_g': float(profit_per_gram),
+            'profit_margin': float(profit_margin),
+            'conversion_mg_per_g': float(conversion_efficiency),
+            'economic_fom': float(economic_fom),
+            'viable': bool(economic_fom >= 0.1 and profit_margin > 0.05)
         }
+        
+        return result
     
     def _estimate_energy_per_gram(self, pathway: TransmutationPathway, beam_power_mw: float) -> float:
         """Estimate energy requirement per gram of product."""

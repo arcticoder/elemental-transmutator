@@ -32,9 +32,8 @@ jobs:
       run: |
         cd prototyping
         python quick_pathway_demo.py
-    
-    - name: Upload analysis results
-      uses: actions/upload-artifact@v3
+      - name: Upload analysis results
+      uses: actions/upload-artifact@v4
       with:
         name: enhanced-pathway-analysis
         path: prototyping/enhanced_comprehensive_analysis/
@@ -65,9 +64,8 @@ jobs:
       run: |
         cd prototyping
         python monthly_experiment_planner.py > monthly_plan.txt
-    
-    - name: Upload monthly plan
-      uses: actions/upload-artifact@v3
+      - name: Upload monthly plan
+      uses: actions/upload-artifact@v4
       with:
         name: monthly-experiment-plan
         path: prototyping/monthly_plan.txt
@@ -93,9 +91,8 @@ jobs:
       run: |
         cd prototyping
         python comprehensive_integration.py
-    
-    - name: Upload integration results
-      uses: actions/upload-artifact@v3
+      - name: Upload integration results
+      uses: actions/upload-artifact@v4
       with:
         name: comprehensive-integration-results
         path: prototyping/comprehensive_pilot_assessment_*.json

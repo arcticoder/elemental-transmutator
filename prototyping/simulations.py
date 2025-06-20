@@ -68,29 +68,40 @@ class Geant4Interface:
         # Check if Geant4 directory exists
         if not self.geant4_dir.exists():
             self.logger.warning(f"Geant4 not found at {self.geant4_dir}, using analytical mode")
-            return
-          # Check for key executables (optional for analytical mode)
+            return        # Check for key executables (optional for analytical mode)
         import sys
+        import shutil
+        
+        # Choose the right program name up front
         if sys.platform.startswith("win"):
-            config_name = "geant4-config.cmd"
+            config_prog = "geant4-config.cmd"
         else:
-            config_name = "geant4-config"
-            
-        if not (self.geant4_bin / config_name).exists():
-            self.logger.info(f"{config_name} not found, using analytical mode")
-            return
+            config_prog = "geant4-config"
+        
+        # First check in the Geant4 bin directory
+        config_path = self.geant4_bin / config_prog
+        if not config_path.exists():
+            # Fallback to system PATH
+            if not shutil.which(config_prog):
+                self.logger.info(f"{config_prog} not found, using analytical mode")
+                return
+            config_prog_path = config_prog  # Use from PATH
+        else:
+            config_prog_path = str(config_path)
         
         # Test basic Geant4 environment
         try:
             result = subprocess.run([
-                str(self.geant4_bin / config_name), "--version"
-            ], capture_output=True, text=True, timeout=10)
+                config_prog_path, "--version"
+            ], capture_output=True, text=True, timeout=10, check=True)
             
-            if result.returncode == 0:
-                version = result.stdout.strip()
-                self.logger.info(f"Found Geant4 version: {version}")
-            else:
-                self.logger.warning("Failed to get Geant4 version, using analytical mode")
+            version = result.stdout.strip()
+            self.logger.info(f"Found Geant4 version: {version}")
+            self.version = version
+            
+        except subprocess.CalledProcessError as e:
+            self.logger.info(f"Failed to get Geant4 version via {config_prog}, using analytical mode")
+            self.version = None
                 
         except Exception as e:
             self.logger.warning(f"Geant4 verification failed: {e}, using analytical mode")

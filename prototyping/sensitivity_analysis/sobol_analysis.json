@@ -1,152 +1,84 @@
 {
   "method": "Sobol",
-  "total_samples": 18432,
+  "total_samples": 160,
   "parameters": [
     "beam_energy_mev",
-    "beam_intensity",
-    "pulse_width_ns",
-    "pulse_frequency_hz",
-    "pb208_fraction",
-    "bi209_fraction",
-    "tl203_fraction",
-    "tl205_fraction"
+    "target_mass_g",
+    "target_density_g_cm3",
+    "target_thickness_cm"
   ],
   "first_order_indices": {
-    "beam_energy_mev": 0.43508431368106326,
-    "beam_intensity": 0.16820907778049318,
-    "pulse_width_ns": 0.046220941249671174,
-    "pulse_frequency_hz": 0.0,
-    "pb208_fraction": 0.014353381717624163,
-    "bi209_fraction": 0.0038001416380902004,
-    "tl203_fraction": 0.002178884609273672,
-    "tl205_fraction": 0.011469646816975298
+    "beam_energy_mev": NaN,
+    "target_mass_g": NaN,
+    "target_density_g_cm3": NaN,
+    "target_thickness_cm": NaN
   },
   "total_order_indices": {
-    "beam_energy_mev": 0.9146120132539038,
-    "beam_intensity": 0.35960464106236706,
-    "pulse_width_ns": 0.20915287216448653,
-    "pulse_frequency_hz": 0.0,
-    "pb208_fraction": 0.03249601939215182,
-    "bi209_fraction": 0.00708586892585325,
-    "tl203_fraction": 0.01466402458625572,
-    "tl205_fraction": 0.019465033073603897
+    "beam_energy_mev": NaN,
+    "target_mass_g": NaN,
+    "target_density_g_cm3": NaN,
+    "target_thickness_cm": NaN
   },
   "parameter_rankings": [
     [
       "beam_energy_mev",
-      0.9146120132539038
+      NaN
     ],
     [
-      "beam_intensity",
-      0.35960464106236706
+      "target_mass_g",
+      NaN
     ],
     [
-      "pulse_width_ns",
-      0.20915287216448653
+      "target_density_g_cm3",
+      NaN
     ],
     [
-      "pb208_fraction",
-      0.03249601939215182
-    ],
-    [
-      "tl205_fraction",
-      0.019465033073603897
-    ],
-    [
-      "tl203_fraction",
-      0.01466402458625572
-    ],
-    [
-      "bi209_fraction",
-      0.00708586892585325
-    ],
-    [
-      "pulse_frequency_hz",
-      0.0
+      "target_thickness_cm",
+      NaN
     ]
   ],
   "confidence_intervals": {
     "beam_energy_mev": [
       [
-        0.3400242923332575,
-        0.530144335028869
+        NaN,
+        NaN
       ],
       [
-        0.6207391521760579,
-        1.2084848743317498
+        NaN,
+        NaN
       ]
     ],
-    "beam_intensity": [
+    "target_mass_g": [
       [
-        0.11000665580667125,
-        0.22641149975431513
+        NaN,
+        NaN
       ],
       [
-        0.25887765006624375,
-        0.46033163205849037
+        NaN,
+        NaN
       ]
     ],
-    "pulse_width_ns": [
+    "target_density_g_cm3": [
       [
-        0.00453843620072731,
-        0.08790344629861505
+        NaN,
+        NaN
       ],
       [
-        0.1533182660404004,
-        0.2649874782885726
+        NaN,
+        NaN
       ]
     ],
-    "pulse_frequency_hz": [
+    "target_thickness_cm": [
       [
-        0.0,
-        0.0
+        NaN,
+        NaN
       ],
       [
-        0.0,
-        0.0
-      ]
-    ],
-    "pb208_fraction": [
-      [
-        -0.0006285737593419039,
-        0.02933533719459023
-      ],
-      [
-        0.013517050073201677,
-        0.05147498871110196
-      ]
-    ],
-    "bi209_fraction": [
-      [
-        -0.0032507263862231323,
-        0.010851009662403533
-      ],
-      [
-        0.004982784305305875,
-        0.009188953546400626
-      ]
-    ],
-    "tl203_fraction": [
-      [
-        -0.006841486083987863,
-        0.011199255302535207
-      ],
-      [
-        0.008527049322585432,
-        0.02080099984992601
-      ]
-    ],
-    "tl205_fraction": [
-      [
-        -0.0006946011525142248,
-        0.02363389478646482
-      ],
-      [
-        0.014402681258067374,
-        0.02452738488914042
+        NaN,
+        NaN
       ]
     ]
   },
-  "analysis_time_s": 1.027463674545288,
-  "analysis_timestamp": "2025-06-19 22:54:39"
+  "analysis_time_s": 0.003537893295288086,
+  "analysis_timestamp": "2025-06-20 07:48:02"
 }

@@ -43,11 +43,13 @@ class SensitivityResults:
     method: str
     total_samples: int
     parameters: List[str]
+    parameter_names: List[str]  # Alias for parameters
     first_order_indices: Dict[str, float]
     total_order_indices: Dict[str, float]
     parameter_rankings: List[Tuple[str, float]]
     confidence_intervals: Dict[str, Tuple[float, float]]
     analysis_time_s: float
+    summary_statistics: Dict[str, Any]  # Summary statistics
 
 class GlobalSensitivityAnalyzer:
     """Global sensitivity analysis for photonuclear transmutation optimization."""
@@ -240,8 +242,7 @@ class GlobalSensitivityAnalyzer:
                 (first_order[param] - conf_s1, first_order[param] + conf_s1),
                 (total_order[param] - conf_st, total_order[param] + conf_st)
             )
-        
-        # Rank parameters by total-order sensitivity
+          # Rank parameters by total-order sensitivity
         rankings = sorted(total_order.items(), key=lambda x: x[1], reverse=True)
         
         analysis_time = time.time() - start_time
@@ -250,11 +251,13 @@ class GlobalSensitivityAnalyzer:
             method="Sobol",
             total_samples=total_samples,
             parameters=param_names,
+            parameter_names=param_names,  # Alias
             first_order_indices=first_order,
             total_order_indices=total_order,
             parameter_rankings=rankings,
             confidence_intervals=confidence_intervals,
-            analysis_time_s=analysis_time
+            analysis_time_s=analysis_time,
+            summary_statistics={'mean_yield': np.mean(y_values), 'std_yield': np.std(y_values)}
         )
         
         # Save results
@@ -429,6 +432,34 @@ class GlobalSensitivityAnalyzer:
                 opportunities.append("D2O photodisintegration neutron source effective")
         
         return opportunities
+
+    def sobol_sensitivity_analysis(self, param_ranges: Dict[str, Tuple[float, float]], 
+                                   samples: int, pathway_name: str) -> Dict:
+        """Wrapper for sobol analysis to match comprehensive analyzer interface."""
+        # Convert param_ranges to selected_params format
+        selected_params = list(param_ranges.keys())
+        
+        # Run the actual Sobol analysis
+        results = self.run_sobol_analysis(n_samples=samples, selected_params=selected_params)
+          # Return in format expected by comprehensive analyzer
+        return {
+            'pathway_name': pathway_name,
+            'first_order': results.first_order_indices,
+            'total_order': results.total_order_indices,
+            'second_order': {},  # Not available in our SensitivityResults
+            'parameters': results.parameter_names if hasattr(results, 'parameter_names') else results.parameters,
+            'summary': getattr(results, 'summary_statistics', {})
+        }
+    
+    def variance_based_analysis(self, param_ranges: Dict[str, Tuple[float, float]], 
+                               samples: int, pathway_name: str) -> Dict:
+        """Placeholder variance-based analysis for compatibility."""
+        # For now, return a minimal result
+        return {
+            'pathway_name': pathway_name,
+            'variance_contribution': {},
+            'parameters': list(param_ranges.keys())
+        }
 
 def main():
     """Test global sensitivity analysis."""

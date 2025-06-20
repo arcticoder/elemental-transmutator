@@ -180,10 +180,9 @@ class EnhancedComprehensiveAnalyzer:
             sobol_results = self.sensitivity_analyzer.sobol_sensitivity_analysis(
                 param_ranges, samples, pathway_name
             )
-            
-            # Run variance-based analysis
+              # Run variance-based analysis
             variance_results = self.sensitivity_analyzer.variance_based_analysis(
-                param_ranges, samples
+                param_ranges, samples, pathway_name
             )
             
             sensitivity_results[pathway_name] = {
