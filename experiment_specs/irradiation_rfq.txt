@@ -1,0 +1,39 @@
+
+REQUEST FOR QUOTE - GAMMA IRRADIATION SERVICES
+============================================
+
+Project: Photonuclear Gold Production Research
+Experiment ID: PGPR_20250619_211423
+Date: 2025-06-19
+
+SAMPLE SPECIFICATIONS:
+- Material: Lead-208 metal
+- Mass: 4.08 g
+- Form: pressed_pellet
+- Container: polyethylene_vial
+
+IRRADIATION REQUIREMENTS:
+- Source: Co-60
+- Target Dose: 78.2 kGy
+- Dose Rate: 1.0 kGy/h
+- Temperature: 25°C
+- Atmosphere: air
+
+DOSIMETRY:
+- Dose mapping required: True
+- Dosimeter type: alanine
+- Uncertainty target: 5.0%
+
+DELIVERABLES:
+- Irradiated sample
+- Dosimetry report
+- Chain of custody documentation
+- Activity measurement
+
+Please provide quote including:
+1. Service cost (CAD)
+2. Turnaround time
+3. Quality assurance procedures
+4. Shipping arrangements
+
+Contact: [Your contact information]

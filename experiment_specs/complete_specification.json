@@ -1,0 +1,194 @@
+{
+  "experiment_metadata": {
+    "experiment_id": "PGPR_20250619_211423",
+    "project_name": "Photonuclear Gold Production Research",
+    "principal_investigator": "Digital Researcher",
+    "institution": "Independent Research",
+    "experiment_date": "2025-06-26T21:14:23.072298",
+    "specification_version": "1.0"
+  },
+  "experiment_overview": {
+    "objective": "Measure gold production from Co-60 irradiation of Pb-208",
+    "hypothesis": "Photonuclear transmutation will produce detectable Au-197",
+    "success_criteria": {
+      "minimum_detection": "0.0016 mg Au",
+      "measurement_uncertainty": "< 20%",
+      "contamination_control": "< 0.001 mg Au background"
+    }
+  },
+  "experimental_parameters": {
+    "feedstock_g": 4.084443440871048,
+    "beam_energy_mev": 13.467478318929311,
+    "total_dose_kgy": 78.18940902700417,
+    "pulse_profile": "continuous",
+    "predicted_au_mg": 0.0015862543713586754,
+    "predicted_cost_cad": 52.82619662695514,
+    "yield_per_cad": 3.0027798188092003e-05,
+    "confidence_interval_mg": [
+      0.0011273283774433428,
+      0.002070765631273604
+    ],
+    "detection_probability": true,
+    "optimization_timestamp": "2025-06-19T21:14:16.126103"
+  },
+  "service_specifications": {
+    "irradiation": {
+      "service_type": "gamma_irradiation",
+      "irradiation_parameters": {
+        "source_type": "Co-60",
+        "target_dose_kgy": 78.18940902700417,
+        "dose_rate_kgy_h": 1.0,
+        "estimated_time_hours": 78.18940902700417,
+        "temperature_c": 25,
+        "atmosphere": "air"
+      },
+      "sample_specifications": {
+        "material": "Lead-208 metal",
+        "mass_g": 4.084443440871048,
+        "purity_minimum": 0.99,
+        "form": "pressed_pellet",
+        "dimensions": {
+          "shape": "cylinder",
+          "radius_cm": 0.38557906289171373,
+          "height_cm": 0.7711581257834275,
+          "volume_cm3": 0.3601801976076762
+        },
+        "container": "polyethylene_vial",
+        "labeling": "Pb-208 sample, research use"
+      },
+      "dosimetry_requirements": {
+        "dose_mapping": true,
+        "dosimeter_type": "alanine",
+        "calibration_standard": "NPL_UK",
+        "uncertainty_target_percent": 5.0
+      },
+      "post_irradiation": {
+        "cooling_time_hours": 24,
+        "activity_measurement_required": true,
+        "expected_isotopes": [
+          "Pb-207",
+          "Tl-207",
+          "Au-197"
+        ],
+        "shipping_classification": "radioactive_material_excepted"
+      },
+      "quality_assurance": {
+        "chain_of_custody": true,
+        "photo_documentation": true,
+        "temperature_logging": true
+      }
+    },
+    "analysis": {
+      "service_type": "precious_metals_analysis",
+      "analytical_method": "ICP-MS",
+      "target_elements": {
+        "primary": [
+          "Au"
+        ],
+        "secondary": [
+          "Pt",
+          "Pd",
+          "Ag"
+        ],
+        "matrix": [
+          "Pb",
+          "Tl"
+        ]
+      },
+      "sample_preparation": {
+        "dissolution_method": "aqua_regia",
+        "dilution_factor": 100,
+        "internal_standards": [
+          "Ir-193",
+          "Re-185"
+        ],
+        "pre_concentration": "fire_assay_optional"
+      },
+      "analytical_requirements": {
+        "detection_limit_mg_kg": 0.038836487622421104,
+        "precision_rsd_percent": 10.0,
+        "accuracy_bias_percent": 15.0,
+        "calibration_range_mg_kg": [
+          0.01,
+          1000
+        ],
+        "reference_materials": [
+          "NIST_SRM_87a",
+          "CANMET_TDB-1"
+        ]
+      },
+      "quality_control": {
+        "method_blanks": 2,
+        "duplicate_analysis": true,
+        "spike_recovery": true,
+        "reference_material_frequency": "every_10_samples"
+      },
+      "reporting_requirements": {
+        "units": "mg/kg_and_total_mg",
+        "significant_figures": 4,
+        "uncertainty_reporting": true,
+        "detection_limit_statement": true,
+        "raw_data_included": true
+      },
+      "sample_handling": {
+        "radioactive_sample": true,
+        "license_required": "Type_II_nuclear_substance_license",
+        "waste_disposal": "included",
+        "return_sample": false
+      }
+    },
+    "shipping": {
+      "shipping_classification": {
+        "un_number": "UN2910",
+        "proper_shipping_name": "Radioactive material, excepted package",
+        "hazard_class": "7",
+        "packaging_group": "N/A",
+        "excepted_quantity": true
+      },
+      "packaging_requirements": {
+        "primary_container": "polyethylene_vial_5ml",
+        "secondary_container": "lead_lined_box",
+        "outer_packaging": "UN_spec_7A_drum",
+        "cushioning": "vermiculite",
+        "radiation_shielding": "2mm_lead_equivalent"
+      },
+      "documentation": {
+        "radiation_survey": true,
+        "contamination_survey": true,
+        "activity_declaration": true,
+        "material_safety_data_sheet": true,
+        "chain_of_custody": true
+      },
+      "logistics": {
+        "carrier": "FedEx_dangerous_goods",
+        "service_level": "next_day",
+        "insurance_value_cad": 500,
+        "tracking_required": true,
+        "signature_required": true
+      },
+      "regulatory_compliance": {
+        "transport_canada_approval": true,
+        "receiving_license_verified": true,
+        "import_permit_if_required": true
+      }
+    }
+  },
+  "timeline": {
+    "sample_preparation": "2025-06-26",
+    "irradiation_start": "2025-06-26",
+    "irradiation_complete": "2025-07-01",
+    "analysis_complete": "2025-07-08",
+    "total_duration_days": 12
+  },
+  "budget": {
+    "estimated_total_cad": 60.0,
+    "payment_terms": "Net 30",
+    "currency": "CAD"
+  },
+  "risk_assessment": {
+    "radiation_exposure": "Minimal, ALARA principles",
+    "sample_loss": "Low, chain of custody",
+    "contamination": "Medium, requires controls",
+    "detection_failure": "Medium, detection limits adequate"
+  }
+}

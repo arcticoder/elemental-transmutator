@@ -1,0 +1,42 @@
+
+REQUEST FOR QUOTE - PRECIOUS METALS ANALYSIS
+==========================================
+
+Project: Photonuclear Gold Production Research
+Experiment ID: PGPR_20250619_211423
+Date: 2025-06-19
+
+SAMPLE TYPE:
+- Material: Post-irradiation Lead-208
+- Expected mass: 4.1 g
+- Radioactive: YES (low-level, exempted)
+- Matrix: Lead metal
+
+ANALYTICAL REQUIREMENTS:
+- Method: ICP-MS
+- Target elements: Au
+- Detection limit: 0.039 mg/kg
+- Precision: 10.0% RSD
+- Accuracy: 15.0% bias
+
+SAMPLE PREPARATION:
+- Dissolution: aqua_regia
+- Internal standards: Ir-193, Re-185
+
+QUALITY CONTROL:
+- Method blanks: 2
+- Duplicate analysis: True
+- Spike recovery: True
+
+SPECIAL REQUIREMENTS:
+- Radioactive sample handling license required
+- Waste disposal included
+- Raw data and uncertainty reporting required
+
+Please provide quote including:
+1. Analysis cost (CAD)
+2. Turnaround time
+3. Detection limits achieved
+4. Quality assurance procedures
+
+Contact: [Your contact information]

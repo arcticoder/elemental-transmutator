@@ -1,0 +1,15 @@
+{
+  "feedstock_g": 4.084443440871048,
+  "beam_energy_mev": 13.467478318929311,
+  "total_dose_kgy": 78.18940902700417,
+  "pulse_profile": "continuous",
+  "predicted_au_mg": 0.0015862543713586754,
+  "predicted_cost_cad": 52.82619662695514,
+  "yield_per_cad": 3.0027798188092003e-05,
+  "confidence_interval_mg": [
+    0.0011273283774433428,
+    0.002070765631273604
+  ],
+  "detection_probability": true,
+  "optimization_timestamp": "2025-06-19T21:14:16.126103"
+}

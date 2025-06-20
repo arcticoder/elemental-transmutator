@@ -1,0 +1,67 @@
+
+PHOTONUCLEAR GOLD PRODUCTION - 3-MONTH ROADMAP
+==============================================
+
+Generated: 2025-06-19 21:14
+Strategy: Outsourced micro-experiments
+Total Budget: $300.00 CAD
+
+MONTH 1: DIGITAL OPTIMIZATION
+-----------------------------
+Phase: Digital Optimization
+Budget: $0.00
+Goal: Complete Monte Carlo simulation and lock in optimal recipe
+
+Key Activities:
+  Week 1: Complete Monte Carlo digital twin
+  Week 2: Implement Bayesian optimizer
+  Week 3: Recipe optimization campaign
+  Week 4: Lock in one-shot recipe
+
+Success Criteria: Recipe with ≥ 0.01 mg Au predicted yield
+
+MONTH 2: FIRST MICRO-EXPERIMENT
+-------------------------------
+Phase: First Micro-Experiment
+Budget: $52.83
+Goal: Execute first outsourced irradiation + analysis cycle
+
+Key Activities:
+  Week 1: Sample preparation and vendor coordination
+  Week 2: Gamma irradiation at vendor facility
+  Week 3: ICP-MS analysis
+  Week 4: Data analysis and model calibration
+
+Success Criteria: Detectable gold measurement with <25% uncertainty
+
+MONTH 3: CALIBRATION & VALIDATION
+---------------------------------
+Phase: Calibration & Validation
+Budget: $85.00
+Goal: Calibrate model and validate process reproducibility
+
+Key Activities:
+  Week 1: Model calibration with real data
+  Week 2: Optimized recipe generation
+  Week 3: Second micro-experiment (if budget allows)
+  Week 4: Business case development
+
+BUDGET BREAKDOWN:
+- Month 1 (Digital): $0.00
+- Month 2 (First Exp): $52.83
+- Month 3 (Validation): $85.00
+- Safety Reserve: $162.17
+
+EXPECTED OUTCOMES:
+By Month 3 end, you will have:
+✓ Real experimental data on gold yield
+✓ Calibrated Monte Carlo model
+✓ Economic viability assessment
+✓ Decision point for scale-up or pivot
+
+NEXT STEPS:
+- If yield ≥ 0.02 mg Au: Plan scale-up to 10g batches
+- If yield 0.005-0.02 mg Au: Optimize process parameters
+- If yield < 0.005 mg Au: Consider alternative approaches
+
+==============================================

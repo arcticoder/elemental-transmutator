@@ -1,0 +1,231 @@
+{
+  "plan_metadata": {
+    "generated_date": "2025-06-19T21:14:23.317332",
+    "planning_horizon": "3_months",
+    "budget_constraint": "300.00 CAD",
+    "strategy": "Outsourced micro-experiments"
+  },
+  "objective": {
+    "primary": "Validate photonuclear gold production",
+    "secondary": "Develop scalable process",
+    "success_metric": "Real yield data within 3 months"
+  },
+  "monthly_plans": {
+    "month_1": {
+      "month": 1,
+      "phase": "Digital Optimization",
+      "budget_allocated": 0.0,
+      "activities": [
+        {
+          "week": 1,
+          "activity": "Complete Monte Carlo digital twin",
+          "deliverables": [
+            "Geant4/MCNP validation",
+            "Cross-section database calibration",
+            "Uncertainty quantification"
+          ],
+          "cost": 0.0
+        },
+        {
+          "week": 2,
+          "activity": "Implement Bayesian optimizer",
+          "deliverables": [
+            "Multi-parameter optimization",
+            "Yield/cost ratio maximization",
+            "Constraint handling for practical limits"
+          ],
+          "cost": 0.0
+        },
+        {
+          "week": 3,
+          "activity": "Recipe optimization campaign",
+          "deliverables": [
+            "1000+ simulation runs",
+            "Pareto frontier analysis",
+            "Sensitivity analysis"
+          ],
+          "cost": 0.0
+        },
+        {
+          "week": 4,
+          "activity": "Lock in one-shot recipe",
+          "deliverables": [
+            "Optimal recipe specification",
+            "Vendor RFQ generation",
+            "Risk assessment"
+          ],
+          "cost": 0.0
+        }
+      ],
+      "success_criteria": {
+        "recipe_yield": ">= 0.01 mg Au predicted",
+        "cost_efficiency": ">= 0.0001 mg Au per CAD",
+        "detection_probability": "> 80%"
+      },
+      "risks": [
+        "Cross-section uncertainties too large",
+        "No economically viable recipe found",
+        "Vendor availability issues"
+      ]
+    },
+    "month_2": {
+      "month": 2,
+      "phase": "First Micro-Experiment",
+      "budget_allocated": 52.82619662695514,
+      "activities": [
+        {
+          "week": 1,
+          "activity": "Sample preparation and vendor coordination",
+          "deliverables": [
+            "4.1g Pb-208 pellet preparation",
+            "Irradiation vendor contract",
+            "Analysis vendor contract",
+            "Shipping arrangements"
+          ],
+          "cost": 10.0
+        },
+        {
+          "week": 2,
+          "activity": "Gamma irradiation at vendor facility",
+          "deliverables": [
+            "78.2 kGy Co-60 irradiation",
+            "Dosimetry certification",
+            "Activity measurement",
+            "Chain of custody documentation"
+          ],
+          "cost": 21.130478650782056
+        },
+        {
+          "week": 3,
+          "activity": "ICP-MS analysis",
+          "deliverables": [
+            "Gold content assay",
+            "Matrix element analysis",
+            "Quality control verification",
+            "Uncertainty assessment"
+          ],
+          "cost": 26.41309831347757
+        },
+        {
+          "week": 4,
+          "activity": "Data analysis and model calibration",
+          "deliverables": [
+            "Yield measurement vs. prediction",
+            "Cross-section correction factors",
+            "Updated Monte Carlo model",
+            "Experiment report"
+          ],
+          "cost": 0.0
+        }
+      ],
+      "success_criteria": {
+        "sample_integrity": "No contamination or loss",
+        "dose_accuracy": "Within 10% of target",
+        "detection_limit": "< 0.0002 mg Au",
+        "measurement_uncertainty": "< 25%"
+      },
+      "risks": [
+        "Sample contamination during handling",
+        "Vendor quality issues",
+        "Below-detection-limit results",
+        "Cost overruns"
+      ]
+    },
+    "month_3": {
+      "month": 3,
+      "phase": "Calibration & Validation",
+      "budget_allocated": 85.0,
+      "activities": [
+        {
+          "week": 1,
+          "activity": "Model calibration with real data",
+          "deliverables": [
+            "Updated cross-section parameters",
+            "Systematic uncertainty quantification",
+            "Bias correction implementation",
+            "Prediction interval validation"
+          ],
+          "cost": 0.0
+        },
+        {
+          "week": 2,
+          "activity": "Optimized recipe generation",
+          "deliverables": [
+            "Second-generation recipe",
+            "Improved yield prediction",
+            "Cost optimization",
+            "Vendor negotiations"
+          ],
+          "cost": 0.0
+        },
+        {
+          "week": 3,
+          "activity": "Second micro-experiment (if budget allows)",
+          "deliverables": [
+            "Confirmation experiment",
+            "Reproducibility assessment",
+            "Process validation",
+            "Scale-up feasibility"
+          ],
+          "cost": 47.54357696425963
+        },
+        {
+          "week": 4,
+          "activity": "Business case development",
+          "deliverables": [
+            "Economic viability assessment",
+            "Scale-up requirements",
+            "Technology roadmap",
+            "Investment proposal"
+          ],
+          "cost": 0.0
+        }
+      ],
+      "success_criteria": {
+        "model_accuracy": "Prediction within 50% of measurement",
+        "process_reproducibility": "CV < 30% between runs",
+        "economic_viability": "Positive ROI at 10g scale",
+        "technology_readiness": "TRL 3-4 achieved"
+      },
+      "decision_points": {
+        "continue_development": "If yield > 0.005 mg Au per run",
+        "scale_up_planning": "If yield > 0.02 mg Au per run",
+        "pivot_to_alternatives": "If yield < 0.001 mg Au per run"
+      }
+    }
+  },
+  "budget_summary": {
+    "total_budget_cad": 300.0,
+    "allocated_budget_cad": 137.82619662695515,
+    "safety_reserve_cad": 162.17380337304485,
+    "cost_breakdown": {
+      "digital_optimization": 0.0,
+      "first_experiment": 52.82619662695514,
+      "second_experiment": 85.0,
+      "overhead": 0.0
+    }
+  },
+  "risk_mitigation": {
+    "budget_overrun": "85% budget allocation with 15% reserve",
+    "vendor_failure": "Multiple vendor options pre-qualified",
+    "detection_limit": "Conservative yield predictions",
+    "contamination": "Strict chain of custody protocols"
+  },
+  "key_milestones": [
+    {
+      "month": 1,
+      "milestone": "Optimal recipe locked in",
+      "success_criteria": "Predicted yield > 0.01 mg Au"
+    },
+    {
+      "month": 2,
+      "milestone": "First real yield measurement",
+      "success_criteria": "Detectable gold production"
+    },
+    {
+      "month": 3,
+      "milestone": "Process validation",
+      "success_criteria": "Reproducible results"
+    }
+  ]
+}
