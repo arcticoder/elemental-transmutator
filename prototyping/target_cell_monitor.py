@@ -88,12 +88,20 @@ class TargetCellMonitor:
         self.position_controller = None
         self.radiation_monitor = None
         self.spectrometer = None
-        
-        # Control parameters
+          # Control parameters
         self.target_temp_c = config.get("target_temperature_c", 200)
         self.coolant_flow_lpm = config.get("coolant_flow_lpm", 5.0)
         self.max_pressure_bar = config.get("max_pressure_bar", 10.0)
         self.max_dose_rate = config.get("max_dose_rate_gy_h", 100.0)
+        
+        # Mock mode for fast CI testing
+        self.mock_mode = config.get("mock_mode", False)
+        if self.mock_mode:
+            self.logger.info("Target cell monitor running in MOCK MODE")
+        
+        # Timing parameters (adjusted for mock mode)
+        self.equilibrium_timeout = 2 if self.mock_mode else 300  # 2s vs 5min
+        self.equilibrium_interval = 0.5 if self.mock_mode else 10  # 0.5s vs 10s intervals
         
         # Material tracking
         self.initial_pb208_g = 0.0
@@ -210,11 +218,16 @@ class TargetCellMonitor:
             
             # Set temperature controller
             # self.temperature_controller.set_target(self.target_temp_c)
-            
-            # Wait for thermal equilibrium
+              # Wait for thermal equilibrium
             self.logger.info("Waiting for thermal equilibrium...")
             equilibrium_time = 0
-            while equilibrium_time < 300:  # 5 minutes maximum
+            max_wait = self.equilibrium_timeout
+            check_interval = self.equilibrium_interval
+            
+            if self.mock_mode:
+                self.logger.info(f"MOCK MODE: Fast thermal equilibrium ({max_wait}s timeout)")
+            
+            while equilibrium_time < max_wait:
                 metrics = self._collect_metrics()
                 temp_delta = abs(metrics.target_temp_c - self.target_temp_c)
                 
@@ -222,8 +235,13 @@ class TargetCellMonitor:
                     self.logger.info(f"Thermal equilibrium reached: {metrics.target_temp_c:.1f}°C")
                     return True
                 
-                time.sleep(10)
-                equilibrium_time += 10
+                if self.mock_mode:
+                    # Show progress in mock mode
+                    progress = (equilibrium_time / max_wait) * 100
+                    self.logger.info(f"MOCK: Thermal progress {progress:.0f}% ({equilibrium_time:.1f}s/{max_wait}s)")
+                
+                time.sleep(check_interval)
+                equilibrium_time += check_interval
             
             self.logger.warning("Thermal equilibrium not reached within timeout")
             return True  # Continue anyway for prototype
@@ -605,6 +623,16 @@ class TargetCellMonitor:
             irradiation_time_h=0
         )
 
+    def cleanup(self) -> None:
+        """Cleanup method for integration tests."""
+        # Stop any active monitoring
+        self.monitoring_active = False
+        if hasattr(self, 'monitor_thread') and self.monitor_thread:
+            self.monitor_thread.join()
+        # Close database connection
+        if hasattr(self, 'conn') and self.conn:
+            self.conn.close()
+
 # Example usage and testing
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
@@ -655,3 +683,13 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("\nEmergency shutdown!")
         target.emergency_shutdown()
+    
+    def cleanup(self) -> None:
+        """Cleanup method for integration tests."""
+        # Stop any active monitoring
+        self.monitoring_active = False
+        if hasattr(self, 'monitor_thread') and self.monitor_thread:
+            self.monitor_thread.join()
+        # Close database connection
+        if hasattr(self, 'conn') and self.conn:
+            self.conn.close()

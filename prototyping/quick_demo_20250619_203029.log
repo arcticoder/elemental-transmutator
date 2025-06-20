@@ -1,0 +1,26 @@
+2025-06-19 20:30:29,602 - INFO - *** MOCK MODE ENABLED - Fast simulation for CI ***
+2025-06-19 20:30:29,602 - INFO - === PHOTONUCLEAR GOLD PRODUCTION QUICK DEMO ===
+2025-06-19 20:30:29,602 - INFO - [STEP 1/8] Initializing Systems
+2025-06-19 20:30:29,603 - INFO - Initializing hardware systems...
+2025-06-19 20:30:29,603 - INFO - GammaBeamController initialized for 16.5 MeV beam
+2025-06-19 20:30:29,604 - INFO - Database initialized: quick_demo_target.db
+2025-06-19 20:30:29,604 - INFO - TargetCellMonitor initialized
+2025-06-19 20:30:29,606 - INFO - Database initialized: quick_demo_data.db
+2025-06-19 20:30:29,615 - INFO - DataLogger initialized
+2025-06-19 20:30:29,615 - INFO - Registered subsystem: gamma_beam
+2025-06-19 20:30:29,616 - INFO - Registered subsystem: target_cell
+2025-06-19 20:30:29,616 - INFO - Hardware initialization complete
+2025-06-19 20:30:29,616 - INFO - [STEP 2/8] Setting Up Data Logging
+2025-06-19 20:30:29,631 - INFO - Data collection started for 2 subsystems
+2025-06-19 20:30:29,632 - INFO - Experiment session started: EXP_20250619_203029
+2025-06-19 20:30:29,632 - INFO - Data logging started: EXP_20250619_203029
+2025-06-19 20:30:29,632 - INFO - [STEP 3/8] Running Safety Checks
+2025-06-19 20:30:29,633 - INFO - Running safety checks...
+2025-06-19 20:30:29,633 - INFO - Safety checks passed
+2025-06-19 20:30:29,634 - INFO - [STEP 4/8] Preparing Target
+2025-06-19 20:30:29,634 - INFO - Loading 1.0 g Pb-208 target...
+2025-06-19 20:30:29,634 - INFO - Loading 1.000 g of Pb-208 target...
+2025-06-19 20:30:34,635 - INFO - Target loaded successfully
+2025-06-19 20:30:34,636 - INFO - Quick thermal conditioning...
+2025-06-19 20:30:34,636 - INFO - Starting coolant circulation...
+2025-06-19 20:30:34,636 - INFO - Waiting for thermal equilibrium...

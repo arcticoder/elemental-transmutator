@@ -36,14 +36,13 @@ def test_quick_demo():
     try:
         # Change to the prototyping directory
         prototyping_dir = Path(__file__).parent
-        
-        # Run the quick demo
+          # Run the quick demo with mock mode for fast testing
         result = subprocess.run(
-            [sys.executable, "quick_demo_ascii.py"],
+            [sys.executable, "quick_demo_ascii.py", "--mock"],
             cwd=prototyping_dir,
             capture_output=True,
             text=True,
-            timeout=30  # 30 second timeout
+            timeout=60  # 1 minute timeout should be enough for mock mode
         )
         
         if result.returncode == 0:

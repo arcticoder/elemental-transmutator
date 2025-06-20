@@ -1,0 +1,224 @@
+2025-06-19 20:46:07,833 - INFO - *** MOCK MODE ENABLED - Fast simulation for CI ***
+2025-06-19 20:46:07,833 - INFO - === PHOTONUCLEAR GOLD PRODUCTION QUICK DEMO ===
+2025-06-19 20:46:07,834 - INFO - [STEP 1/8] Initializing Systems
+2025-06-19 20:46:07,834 - INFO - Initializing hardware systems...
+2025-06-19 20:46:07,834 - INFO - GammaBeamController initialized in MOCK MODE (accelerated timing)
+2025-06-19 20:46:07,835 - INFO - GammaBeamController initialized for 16.5 MeV beam
+2025-06-19 20:46:07,835 - INFO - Target cell monitor running in MOCK MODE
+2025-06-19 20:46:07,836 - INFO - Database initialized: quick_demo_target.db
+2025-06-19 20:46:07,845 - INFO - TargetCellMonitor initialized
+2025-06-19 20:46:07,847 - INFO - Database initialized: quick_demo_data.db
+2025-06-19 20:46:07,848 - INFO - DataLogger initialized
+2025-06-19 20:46:07,848 - INFO - Registered subsystem: gamma_beam
+2025-06-19 20:46:07,848 - INFO - Registered subsystem: target_cell
+2025-06-19 20:46:07,849 - INFO - Hardware initialization complete
+2025-06-19 20:46:07,849 - INFO - [STEP 2/8] Setting Up Data Logging
+2025-06-19 20:46:07,867 - INFO - Data collection started for 2 subsystems
+2025-06-19 20:46:07,868 - INFO - Experiment session started: EXP_20250619_204607
+2025-06-19 20:46:07,868 - INFO - Data logging started: EXP_20250619_204607
+2025-06-19 20:46:07,868 - INFO - [STEP 3/8] Running Safety Checks
+2025-06-19 20:46:07,869 - INFO - Running safety checks...
+2025-06-19 20:46:07,869 - INFO - Safety checks passed
+2025-06-19 20:46:07,870 - INFO - [STEP 4/8] Preparing Target
+2025-06-19 20:46:07,870 - INFO - Loading 1.0 g Pb-208 target...
+2025-06-19 20:46:07,870 - INFO - Loading 1.000 g of Pb-208 target...
+2025-06-19 20:46:12,871 - INFO - Target loaded successfully
+2025-06-19 20:46:12,872 - INFO - Quick thermal conditioning...
+2025-06-19 20:46:12,872 - INFO - Starting coolant circulation...
+2025-06-19 20:46:12,873 - INFO - Waiting for thermal equilibrium...
+2025-06-19 20:46:12,873 - INFO - MOCK MODE: Fast thermal equilibrium (2s timeout)
+2025-06-19 20:46:12,874 - INFO - MOCK: Thermal progress 0% (0.0s/2s)
+2025-06-19 20:46:13,376 - INFO - MOCK: Thermal progress 25% (0.5s/2s)
+2025-06-19 20:46:13,882 - INFO - MOCK: Thermal progress 50% (1.0s/2s)
+2025-06-19 20:46:14,383 - INFO - MOCK: Thermal progress 75% (1.5s/2s)
+2025-06-19 20:46:14,908 - WARNING - Thermal equilibrium not reached within timeout
+2025-06-19 20:46:15,916 - INFO - Target preparation complete
+2025-06-19 20:46:15,916 - INFO - [STEP 5/8] Starting Gamma Beam
+2025-06-19 20:46:15,917 - INFO - Starting gamma beam system...
+2025-06-19 20:46:15,917 - INFO - Powering on gamma beam system...
+2025-06-19 20:46:15,918 - INFO - System warming up... ETA: 0.0 minutes
+2025-06-19 20:46:16,919 - INFO - Gamma beam warmup progress: 100.1% (mock mode)
+2025-06-19 20:46:16,920 - INFO - System ready for beam operation
+2025-06-19 20:46:16,921 - INFO - Ramping laser to full power...
+2025-06-19 20:46:17,122 - INFO - Activating electron beam...
+2025-06-19 20:46:17,324 - INFO - Monitoring beam formation...
+2025-06-19 20:46:17,825 - INFO - Gamma beam ON: 16.5 MeV, 5.00e+13 gamma/cm2/s
+2025-06-19 20:46:17,828 - INFO - Gamma beam active: 16.37 MeV, 98.6% stable
+2025-06-19 20:46:17,829 - INFO - [STEP 6/8] Running Irradiation
+2025-06-19 20:46:17,829 - INFO - Starting accelerated irradiation...
+2025-06-19 20:46:17,830 - INFO - Starting irradiation monitoring...
+2025-06-19 20:46:17,832 - INFO - Irradiation monitoring active
+2025-06-19 20:46:17,833 - INFO - Irradiation will run for 29.9 seconds (MOCK MODE)
+2025-06-19 20:46:18,835 - INFO - MOCK: Step 1/29 (3%) - 1.0s elapsed, 28.9s remaining
+2025-06-19 20:46:18,836 - INFO - Status: 0.0min elapsed, 0.5min remaining
+2025-06-19 20:46:18,836 - INFO -   Conversion: 0.0000% | Temp: 149.9C
+2025-06-19 20:46:18,837 - INFO -   Beam stability: 97.8% | Au-197: 21716383 Bq
+2025-06-19 20:46:18,837 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 20:46:19,840 - INFO - MOCK: Step 2/29 (7%) - 2.0s elapsed, 27.9s remaining
+2025-06-19 20:46:19,845 - INFO - Status: 0.0min elapsed, 0.5min remaining
+2025-06-19 20:46:19,847 - INFO -   Conversion: 0.0000% | Temp: 149.0C
+2025-06-19 20:46:19,847 - INFO -   Beam stability: 97.6% | Au-197: 21716383 Bq
+2025-06-19 20:46:19,848 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 20:46:20,863 - INFO - MOCK: Step 3/29 (10%) - 3.0s elapsed, 26.8s remaining
+2025-06-19 20:46:20,864 - INFO - Status: 0.1min elapsed, 0.4min remaining
+2025-06-19 20:46:20,864 - INFO -   Conversion: 0.0000% | Temp: 150.2C
+2025-06-19 20:46:20,864 - INFO -   Beam stability: 98.8% | Au-197: 43432765 Bq
+2025-06-19 20:46:20,865 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 20:46:21,867 - INFO - MOCK: Step 4/29 (14%) - 4.0s elapsed, 25.8s remaining
+2025-06-19 20:46:21,868 - INFO - Status: 0.1min elapsed, 0.4min remaining
+2025-06-19 20:46:21,869 - INFO -   Conversion: 0.0000% | Temp: 151.1C
+2025-06-19 20:46:21,870 - INFO -   Beam stability: 98.0% | Au-197: 65149148 Bq
+2025-06-19 20:46:21,872 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 20:46:22,877 - INFO - MOCK: Step 5/29 (17%) - 5.0s elapsed, 24.8s remaining
+2025-06-19 20:46:22,878 - INFO - Status: 0.1min elapsed, 0.4min remaining
+2025-06-19 20:46:22,879 - INFO -   Conversion: 0.0000% | Temp: 151.5C
+2025-06-19 20:46:22,879 - INFO -   Beam stability: 99.4% | Au-197: 86865530 Bq
+2025-06-19 20:46:22,880 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 20:46:23,881 - INFO - MOCK: Step 6/29 (21%) - 6.0s elapsed, 23.8s remaining
+2025-06-19 20:46:23,882 - INFO - Status: 0.1min elapsed, 0.4min remaining
+2025-06-19 20:46:23,882 - INFO -   Conversion: 0.0000% | Temp: 151.3C
+2025-06-19 20:46:23,883 - INFO -   Beam stability: 96.5% | Au-197: 108581913 Bq
+2025-06-19 20:46:23,883 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 20:46:24,885 - INFO - MOCK: Step 7/29 (24%) - 7.1s elapsed, 22.8s remaining
+2025-06-19 20:46:24,887 - INFO - Status: 0.1min elapsed, 0.4min remaining
+2025-06-19 20:46:24,888 - INFO -   Conversion: 0.0000% | Temp: 147.8C
+2025-06-19 20:46:24,888 - INFO -   Beam stability: 97.1% | Au-197: 152014678 Bq
+2025-06-19 20:46:24,890 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 20:46:25,911 - INFO - MOCK: Step 8/29 (28%) - 8.1s elapsed, 21.8s remaining
+2025-06-19 20:46:25,931 - INFO - Status: 0.1min elapsed, 0.4min remaining
+2025-06-19 20:46:25,932 - INFO -   Conversion: 0.0000% | Temp: 149.0C
+2025-06-19 20:46:25,934 - INFO -   Beam stability: 99.2% | Au-197: 173731061 Bq
+2025-06-19 20:46:25,935 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 20:46:26,950 - INFO - MOCK: Step 9/29 (31%) - 9.1s elapsed, 20.8s remaining
+2025-06-19 20:46:26,951 - INFO - Status: 0.2min elapsed, 0.3min remaining
+2025-06-19 20:46:26,952 - INFO -   Conversion: 0.0000% | Temp: 151.2C
+2025-06-19 20:46:26,952 - INFO -   Beam stability: 95.3% | Au-197: 195447443 Bq
+2025-06-19 20:46:26,952 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 20:46:27,954 - INFO - MOCK: Step 10/29 (34%) - 10.1s elapsed, 19.8s remaining
+2025-06-19 20:46:27,957 - INFO - Status: 0.2min elapsed, 0.3min remaining
+2025-06-19 20:46:27,958 - INFO -   Conversion: 0.0000% | Temp: 150.5C
+2025-06-19 20:46:27,959 - INFO -   Beam stability: 96.7% | Au-197: 217163826 Bq
+2025-06-19 20:46:27,960 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 20:46:28,961 - INFO - MOCK: Step 11/29 (38%) - 11.1s elapsed, 18.8s remaining
+2025-06-19 20:46:28,962 - INFO - Status: 0.2min elapsed, 0.3min remaining
+2025-06-19 20:46:28,962 - INFO -   Conversion: 0.0000% | Temp: 152.8C
+2025-06-19 20:46:28,963 - INFO -   Beam stability: 98.0% | Au-197: 238880208 Bq
+2025-06-19 20:46:28,963 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 20:46:29,964 - INFO - MOCK: Step 12/29 (41%) - 12.1s elapsed, 17.7s remaining
+2025-06-19 20:46:29,965 - INFO - Status: 0.2min elapsed, 0.3min remaining
+2025-06-19 20:46:29,966 - INFO -   Conversion: 0.0000% | Temp: 147.1C
+2025-06-19 20:46:29,966 - INFO -   Beam stability: 97.7% | Au-197: 260596591 Bq
+2025-06-19 20:46:29,967 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 20:46:30,968 - INFO - MOCK: Step 13/29 (45%) - 13.1s elapsed, 16.7s remaining
+2025-06-19 20:46:30,969 - INFO - Status: 0.2min elapsed, 0.3min remaining
+2025-06-19 20:46:30,971 - INFO -   Conversion: 0.0000% | Temp: 151.9C
+2025-06-19 20:46:30,972 - INFO -   Beam stability: 98.0% | Au-197: 282312974 Bq
+2025-06-19 20:46:30,972 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 20:46:31,990 - INFO - MOCK: Step 14/29 (48%) - 14.2s elapsed, 15.7s remaining
+2025-06-19 20:46:31,991 - INFO - Status: 0.2min elapsed, 0.3min remaining
+2025-06-19 20:46:31,992 - INFO -   Conversion: 0.0000% | Temp: 148.2C
+2025-06-19 20:46:31,993 - INFO -   Beam stability: 97.8% | Au-197: 304029356 Bq
+2025-06-19 20:46:31,993 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 20:46:32,995 - INFO - MOCK: Step 15/29 (52%) - 15.2s elapsed, 14.7s remaining
+2025-06-19 20:46:32,997 - INFO - Status: 0.3min elapsed, 0.2min remaining
+2025-06-19 20:46:32,997 - INFO -   Conversion: 0.0000% | Temp: 153.0C
+2025-06-19 20:46:32,998 - INFO -   Beam stability: 97.2% | Au-197: 325745739 Bq
+2025-06-19 20:46:32,999 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 20:46:34,000 - INFO - MOCK: Step 16/29 (55%) - 16.2s elapsed, 13.7s remaining
+2025-06-19 20:46:34,002 - INFO - Status: 0.3min elapsed, 0.2min remaining
+2025-06-19 20:46:34,004 - INFO -   Conversion: 0.0000% | Temp: 149.2C
+2025-06-19 20:46:34,004 - INFO -   Beam stability: 97.5% | Au-197: 347462121 Bq
+2025-06-19 20:46:34,005 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 20:46:35,006 - INFO - MOCK: Step 17/29 (59%) - 17.2s elapsed, 12.7s remaining
+2025-06-19 20:46:35,007 - INFO - Status: 0.3min elapsed, 0.2min remaining
+2025-06-19 20:46:35,008 - INFO -   Conversion: 0.0000% | Temp: 152.2C
+2025-06-19 20:46:35,009 - INFO -   Beam stability: 97.7% | Au-197: 369178504 Bq
+2025-06-19 20:46:35,010 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 20:46:36,012 - INFO - MOCK: Step 18/29 (62%) - 18.2s elapsed, 11.7s remaining
+2025-06-19 20:46:36,013 - INFO - Status: 0.3min elapsed, 0.2min remaining
+2025-06-19 20:46:36,015 - INFO -   Conversion: 0.0000% | Temp: 151.0C
+2025-06-19 20:46:36,015 - INFO -   Beam stability: 97.1% | Au-197: 390894886 Bq
+2025-06-19 20:46:36,016 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 20:46:37,024 - INFO - MOCK: Step 19/29 (66%) - 19.2s elapsed, 10.7s remaining
+2025-06-19 20:46:37,025 - INFO - Status: 0.3min elapsed, 0.2min remaining
+2025-06-19 20:46:37,026 - INFO -   Conversion: 0.0000% | Temp: 149.7C
+2025-06-19 20:46:37,026 - INFO -   Beam stability: 98.0% | Au-197: 412611269 Bq
+2025-06-19 20:46:37,027 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 20:46:38,029 - INFO - MOCK: Step 20/29 (69%) - 20.2s elapsed, 9.7s remaining
+2025-06-19 20:46:38,032 - INFO - Status: 0.3min elapsed, 0.2min remaining
+2025-06-19 20:46:38,033 - INFO -   Conversion: 0.0000% | Temp: 149.9C
+2025-06-19 20:46:38,036 - INFO -   Beam stability: 97.9% | Au-197: 434327652 Bq
+2025-06-19 20:46:38,037 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 20:46:39,039 - INFO - MOCK: Step 21/29 (72%) - 21.2s elapsed, 8.7s remaining
+2025-06-19 20:46:39,039 - INFO - Status: 0.4min elapsed, 0.1min remaining
+2025-06-19 20:46:39,040 - INFO -   Conversion: 0.0000% | Temp: 149.1C
+2025-06-19 20:46:39,040 - INFO -   Beam stability: 97.8% | Au-197: 456044034 Bq
+2025-06-19 20:46:39,041 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 20:46:40,042 - INFO - MOCK: Step 22/29 (76%) - 22.2s elapsed, 7.7s remaining
+2025-06-19 20:46:40,043 - INFO - Status: 0.4min elapsed, 0.1min remaining
+2025-06-19 20:46:40,045 - INFO -   Conversion: 0.0000% | Temp: 149.8C
+2025-06-19 20:46:40,046 - INFO -   Beam stability: 99.2% | Au-197: 477760417 Bq
+2025-06-19 20:46:40,046 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 20:46:41,052 - INFO - MOCK: Step 23/29 (79%) - 23.2s elapsed, 6.7s remaining
+2025-06-19 20:46:41,053 - INFO - Status: 0.4min elapsed, 0.1min remaining
+2025-06-19 20:46:41,054 - INFO -   Conversion: 0.0000% | Temp: 148.9C
+2025-06-19 20:46:41,055 - INFO -   Beam stability: 98.8% | Au-197: 499476799 Bq
+2025-06-19 20:46:41,055 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 20:46:42,057 - INFO - MOCK: Step 24/29 (83%) - 24.2s elapsed, 5.7s remaining
+2025-06-19 20:46:42,059 - INFO - Status: 0.4min elapsed, 0.1min remaining
+2025-06-19 20:46:42,060 - INFO -   Conversion: 0.0000% | Temp: 147.5C
+2025-06-19 20:46:42,061 - INFO -   Beam stability: 97.7% | Au-197: 521193182 Bq
+2025-06-19 20:46:42,062 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 20:46:43,063 - INFO - MOCK: Step 25/29 (86%) - 25.2s elapsed, 4.6s remaining
+2025-06-19 20:46:43,065 - INFO - Status: 0.4min elapsed, 0.1min remaining
+2025-06-19 20:46:43,067 - INFO -   Conversion: 0.0000% | Temp: 151.1C
+2025-06-19 20:46:43,067 - INFO -   Beam stability: 99.1% | Au-197: 542909565 Bq
+2025-06-19 20:46:43,068 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 20:46:44,070 - INFO - MOCK: Step 26/29 (90%) - 26.2s elapsed, 3.6s remaining
+2025-06-19 20:46:44,071 - INFO - Status: 0.4min elapsed, 0.1min remaining
+2025-06-19 20:46:44,071 - INFO -   Conversion: 0.0000% | Temp: 152.9C
+2025-06-19 20:46:44,072 - INFO -   Beam stability: 98.3% | Au-197: 564625947 Bq
+2025-06-19 20:46:44,072 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 20:46:45,078 - INFO - MOCK: Step 27/29 (93%) - 27.2s elapsed, 2.6s remaining
+2025-06-19 20:46:45,079 - INFO - Status: 0.5min elapsed, 0.0min remaining
+2025-06-19 20:46:45,080 - INFO -   Conversion: 0.0000% | Temp: 151.3C
+2025-06-19 20:46:45,080 - INFO -   Beam stability: 100.1% | Au-197: 586342330 Bq
+2025-06-19 20:46:45,081 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 20:46:46,083 - INFO - MOCK: Step 28/29 (97%) - 28.2s elapsed, 1.6s remaining
+2025-06-19 20:46:46,084 - INFO - Status: 0.5min elapsed, 0.0min remaining
+2025-06-19 20:46:46,084 - INFO -   Conversion: 0.0000% | Temp: 150.7C
+2025-06-19 20:46:46,085 - INFO -   Beam stability: 97.1% | Au-197: 608058712 Bq
+2025-06-19 20:46:46,085 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 20:46:47,086 - INFO - MOCK: Step 29/29 (100%) - 29.3s elapsed, 0.6s remaining
+2025-06-19 20:46:47,087 - INFO - Status: 0.5min elapsed, 0.0min remaining
+2025-06-19 20:46:47,088 - INFO -   Conversion: 0.0000% | Temp: 152.0C
+2025-06-19 20:46:47,088 - INFO -   Beam stability: 98.0% | Au-197: 629775095 Bq
+2025-06-19 20:46:47,088 - INFO -   Projected final: 0.0000% (0.000 mg gold)
+2025-06-19 20:46:47,716 - INFO - Stopping irradiation...
+2025-06-19 20:46:47,717 - INFO - Total irradiation time: 0.01 hours
+2025-06-19 20:46:47,717 - INFO - Turning off gamma beam...
+2025-06-19 20:46:56,720 - INFO - Gamma beam OFF
+2025-06-19 20:46:56,721 - INFO - Irradiation sequence complete
+2025-06-19 20:46:56,722 - INFO - [STEP 7/8] Analyzing Results
+2025-06-19 20:46:56,722 - INFO - Analyzing results...
+2025-06-19 20:46:56,723 - INFO - Brief cooling period...
+2025-06-19 20:46:56,724 - INFO - Cooling: Step 1/5 (20%) - 0.4s elapsed
+2025-06-19 20:46:57,125 - INFO - Cooling: Step 2/5 (40%) - 0.8s elapsed
+2025-06-19 20:46:57,528 - INFO - Cooling: Step 3/5 (60%) - 1.2s elapsed
+2025-06-19 20:46:57,929 - INFO - Cooling: Step 4/5 (80%) - 1.6s elapsed
+2025-06-19 20:46:58,331 - INFO - Cooling: Step 5/5 (100%) - 2.0s elapsed
+2025-06-19 20:46:58,732 - INFO - Unloading target...
+2025-06-19 20:46:58,854 - INFO - Target unloaded successfully
+2025-06-19 20:46:58,859 - INFO - Results analysis complete
+2025-06-19 20:46:58,861 - INFO - [STEP 8/8] Cleanup and Shutdown
+2025-06-19 20:46:58,861 - INFO - Cleaning up systems...
+2025-06-19 20:46:58,863 - WARNING - Stop irradiation called from state: TargetState.EMPTY
+2025-06-19 20:46:58,864 - INFO - Stopping irradiation...
+2025-06-19 20:46:58,864 - ERROR - Cleanup error: 'DataLogger' object has no attribute 'process_final_data'
+2025-06-19 20:46:58,866 - INFO - Powering down gamma beam system...
+2025-06-19 20:46:58,969 - INFO - System powered down successfully
+2025-06-19 20:46:59,956 - INFO - Data collection stopped
+2025-06-19 20:47:00,011 - INFO - Session data backed up: quick_demo_backups\EXP_20250619_204607_20250619_204659.csv
+2025-06-19 20:47:00,015 - INFO - Experiment session ended: EXP_20250619_204607
+2025-06-19 20:47:00,019 - INFO - Data logging ended: 1132 points
+2025-06-19 20:47:00,022 - INFO - === DEMONSTRATION COMPLETED SUCCESSFULLY ===

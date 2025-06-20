@@ -62,9 +62,13 @@ class PhotonuclearDemo:
     Complete photonuclear transmutation demonstration controller.
     """
     
-    def __init__(self, config_path: str):
+    def __init__(self, config_path: str, mock_mode: bool = False):
         """Initialize the demonstration controller."""
         self.logger = logging.getLogger(__name__)
+        self.mock_mode = mock_mode
+        
+        if self.mock_mode:
+            self.logger.info("PhotonuclearDemo initialized in MOCK MODE")
         
         # Load configuration
         with open(config_path, 'r') as f:
@@ -114,15 +118,16 @@ class PhotonuclearDemo:
     def initialize_hardware(self) -> bool:
         """Initialize all hardware subsystems."""
         try:
-            self.logger.info("Initializing hardware subsystems...")
-            
-            # Initialize gamma beam controller
-            self.gamma_beam = GammaBeamController(self.config["gamma_source"])
+            self.logger.info("Initializing hardware subsystems...")            # Initialize gamma beam controller
+            gamma_config = self.config["gamma_source"].copy()
+            gamma_config["mock_mode"] = self.mock_mode
             
             # Initialize target cell monitor
-            self.target_cell = TargetCellMonitor(self.config["target_cell"])
+            target_config = self.config["target_cell"].copy()
+            target_config["mock_mode"] = self.mock_mode
             
-            # Initialize data logger
+            self.gamma_beam = GammaBeamController(gamma_config, self.mock_mode)
+            self.target_cell = TargetCellMonitor(target_config)
             self.data_logger = DataLogger(self.config["data_logging"])
             
             # Register subsystems with data logger

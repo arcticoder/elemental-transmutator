@@ -45,9 +45,10 @@ class BeamMetrics:
 class GammaBeamController:
     """Advanced gamma-ray beam controller for photonuclear transmutation."""
     
-    def __init__(self, config: Dict):
+    def __init__(self, config: Dict, mock_mode: bool = False):
         """Initialize the gamma beam controller."""
         self.config = config
+        self.mock_mode = mock_mode
         self.logger = logging.getLogger(__name__)
         
         # Beam state management
@@ -60,6 +61,11 @@ class GammaBeamController:
         self.target_energy = config.get("energy_MeV", 16.5)
         self.target_flux = config.get("flux_per_cm2_s", 1e13)
         self.warmup_time = config.get("warmup_s", 3600)
+        
+        # Mock mode accelerates timing for CI/testing
+        if self.mock_mode:
+            self.warmup_time = min(self.warmup_time, 10)  # Max 10 seconds in mock mode
+            self.logger.info("GammaBeamController initialized in MOCK MODE (accelerated timing)")
         
         # Monitoring thread
         self.monitoring_active = False
@@ -110,19 +116,21 @@ class GammaBeamController:
         # Start monitoring thread
         self.monitoring_active = True
         self.monitor_thread = threading.Thread(target=self._monitoring_loop)
-        self.monitor_thread.start()
-        
+        self.monitor_thread.start()        
         self.logger.info(f"System warming up... ETA: {self.warmup_time/60:.1f} minutes")
         return True
-    
+
     def wait_for_ready(self) -> bool:
         """Wait for the system to complete warmup and be ready for beam."""
         if self.state != BeamState.WARMING_UP:
             return self.state == BeamState.READY
         
         warmup_start = time.time()
+        check_interval = 1 if self.mock_mode else 10  # Check every second in mock mode
+        progress_interval = 5 if self.mock_mode else 20  # Report more frequently in mock mode
+        
         while time.time() - warmup_start < self.warmup_time:
-            time.sleep(10)  # Check every 10 seconds
+            time.sleep(check_interval)
             
             # Check for faults during warmup
             if self.state == BeamState.FAULT:
@@ -132,8 +140,13 @@ class GammaBeamController:
             # Update progress
             elapsed = time.time() - warmup_start
             progress = (elapsed / self.warmup_time) * 100
-            if progress % 20 < 1:  # Log every 20%
-                self.logger.info(f"Warmup progress: {progress:.1f}%")
+            
+            # More frequent progress reporting in mock mode
+            if progress % progress_interval < (check_interval / self.warmup_time * 100):
+                if self.mock_mode:
+                    self.logger.info(f"Gamma beam warmup progress: {progress:.1f}% (mock mode)")
+                else:
+                    self.logger.info(f"Warmup progress: {progress:.1f}%")
         
         # Warmup complete
         self.state = BeamState.READY
@@ -144,8 +157,7 @@ class GammaBeamController:
         """Turn on the gamma ray beam."""
         if self.state != BeamState.READY:
             self.logger.error(f"Cannot activate beam from state: {self.state}")
-            return False
-        
+            return False        
         # Final safety check
         safe, interlocks = self.check_safety_interlocks()
         if not safe:
@@ -155,16 +167,17 @@ class GammaBeamController:
         try:
             # Ramp up laser power
             self.logger.info("Ramping laser to full power...")
-            time.sleep(2)  # Simulate ramp time
+            time.sleep(0.2 if self.mock_mode else 2)  # Simulate ramp time
             
             # Activate electron beam
             self.logger.info("Activating electron beam...")
-            time.sleep(2)  # Simulate activation time
+            time.sleep(0.2 if self.mock_mode else 2)  # Simulate activation time
             
             # Monitor beam formation
             self.logger.info("Monitoring beam formation...")
-            time.sleep(5)  # Allow beam to stabilize
-              # Verify beam parameters
+            time.sleep(0.5 if self.mock_mode else 5)  # Allow beam to stabilize
+            
+            # Verify beam parameters
             if self._verify_beam_parameters():
                 self.state = BeamState.ON
                 self.logger.info(f"Gamma beam ON: {self.target_energy:.1f} MeV, {self.target_flux:.2e} gamma/cm2/s")
@@ -235,6 +248,10 @@ class GammaBeamController:
         except Exception as e:
             self.logger.error(f"Shutdown failed: {e}")
             return False
+    
+    def cleanup(self) -> None:
+        """Cleanup method for integration tests."""
+        self.power_off()
     
     def get_status(self) -> Dict:
         """Get comprehensive system status."""

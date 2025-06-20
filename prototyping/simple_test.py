@@ -56,11 +56,10 @@ def main():
                     "gamma_beam": 1.0,
                     "target_cell": 0.5
                 }
-            }
-        }
+            }        }
         
         print("\n1. Testing Gamma Beam Controller...")
-        beam = GammaBeamController(config["gamma_source"])
+        beam = GammaBeamController(config["gamma_source"], mock_mode=True)
         
         if beam.power_on():
             print("   Power on: SUCCESS")

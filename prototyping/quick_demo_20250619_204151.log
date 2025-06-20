@@ -1,0 +1,7 @@
+2025-06-19 20:41:51,058 - INFO - *** MOCK MODE ENABLED - Fast simulation for CI ***
+2025-06-19 20:41:51,058 - INFO - === PHOTONUCLEAR GOLD PRODUCTION QUICK DEMO ===
+2025-06-19 20:41:51,059 - INFO - [STEP 1/8] Initializing Systems
+2025-06-19 20:41:51,060 - INFO - Initializing hardware systems...
+2025-06-19 20:41:51,060 - INFO - GammaBeamController initialized in MOCK MODE (accelerated timing)
+2025-06-19 20:41:51,060 - INFO - GammaBeamController initialized for 16.5 MeV beam
+2025-06-19 20:41:51,061 - ERROR - Hardware initialization failed: TargetCellMonitor.__init__() takes 2 positional arguments but 3 were given

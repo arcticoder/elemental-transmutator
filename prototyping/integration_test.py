@@ -105,14 +105,16 @@ def test_hardware_controllers():
         # Load config for controllers that need it
         config_path = Path(__file__).parent / "hardware_config.json"
         with open(config_path, 'r') as f:
-            config = json.load(f)
-        
-        # Test beam controller initialization
-        beam = GammaBeamController(config)
+            config = json.load(f)        # Test beam controller initialization
+        gamma_config = config.copy()
+        gamma_config["mock_mode"] = True
+        beam = GammaBeamController(gamma_config, mock_mode=True)
         logger.info("  GammaBeamController: Initialized OK")
         
         # Test target monitor initialization
-        target = TargetCellMonitor()
+        target_config = config.copy()
+        target_config["mock_mode"] = True
+        target = TargetCellMonitor(target_config)
         logger.info("  TargetCellMonitor: Initialized OK")
         
         # Test data logger initialization

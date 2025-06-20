@@ -1,7 +1,26 @@
-{
-  "system_id": "Au_Replicator_Prototype_v1",
+{  "system_id": "Au_Replicator_Prototype_v1",
   "timestamp": "2025-06-19T08:30:00Z",
   "operator": "LV_Research_Team",
+  
+  "laser_system": {
+    "wavelength_nm": 800,
+    "power_kw": 1.0,
+    "pulse_rate_hz": 1e6,
+    "beam_diameter_mm": 1.0,
+    "stability_percent": 0.1,
+    "interlock_settings": {
+      "personnel_safety": true,
+      "beam_dump_engaged": true,
+      "shutter_closed": true,
+      "key_switch_enabled": true
+    },
+    "operating_parameters": {
+      "warmup_time_s": 300,
+      "cooldown_time_s": 600,
+      "max_duty_cycle_percent": 80,
+      "maintenance_interval_h": 1000
+    }
+  },
   
   "lv_energy_converter": {
     "mode": "LV_self_powered",
@@ -26,8 +45,40 @@
     "electron_energy_MeV": 100,
     "electron_current_ma": 10,
     "warmup_s": 3600,
-    "stability_percent": 2.0,
-    "beam_on_interlock": ["personnel_clear", "shielding_closed", "target_ready"]
+    "stability_percent": 2.0,    "beam_on_interlock": ["personnel_clear", "shielding_closed", "target_ready"]
+  },
+  
+  "electron_accelerator": {
+    "type": "rf_linac",
+    "energy_MeV": 100,
+    "current_mA": 10,
+    "rf_frequency_MHz": 2856,
+    "pulse_width_us": 1.0,
+    "repetition_rate_Hz": 1000,
+    "gun_voltage_kV": 90,
+    "focusing_system": "quadrupole_doublets",
+    "cooling_system": "forced_air",
+    "stability_percent": 0.5,
+    "interlock_systems": ["beam_stop", "rf_interlock", "vacuum_interlock"]
+  },
+  
+  "gamma_conversion": {
+    "interaction_point": "laser_electron_collision",
+    "conversion_efficiency_percent": 10,
+    "photon_energy_spread_percent": 5,
+    "angular_divergence_mrad": 2,
+    "focusing_optics": "parabolic_mirrors",
+    "beam_dump": "tungsten_block",
+    "collimation_system": "adjustable_slits"
+  },
+  
+  "beam_monitoring": {
+    "flux_monitor": "ionization_chamber",
+    "energy_monitor": "scintillator_detector",
+    "position_monitor": "wire_scanner",
+    "profile_monitor": "phosphor_screen",
+    "data_acquisition_rate_Hz": 1000,
+    "calibration_interval_h": 8
   },
   
   "target_cell": {

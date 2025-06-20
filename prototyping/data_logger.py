@@ -63,14 +63,13 @@ class DataLogger:
     Advanced data logging and analysis system.
     """
     
-    def __init__(self, config: Dict):
+    def __init__(self, config: Optional[Dict] = None):
         """Initialize the data logger."""
-        self.config = config
+        self.config = config or {"database_path": "experiment_data.db"}
         self.logger = logging.getLogger(__name__)
-        
-        # Database setup
-        self.db_path = config.get("database_path", "experiment_data.db")
-        self.backup_dir = Path(config.get("backup_directory", "data_backups"))
+          # Database setup
+        self.db_path = self.config.get("database_path", "experiment_data.db")
+        self.backup_dir = Path(self.config.get("backup_directory", "data_backups"))
         self.backup_dir.mkdir(exist_ok=True)
         
         # Data collection
@@ -81,17 +80,16 @@ class DataLogger:
         # Current session
         self.current_session = None
         self.session_start = None
-        
-        # Subsystem interfaces
+          # Subsystem interfaces
         self.subsystems = {}
-        self.sampling_rates = config.get("sampling_rates", {})
+        self.sampling_rates = self.config.get("sampling_rates", {})
         
         # Alert system
-        self.alert_thresholds = config.get("alert_thresholds", {})
+        self.alert_thresholds = self.config.get("alert_thresholds", {})
         self.active_alerts = set()
         
         # Data analysis
-        self.analysis_window = config.get("analysis_window_s", 60)
+        self.analysis_window = self.config.get("analysis_window_s", 60)
         self.last_analysis = time.time()
         
         # Initialize database
@@ -987,6 +985,18 @@ class DataLogger:
         plt.tight_layout()
         plt.savefig(output_path / 'radiation_monitoring.png', dpi=300, bbox_inches='tight')
         plt.close()
+
+    def cleanup(self) -> None:
+        """Cleanup method for integration tests."""
+        # Stop data collection
+        self.collection_active = False
+        # Wait for threads to finish
+        for thread in self.collection_threads:
+            if thread.is_alive():
+                thread.join(timeout=1.0)
+        # Close database connection
+        if hasattr(self, 'conn') and self.conn:
+            self.conn.close()
 
 # Example usage and testing
 if __name__ == "__main__":

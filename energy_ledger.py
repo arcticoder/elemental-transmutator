@@ -249,68 +249,65 @@ class EnergyLedger:
         # Update pathway-specific tracking
         self._update_pathway_metrics(pathway, energy_type, amount)
     
-    def log_pathway_interaction(self, 
-                              pathway_1: str, 
-                              pathway_2: str,
-                              interaction_type: str,
-                              coupling_strength: float,
-                              energy_transfer: float,
-                              stability_impact: float = 0.0) -> None:
-        """Log interaction between energy pathways."""
-        interaction = PathwayInteraction(
-            timestamp=self.simulation_time,
-            pathway_1=pathway_1,
-            pathway_2=pathway_2,
-            interaction_type=interaction_type,
-            coupling_strength=coupling_strength,
-            energy_transfer=energy_transfer,
-            stability_impact=stability_impact
+    def add_operation(self, operation_name: str, power_watts: float, duration_seconds: float) -> None:
+        """
+        Add an operation to the energy ledger (compatibility method for integration tests).
+        
+        Parameters:
+        -----------
+        operation_name : str
+            Name of the operation (e.g., 'beam_power', 'cooling')
+        power_watts : float
+            Power consumption in watts
+        duration_seconds : float
+            Duration of operation in seconds
+        """
+        energy_joules = power_watts * duration_seconds
+        
+        # Map operation names to energy types
+        operation_mapping = {
+            'beam_power': EnergyType.INPUT_DRIVE,
+            'cooling': EnergyType.INPUT_DRIVE,
+            'heating': EnergyType.INPUT_DRIVE,
+            'pumping': EnergyType.INPUT_DRIVE,
+            'monitoring': EnergyType.INPUT_DRIVE,
+            'control': EnergyType.INPUT_DRIVE,
+        }
+        
+        energy_type = operation_mapping.get(operation_name, EnergyType.INPUT_DRIVE)
+        
+        self.log_transaction(
+            energy_type=energy_type,
+            amount=energy_joules,
+            location="system",
+            pathway="operational",
+            details={
+                'operation_name': operation_name,
+                'power_watts': power_watts,
+                'duration_seconds': duration_seconds
+            }
         )
-        
-        self.pathway_interactions.append(interaction)
-        
-        # Update synergy tracking
-        synergy_key = f"{pathway_1}_{pathway_2}"
-        self.synergy_effects[synergy_key] += energy_transfer
     
-    def log_lv_operator_effect(self, 
-                             operator_dimension: int,
-                             operator_type: str,
-                             coefficient: float,
-                             energy_contribution: float) -> None:
-        """Log effects from higher-dimension LV operators."""
-        self.lv_operator_effects[operator_type].append({
-            'timestamp': self.simulation_time,
-            'dimension': operator_dimension,
-            'coefficient': coefficient,
-            'energy': energy_contribution
-        })
-        
-        self.operator_energy_contributions[operator_type] += energy_contribution
-        
-        # Update operator tracking by dimension
-        dim_key = f"dimension_{operator_dimension}" if operator_dimension <= 6 else "dimension_higher"
-        self.operator_tracking[dim_key][operator_type] += energy_contribution
+    @property
+    def total_energy_kwh(self) -> float:
+        """Get total energy in kWh for compatibility."""
+        total_joules = sum(self.totals.values())
+        return total_joules / 3.6e6  # Convert J to kWh
     
-    def log_vacuum_stability(self, 
-                           stability_parameter: float,
-                           energy_density: float,
-                           casimir_pressure: float = 0.0,
-                           instability_growth: float = 0.0) -> None:
-        """Log vacuum stability metrics."""
-        self.vacuum_stability_metrics.update({
-            'stability_parameter': stability_parameter,
-            'energy_density': energy_density,
-            'casimir_pressure': casimir_pressure,
-            'instability_growth': instability_growth,
-            'timestamp': self.simulation_time
-        })
-        
-        # Update vacuum tracking
-        self.vacuum_tracking['casimir_pressure'].append(casimir_pressure)
-        self.vacuum_tracking['energy_density'].append(energy_density)
-        self.vacuum_tracking['instability_parameter'].append(instability_growth)
-        self.vacuum_tracking['stability_window'].append(stability_parameter)
+    @property 
+    def operations(self) -> List:
+        """Get list of operations for compatibility."""
+        return [t for t in self.transactions if t.details.get('operation_name')]
+    
+    def get_summary(self) -> Dict[str, Any]:
+        """Get energy summary for compatibility with integration tests."""
+        return {
+            'total_energy_kwh': self.total_energy_kwh,
+            'total_operations': len(self.operations),
+            'net_energy_gain_j': self.calculate_net_energy_gain(),
+            'conversion_efficiency': self.calculate_conversion_efficiency(),
+            'conservation_valid': self.verify_conservation()[0]
+        }
     
     def _update_pathway_metrics(self, pathway: str, energy_type: EnergyType, amount: float):
         """Update pathway-specific performance metrics."""

@@ -105,11 +105,15 @@ class SafePhotonuclearDemo:
     def initialize_systems(self) -> bool:
         """Initialize all hardware systems."""
         try:
-            self.logger.info("Initializing hardware systems...")
+            self.logger.info("Initializing hardware systems...")            # Initialize controllers
+            gamma_config = self.config["gamma_source"].copy()
+            gamma_config["mock_mode"] = self.mock_mode
             
-            # Initialize controllers
-            self.gamma_beam = GammaBeamController(self.config["gamma_source"])
-            self.target_cell = TargetCellMonitor(self.config["target_cell"])
+            target_config = self.config["target_cell"].copy()
+            target_config["mock_mode"] = self.mock_mode
+            
+            self.gamma_beam = GammaBeamController(gamma_config, self.mock_mode)
+            self.target_cell = TargetCellMonitor(target_config)
             self.data_logger = DataLogger(self.config["data_logging"])
             
             # Register for data logging

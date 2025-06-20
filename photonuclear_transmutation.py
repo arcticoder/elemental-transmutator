@@ -191,6 +191,14 @@ class PhotonuclearTransmuter:
         
         return σ_enhanced  # mb
     
+    def lv_enhancement_factor(self) -> float:
+        """Get the total LV enhancement factor."""
+        return self.lv_factors['total']
+    
+    def calculate_transmutation_yield(self, target_mass: float) -> Dict[str, Any]:
+        """Calculate transmutation yield (compatibility method for integration tests)."""
+        return self.transmute_sample(sample_mass_g=target_mass)
+    
     def calculate_target_density(self) -> float:
         """Calculate number density of target nuclei."""
         # Avogadro's number
@@ -406,3 +414,6 @@ if __name__ == "__main__":
     print(f"Optimal energy: {optimization['optimal_energy_MeV']:.1f} MeV")
     print(f"Optimal yield: {optimization['optimal_yield_g']:.6f} g")
     print(f"Improvement factor: {optimization['improvement_factor']:.2f}×")
+
+# Alias for integration test compatibility
+PhotonuclearTransmutation = PhotonuclearTransmuter
