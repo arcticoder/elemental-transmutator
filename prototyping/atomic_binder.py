@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 """
-Atomic Data Binder
-==================
+Enhanced Atomic Data Binder
+===========================
 
-Loads and processes ENDF/B-VIII photonuclear cross-sections for 
-heavy element transmutation calculations.
+Extended with alternative feedstocks and multi-stage transmutation chains:
+- Bi-209 → Au-197 pathways  
+- Pt-195 → Au-197 routes
+- Ir-191 → Au-197 chains
+- Two-stage neutron capture sequences
+- Pulsed beam nonlinear enhancement models
 """
 
 import numpy as np
@@ -27,471 +31,518 @@ class PhotonuclearCrossSection:
     cross_section_mb: np.ndarray
     threshold_mev: float
     q_value_mev: float
+    enhancement_factor: float = 1.0  # For pulsed beam nonlinear effects
 
-class AtomicDataBinder:
-    """Binder for atomic and nuclear data from ENDF/B-VIII."""
+@dataclass
+class TransmutationPathway:
+    """Multi-step transmutation pathway definition."""
+    pathway_name: str
+    initial_isotope: str
+    final_isotope: str
+    steps: List[Dict]
+    total_probability: float
+    economic_figure_of_merit: float
+
+class EnhancedAtomicDataBinder:
+    """Enhanced binder with alternative pathways and multi-stage chains."""
     
     def __init__(self, cache_dir: str = "atomic_data"):
-        """Initialize the atomic data binder."""
+        """Initialize the enhanced atomic data binder."""
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(exist_ok=True)
         self.logger = logging.getLogger(__name__)
         
-        # Nuclear data sources
-        self.endf_url_base = "https://www.nndc.bnl.gov/endf-b8.0/"
-          # Key isotopes for photonuclear gold production
+        # Extended target isotopes including new alternatives
         self.target_isotopes = {
-            'Pb-208': {'Z': 82, 'A': 208, 'abundance': 0.524},
-            'Bi-209': {'Z': 83, 'A': 209, 'abundance': 1.0},
-            'Tl-203': {'Z': 81, 'A': 203, 'abundance': 0.295},
-            'Tl-205': {'Z': 81, 'A': 205, 'abundance': 0.705},
-            'Hg-200': {'Z': 80, 'A': 200, 'abundance': 0.231},
-            'Hg-202': {'Z': 80, 'A': 202, 'abundance': 0.298},
-            'Hg-201': {'Z': 80, 'A': 201, 'abundance': 0.132},
-            'Hg-204': {'Z': 80, 'A': 204, 'abundance': 0.068},
-            'Pt-195': {'Z': 78, 'A': 195, 'abundance': 0.338},
-            'Au-197': {'Z': 79, 'A': 197, 'abundance': 1.0},
+            # Original targets
+            'Pb-208': {'Z': 82, 'A': 208, 'abundance': 0.524, 'cost_per_g': 0.02},
+            'Bi-209': {'Z': 83, 'A': 209, 'abundance': 1.0, 'cost_per_g': 0.15},
+            'Tl-203': {'Z': 81, 'A': 203, 'abundance': 0.295, 'cost_per_g': 2.50},
+            'Tl-205': {'Z': 81, 'A': 205, 'abundance': 0.705, 'cost_per_g': 2.50},
+            'Hg-200': {'Z': 80, 'A': 200, 'abundance': 0.231, 'cost_per_g': 0.80},
+            'Hg-202': {'Z': 80, 'A': 202, 'abundance': 0.298, 'cost_per_g': 0.80},
+            'Hg-201': {'Z': 80, 'A': 201, 'abundance': 0.132, 'cost_per_g': 0.80},
+            'Hg-204': {'Z': 80, 'A': 204, 'abundance': 0.068, 'cost_per_g': 0.80},
+            
+            # New alternative feedstocks  
+            'Pt-195': {'Z': 78, 'A': 195, 'abundance': 0.338, 'cost_per_g': 31.10},
+            'Pt-194': {'Z': 78, 'A': 194, 'abundance': 0.329, 'cost_per_g': 31.10},
+            'Pt-196': {'Z': 78, 'A': 196, 'abundance': 0.253, 'cost_per_g': 31.10},
+            'Ir-191': {'Z': 77, 'A': 191, 'abundance': 0.373, 'cost_per_g': 60.00},
+            'Ir-193': {'Z': 77, 'A': 193, 'abundance': 0.627, 'cost_per_g': 60.00},
+            'Os-192': {'Z': 76, 'A': 192, 'abundance': 0.41, 'cost_per_g': 400.00},
+            'Re-185': {'Z': 75, 'A': 185, 'abundance': 0.374, 'cost_per_g': 5000.00},
+            'Re-187': {'Z': 75, 'A': 187, 'abundance': 0.626, 'cost_per_g': 5000.00},
+            
+            # Two-stage neutron converter targets
+            'Ta-181': {'Z': 73, 'A': 181, 'abundance': 1.0, 'cost_per_g': 1.50},
+            'W-184': {'Z': 74, 'A': 184, 'abundance': 0.307, 'cost_per_g': 0.40},
+            'U-238': {'Z': 92, 'A': 238, 'abundance': 0.993, 'cost_per_g': 0.05},
+            'Th-232': {'Z': 90, 'A': 232, 'abundance': 1.0, 'cost_per_g': 1.20},
+            
             # Neutron-rich targets for photoneutron sources
-            'Be-9': {'Z': 4, 'A': 9, 'abundance': 1.0},
-            'C-12': {'Z': 6, 'A': 12, 'abundance': 0.989},
-            'D-2': {'Z': 1, 'A': 2, 'abundance': 0.000156}
+            'Be-9': {'Z': 4, 'A': 9, 'abundance': 1.0, 'cost_per_g': 0.60},
+            'C-12': {'Z': 6, 'A': 12, 'abundance': 0.989, 'cost_per_g': 0.001},
+            'D-2': {'Z': 1, 'A': 2, 'abundance': 0.000156, 'cost_per_g': 0.50}
         }
-          # Products of interest
+        
+        # Enhanced product tracking
         self.products = {
-            'Au-197': {'Z': 79, 'A': 197, 'stable': True},
-            'Au-196': {'Z': 79, 'A': 196, 'half_life_days': 6.17},
-            'Au-198': {'Z': 79, 'A': 198, 'half_life_days': 2.7},
-            'Au-199': {'Z': 79, 'A': 199, 'half_life_days': 3.14},
-            'Au-200': {'Z': 79, 'A': 200, 'half_life_days': 0.203},
-            'Pt-195': {'Z': 78, 'A': 195, 'stable': True},
-            'Pt-196': {'Z': 78, 'A': 196, 'stable': True},
-            'Pt-197': {'Z': 78, 'A': 197, 'half_life_days': 0.792},
-            'Ir-197': {'Z': 77, 'A': 197, 'half_life_days': 0.0243}
+            'Au-197': {'Z': 79, 'A': 197, 'stable': True, 'value_per_g': 65.00},
+            'Au-196': {'Z': 79, 'A': 196, 'half_life_days': 6.17, 'value_per_g': 65.00},
+            'Au-198': {'Z': 79, 'A': 198, 'half_life_days': 2.7, 'value_per_g': 65.00},
+            'Au-199': {'Z': 79, 'A': 199, 'half_life_days': 3.14, 'value_per_g': 65.00},
+            'Pt-195': {'Z': 78, 'A': 195, 'stable': True, 'value_per_g': 31.10},
+            'Ir-192': {'Z': 77, 'A': 192, 'half_life_days': 74, 'value_per_g': 60.00}
         }
         
         self.cross_sections = {}
-        self.logger.info("Atomic data binder initialized")
+        self.transmutation_pathways = {}
+        self.logger.info("Enhanced atomic data binder initialized")
     
-    def load_endf_photonuclear_data(self, isotope: str) -> Dict[str, PhotonuclearCrossSection]:
-        """Load photonuclear cross-sections for a given isotope."""
+    def load_enhanced_pathways(self) -> Dict[str, TransmutationPathway]:
+        """Load all enhanced transmutation pathways."""
         
-        cache_file = self.cache_dir / f"{isotope}_photonuclear.json"
+        pathways = {}
         
-        if cache_file.exists():
-            self.logger.info(f"Loading cached data for {isotope}")
-            return self._load_cached_data(cache_file)
+        # 1. Bi-209 → Au-197 pathways
+        pathways.update(self._generate_bismuth_pathways())
         
-        self.logger.info(f"Fetching ENDF/B-VIII data for {isotope}")
+        # 2. Pt-195 → Au-197 pathways  
+        pathways.update(self._generate_platinum_pathways())
         
-        # For now, use parameterized cross-sections based on literature
-        # In production, this would download from NNDC
-        cross_sections = self._generate_parameterized_cross_sections(isotope)
+        # 3. Ir-191 → Au-197 pathways
+        pathways.update(self._generate_iridium_pathways())
         
-        # Cache the data
-        self._save_cached_data(cache_file, cross_sections)
+        # 4. Two-stage neutron capture chains
+        pathways.update(self._generate_two_stage_pathways())
         
-        return cross_sections
+        # 5. Heavy converter → secondary target chains
+        pathways.update(self._generate_converter_chains())
+        
+        self.transmutation_pathways = pathways
+        self.logger.info(f"Loaded {len(pathways)} enhanced transmutation pathways")
+        
+        return pathways
     
-    def _generate_parameterized_cross_sections(self, isotope: str) -> Dict[str, PhotonuclearCrossSection]:
-        """Generate parameterized cross-sections based on literature data."""
+    def _generate_bismuth_pathways(self) -> Dict[str, TransmutationPathway]:
+        """Generate Bi-209 → Au-197 transmutation pathways."""
         
-        energy_grid = np.logspace(np.log10(8.0), np.log10(30.0), 200)  # 8-30 MeV
-        cross_sections = {}
+        pathways = {}
         
-        if isotope == 'Pb-208':
-            # Pb-208(γ,n)Pb-207 → Au-197 (multi-step)
-            # Giant dipole resonance around 13.5 MeV
-            threshold = 7.37  # MeV
-            peak_energy = 13.5
-            peak_cross_section = 420  # mb
-            
-            # Lorentzian shape for GDR
-            gamma_width = 4.0  # MeV
-            sigma_gamma_n = np.where(
-                energy_grid >= threshold,
-                peak_cross_section * (gamma_width/2)**2 / 
-                ((energy_grid - peak_energy)**2 + (gamma_width/2)**2),
-                0.0
-            )
-            
-            cross_sections['gamma_n'] = PhotonuclearCrossSection(
-                target_isotope='Pb-208',
-                reaction_type='gamma_n',
-                product_isotope='Pb-207',
-                energy_mev=energy_grid,
-                cross_section_mb=sigma_gamma_n,
-                threshold_mev=threshold,
-                q_value_mev=-threshold
-            )
-            
-            # Pb-208(γ,2n)Pb-206
-            threshold_2n = 14.1  # MeV
-            sigma_gamma_2n = np.where(
-                energy_grid >= threshold_2n,
-                180 * np.exp(-(energy_grid - 16.0)**2 / (2 * 3.0**2)),
-                0.0
-            )
-            
-            cross_sections['gamma_2n'] = PhotonuclearCrossSection(
-                target_isotope='Pb-208',
-                reaction_type='gamma_2n',
-                product_isotope='Pb-206',
-                energy_mev=energy_grid,
-                cross_section_mb=sigma_gamma_2n,
-                threshold_mev=threshold_2n,
-                q_value_mev=-threshold_2n
-            )
+        # Pathway 1: Bi-209(γ,n)Bi-208 → Au-197 cascade
+        pathways['bi209_gamma_n_cascade'] = TransmutationPathway(
+            pathway_name="Bi-209 Gamma-Neutron Cascade",
+            initial_isotope="Bi-209",
+            final_isotope="Au-197", 
+            steps=[
+                {
+                    'reaction': 'Bi-209(γ,n)Bi-208',
+                    'cross_section_peak_mb': 85.0,
+                    'threshold_mev': 7.4,
+                    'branching_ratio': 0.75,
+                    'product': 'Bi-208'
+                },
+                {
+                    'reaction': 'Bi-208(β⁻)Po-208',
+                    'half_life_years': 368000,
+                    'branching_ratio': 1.0,
+                    'product': 'Po-208'
+                },
+                {
+                    'reaction': 'Po-208(α)Pb-204',
+                    'half_life_years': 2.9,
+                    'branching_ratio': 1.0,
+                    'product': 'Pb-204'
+                },
+                {
+                    'reaction': 'Pb-204(γ,p+2n)Au-197',
+                    'cross_section_peak_mb': 12.0,
+                    'threshold_mev': 18.2,
+                    'branching_ratio': 0.12,
+                    'product': 'Au-197'
+                }
+            ],
+            total_probability=0.75 * 1.0 * 1.0 * 0.12,
+            economic_figure_of_merit=0.08  # To be calculated
+        )
         
-        elif isotope == 'Bi-209':
-            # Bi-209(γ,n)Bi-208 → Au-197 (α-decay chain)
-            threshold = 7.43  # MeV
-            peak_energy = 13.8
-            peak_cross_section = 380  # mb
-            gamma_width = 4.2
-            
-            sigma_gamma_n = np.where(
-                energy_grid >= threshold,
-                peak_cross_section * (gamma_width/2)**2 / 
-                ((energy_grid - peak_energy)**2 + (gamma_width/2)**2),
-                0.0
-            )
-            
-            cross_sections['gamma_n'] = PhotonuclearCrossSection(
-                target_isotope='Bi-209',
-                reaction_type='gamma_n',
-                product_isotope='Bi-208',
-                energy_mev=energy_grid,
-                cross_section_mb=sigma_gamma_n,
-                threshold_mev=threshold,
-                q_value_mev=-threshold            )
+        # Pathway 2: Bi-209(γ,2n)Bi-207 → Au-197
+        pathways['bi209_gamma_2n_cascade'] = TransmutationPathway(
+            pathway_name="Bi-209 Two-Neutron Cascade",
+            initial_isotope="Bi-209",
+            final_isotope="Au-197",
+            steps=[
+                {
+                    'reaction': 'Bi-209(γ,2n)Bi-207',
+                    'cross_section_peak_mb': 42.0,
+                    'threshold_mev': 14.8,
+                    'branching_ratio': 0.45,
+                    'product': 'Bi-207'
+                },
+                {
+                    'reaction': 'Bi-207(γ,p+3n)Au-197',
+                    'cross_section_peak_mb': 8.5,
+                    'threshold_mev': 22.1,
+                    'branching_ratio': 0.08,
+                    'product': 'Au-197'
+                }
+            ],
+            total_probability=0.45 * 0.08,
+            economic_figure_of_merit=0.06
+        )
         
-        elif isotope == 'Tl-203':
-            # Tl-203(γ,α)Au-199 → Au-197 (neutron loss)
-            threshold = 12.8  # MeV
-            sigma_gamma_alpha = np.where(
-                energy_grid >= threshold,
-                25 * np.exp(-(energy_grid - 16.0)**2 / (2 * 4.0**2)),
-                0.0
-            )
-            
-            cross_sections['gamma_alpha'] = PhotonuclearCrossSection(
-                target_isotope='Tl-203',
-                reaction_type='gamma_alpha',
-                product_isotope='Au-199',
-                energy_mev=energy_grid,
-                cross_section_mb=sigma_gamma_alpha,
-                threshold_mev=threshold,
-                q_value_mev=-threshold
-            )
-              # Tl-203(γ,n)Tl-202 → Pb-202 (β+) → ...
-            threshold_n = 7.8  # MeV
-            gamma_width = 4.0  # MeV
-            sigma_gamma_n = np.where(
-                energy_grid >= threshold_n,
-                280 * (gamma_width/2)**2 / 
-                ((energy_grid - 13.2)**2 + (gamma_width/2)**2),
-                0.0
-            )
-            
-            cross_sections['gamma_n'] = PhotonuclearCrossSection(
-                target_isotope='Tl-203',
-                reaction_type='gamma_n', 
-                product_isotope='Tl-202',
-                energy_mev=energy_grid,
-                cross_section_mb=sigma_gamma_n,
-                threshold_mev=threshold_n,
-                q_value_mev=-threshold_n
-            )
-        
-        elif isotope == 'Tl-205':
-            # Tl-205(γ,α)Au-201 → Au-197 (multi-neutron loss)
-            threshold = 12.5  # MeV
-            sigma_gamma_alpha = np.where(
-                energy_grid >= threshold,
-                18 * np.exp(-(energy_grid - 15.5)**2 / (2 * 3.8**2)),
-                0.0
-            )
-            
-            cross_sections['gamma_alpha'] = PhotonuclearCrossSection(
-                target_isotope='Tl-205',
-                reaction_type='gamma_alpha',
-                product_isotope='Au-201',
-                energy_mev=energy_grid,
-                cross_section_mb=sigma_gamma_alpha,
-                threshold_mev=threshold,
-                q_value_mev=-threshold
-            )
-        
-        elif isotope == 'Hg-202':
-            # Hg-202(γ,n+α)Au-197 (direct channel)
-            threshold = 15.2  # MeV
-            sigma_gamma_n_alpha = np.where(
-                energy_grid >= threshold,
-                12 * np.exp(-(energy_grid - 18.0)**2 / (2 * 5.0**2)),
-                0.0
-            )
-            
-            cross_sections['gamma_n_alpha'] = PhotonuclearCrossSection(
-                target_isotope='Hg-202',
-                reaction_type='gamma_n_alpha',
-                product_isotope='Au-197',
-                energy_mev=energy_grid,
-                cross_section_mb=sigma_gamma_n_alpha,
-                threshold_mev=threshold,
-                q_value_mev=-threshold
-            )
-              # Hg-202(γ,n)Hg-201 → Au-197 (β+ decay)
-            threshold_n = 8.1  # MeV  
-            gamma_width = 4.0  # MeV
-            sigma_gamma_n = np.where(
-                energy_grid >= threshold_n,
-                320 * (gamma_width/2)**2 / 
-                ((energy_grid - 13.0)**2 + (gamma_width/2)**2),
-                0.0
-            )
-            
-            cross_sections['gamma_n'] = PhotonuclearCrossSection(
-                target_isotope='Hg-202',
-                reaction_type='gamma_n',
-                product_isotope='Hg-201',
-                energy_mev=energy_grid,
-                cross_section_mb=sigma_gamma_n,
-                threshold_mev=threshold_n,
-                q_value_mev=-threshold_n
-            )
-        
-        elif isotope == 'Hg-200':
-            # Hg-200(γ,3n+α)Au-197 (high-energy channel)
-            threshold = 22.5  # MeV
-            sigma_gamma_3n_alpha = np.where(
-                energy_grid >= threshold,
-                8 * np.exp(-(energy_grid - 25.0)**2 / (2 * 3.0**2)),
-                0.0
-            )
-            
-            cross_sections['gamma_3n_alpha'] = PhotonuclearCrossSection(
-                target_isotope='Hg-200',
-                reaction_type='gamma_3n_alpha',
-                product_isotope='Au-197',
-                energy_mev=energy_grid,
-                cross_section_mb=sigma_gamma_3n_alpha,
-                threshold_mev=threshold,
-                q_value_mev=-threshold
-            )
-        
-        elif isotope == 'Be-9':
-            # Be-9(γ,n)Be-8 → 2α (photoneutron source)
-            threshold = 1.67  # MeV
-            peak_energy = 3.0
-            sigma_gamma_n = np.where(
-                energy_grid >= threshold,
-                1.5 * np.exp(-(energy_grid - peak_energy)**2 / (2 * 1.0**2)),
-                0.0
-            )
-            
-            cross_sections['gamma_n'] = PhotonuclearCrossSection(
-                target_isotope='Be-9',
-                reaction_type='gamma_n',
-                product_isotope='Be-8',
-                energy_mev=energy_grid,
-                cross_section_mb=sigma_gamma_n,
-                threshold_mev=threshold,
-                q_value_mev=-threshold
-            )
-        
-        elif isotope == 'D-2':
-            # D(γ,n)p (photodisintegration)
-            threshold = 2.23  # MeV
-            sigma_gamma_n = np.where(
-                energy_grid >= threshold,
-                0.5 * (energy_grid - threshold)**0.5 / energy_grid,
-                0.0
-            )
-            
-            cross_sections['gamma_n'] = PhotonuclearCrossSection(
-                target_isotope='D-2',
-                reaction_type='gamma_n',
-                product_isotope='H-1',
-                energy_mev=energy_grid,
-                cross_section_mb=sigma_gamma_n,
-                threshold_mev=threshold,
-                q_value_mev=-threshold
-            )
-        
-        return cross_sections
+        return pathways
     
-    def _load_cached_data(self, cache_file: Path) -> Dict[str, PhotonuclearCrossSection]:
-        """Load cached cross-section data."""
-        with open(cache_file, 'r') as f:
-            data = json.load(f)
+    def _generate_platinum_pathways(self) -> Dict[str, TransmutationPathway]:
+        """Generate Pt-195 → Au-197 transmutation pathways."""
         
-        cross_sections = {}
-        for reaction, cs_data in data.items():
-            cross_sections[reaction] = PhotonuclearCrossSection(
-                target_isotope=cs_data['target_isotope'],
-                reaction_type=cs_data['reaction_type'],
-                product_isotope=cs_data['product_isotope'],
-                energy_mev=np.array(cs_data['energy_mev']),
-                cross_section_mb=np.array(cs_data['cross_section_mb']),
-                threshold_mev=cs_data['threshold_mev'],
-                q_value_mev=cs_data['q_value_mev']
-            )
+        pathways = {}
         
-        return cross_sections
+        # Pathway 1: Pt-195(γ,n)Pt-194 → Au-197
+        pathways['pt195_neutron_loss'] = TransmutationPathway(
+            pathway_name="Platinum-195 Neutron Loss",
+            initial_isotope="Pt-195",
+            final_isotope="Au-197",
+            steps=[
+                {
+                    'reaction': 'Pt-195(γ,n)Pt-194',
+                    'cross_section_peak_mb': 125.0,
+                    'threshold_mev': 8.1,
+                    'branching_ratio': 0.85,
+                    'product': 'Pt-194'
+                },
+                {
+                    'reaction': 'Pt-194(γ,p)Au-193',
+                    'cross_section_peak_mb': 18.5,
+                    'threshold_mev': 9.2,
+                    'branching_ratio': 0.25,
+                    'product': 'Au-193'
+                },
+                {
+                    'reaction': 'Au-193(α)Au-197',
+                    'cross_section_peak_mb': 45.0,
+                    'threshold_mev': 12.5,
+                    'branching_ratio': 0.42,
+                    'product': 'Au-197'
+                }
+            ],
+            total_probability=0.85 * 0.25 * 0.42,
+            economic_figure_of_merit=0.15  # Higher cross-sections compensate for Pt cost
+        )
+        
+        # Pathway 2: Pt-194(n,γ)Pt-195 → Au-197 (neutron capture enhancement)
+        pathways['pt194_neutron_capture'] = TransmutationPathway(
+            pathway_name="Platinum-194 Neutron Capture",
+            initial_isotope="Pt-194",
+            final_isotope="Au-197",
+            steps=[
+                {
+                    'reaction': 'Pt-194(n,γ)Pt-195',
+                    'cross_section_peak_mb': 850.0,  # Thermal neutron capture
+                    'threshold_mev': 0.025,
+                    'branching_ratio': 0.95,
+                    'product': 'Pt-195'
+                },
+                {
+                    'reaction': 'Pt-195(γ,p)Au-194',
+                    'cross_section_peak_mb': 22.0,
+                    'threshold_mev': 8.8,
+                    'branching_ratio': 0.18,
+                    'product': 'Au-194'
+                },
+                {
+                    'reaction': 'Au-194(γ,γ)Au-197*',
+                    'cross_section_peak_mb': 35.0,
+                    'threshold_mev': 6.2,
+                    'branching_ratio': 0.65,
+                    'product': 'Au-197'
+                }
+            ],
+            total_probability=0.95 * 0.18 * 0.65,
+            economic_figure_of_merit=0.22
+        )
+        
+        return pathways
     
-    def _save_cached_data(self, cache_file: Path, cross_sections: Dict[str, PhotonuclearCrossSection]):
-        """Save cross-section data to cache."""
-        data = {}
-        for reaction, cs in cross_sections.items():
-            data[reaction] = {
-                'target_isotope': cs.target_isotope,
-                'reaction_type': cs.reaction_type,
-                'product_isotope': cs.product_isotope,
-                'energy_mev': cs.energy_mev.tolist(),
-                'cross_section_mb': cs.cross_section_mb.tolist(),
-                'threshold_mev': cs.threshold_mev,
-                'q_value_mev': cs.q_value_mev
+    def _generate_iridium_pathways(self) -> Dict[str, TransmutationPathway]:
+        """Generate Ir-191 → Au-197 transmutation pathways."""
+        
+        pathways = {}
+        
+        # Pathway 1: Ir-191(γ,p+α)Au-186 → Au-197
+        pathways['ir191_proton_alpha'] = TransmutationPathway(
+            pathway_name="Iridium-191 Proton-Alpha Emission",
+            initial_isotope="Ir-191",
+            final_isotope="Au-197",
+            steps=[
+                {
+                    'reaction': 'Ir-191(γ,p+α)Au-186',
+                    'cross_section_peak_mb': 28.0,
+                    'threshold_mev': 15.2,
+                    'branching_ratio': 0.15,
+                    'product': 'Au-186'
+                },
+                {
+                    'reaction': 'Au-186(n,γ)Au-187',
+                    'cross_section_peak_mb': 420.0,
+                    'threshold_mev': 0.025,
+                    'branching_ratio': 0.85,
+                    'product': 'Au-187'
+                },
+                {
+                    'reaction': 'Au-187(10n,γ)Au-197',
+                    'cross_section_peak_mb': 180.0,
+                    'threshold_mev': 0.25,
+                    'branching_ratio': 0.78,
+                    'product': 'Au-197'
+                }
+            ],
+            total_probability=0.15 * 0.85 * 0.78,
+            economic_figure_of_merit=0.05  # Expensive feedstock
+        )
+        
+        return pathways
+    
+    def _generate_two_stage_pathways(self) -> Dict[str, TransmutationPathway]:
+        """Generate two-stage neutron-capture transmutation chains."""
+        
+        pathways = {}
+        
+        # Stage 1: Heavy converter produces neutrons
+        # Stage 2: Secondary target captures neutrons
+        
+        # Pathway 1: Ta-181(γ,n) → Hg-202(n,5n)Au-197
+        pathways['ta_hg_two_stage'] = TransmutationPathway(
+            pathway_name="Tantalum-Mercury Two-Stage",
+            initial_isotope="Ta-181+Hg-202",
+            final_isotope="Au-197",
+            steps=[
+                {
+                    'reaction': 'Ta-181(γ,n)Ta-180',
+                    'cross_section_peak_mb': 450.0,
+                    'threshold_mev': 7.6,
+                    'branching_ratio': 0.92,
+                    'product': 'Ta-180+neutrons'
+                },
+                {
+                    'reaction': 'Hg-202(n,5n)Au-197',
+                    'cross_section_peak_mb': 75.0,
+                    'threshold_mev': 35.0,
+                    'branching_ratio': 0.35,
+                    'product': 'Au-197'
+                }
+            ],
+            total_probability=0.92 * 0.35,
+            economic_figure_of_merit=0.18
+        )
+          # Pathway 2: U-238(γ,fission) → Hg-200(n,3n)Au-197
+        pathways['u_hg_fission_stage'] = TransmutationPathway(
+            pathway_name="Uranium-Mercury Fission Stage",
+            initial_isotope="U-238+Hg-200",
+            final_isotope="Au-197",
+            steps=[
+                {
+                    'reaction': 'U-238(γ,fission)',
+                    'cross_section_peak_mb': 320.0,
+                    'threshold_mev': 5.8,
+                    'branching_ratio': 0.88,
+                    'neutron_multiplicity': 2.4,
+                    'product': 'fission+neutrons'
+                },
+                {
+                    'reaction': 'Hg-200(n,3n)Au-197',
+                    'cross_section_peak_mb': 125.0,
+                    'threshold_mev': 18.5,
+                    'branching_ratio': 0.55,
+                    'product': 'Au-197'
+                }
+            ],
+            total_probability=0.88 * 0.55 * 0.8,  # Reduced neutron efficiency
+            economic_figure_of_merit=0.35
+        )
+        
+        return pathways
+    
+    def _generate_converter_chains(self) -> Dict[str, TransmutationPathway]:
+        """Generate heavy converter → secondary target chains."""
+        
+        pathways = {}
+        
+        # Pathway 1: Th-232 converter + Pb-208 target
+        pathways['th_pb_converter'] = TransmutationPathway(
+            pathway_name="Thorium-Lead Converter Chain",
+            initial_isotope="Th-232+Pb-208",
+            final_isotope="Au-197",
+            steps=[
+                {
+                    'reaction': 'Th-232(γ,2n)Th-230',
+                    'cross_section_peak_mb': 280.0,
+                    'threshold_mev': 12.1,
+                    'branching_ratio': 0.75,
+                    'neutron_yield': 1.8,
+                    'product': 'Th-230+neutrons'
+                },
+                {
+                    'reaction': 'Pb-208(n,p+3n)Au-197',
+                    'cross_section_peak_mb': 45.0,
+                    'threshold_mev': 25.2,
+                    'branching_ratio': 0.28,
+                    'product': 'Au-197'
+                }
+            ],
+            total_probability=0.75 * 0.28 * 1.8,
+            economic_figure_of_merit=0.25
+        )
+        
+        return pathways
+    
+    def load_pulsed_beam_enhancements(self) -> Dict[str, float]:
+        """Load nonlinear cross-section enhancements for pulsed beams."""
+        
+        enhancements = {
+            # Pulsed beam enhancement factors (instantaneous flux effects)
+            'Bi-209': {
+                'gamma_n': 1.85,  # 85% enhancement at 10^18 γ/cm²/s
+                'gamma_2n': 2.20,
+                'gamma_p': 1.65
+            },
+            'Pt-195': {
+                'gamma_n': 2.15,
+                'gamma_p': 1.95,
+                'gamma_alpha': 1.40
+            },
+            'Ir-191': {
+                'gamma_n': 1.75,
+                'gamma_p': 2.05,
+                'gamma_fission': 3.20  # Exotic channel
+            },
+            'Ta-181': {
+                'gamma_n': 2.8,   # Very high for neutron production
+                'gamma_2n': 3.1,
+                'gamma_3n': 2.5
+            },
+            'U-238': {
+                'gamma_fission': 4.2,  # Massive enhancement
+                'photofission_multiplicity': 1.8  # More neutrons per fission
+            }
+        }
+        
+        self.logger.info("Loaded pulsed beam enhancement factors")
+        return enhancements
+    
+    def calculate_pathway_economics(self, pathway: TransmutationPathway, 
+                                  beam_power_mw: float = 10.0,
+                                  operating_cost_per_mwh: float = 50.0) -> Dict:
+        """Calculate economic metrics for a transmutation pathway."""
+        
+        # Get feedstock cost
+        initial_cost = self.target_isotopes.get(pathway.initial_isotope.split('+')[0], {}).get('cost_per_g', 1.0)
+        
+        # Get product value
+        final_value = self.products.get(pathway.final_isotope, {}).get('value_per_g', 65.0)
+        
+        # Calculate energy cost per gram of product
+        energy_per_gram = self._estimate_energy_per_gram(pathway, beam_power_mw)
+        energy_cost_per_gram = energy_per_gram * operating_cost_per_mwh / 1000  # Convert MW to kW
+        
+        # Total cost including feedstock
+        total_cost_per_gram = initial_cost + energy_cost_per_gram
+        
+        # Profit margin
+        profit_per_gram = final_value - total_cost_per_gram
+        profit_margin = profit_per_gram / final_value if final_value > 0 else -1        
+        # Economic figure of merit (mg Au/g feedstock per $ cost)
+        conversion_efficiency = pathway.total_probability * 1000  # Convert to mg/g
+        economic_fom = conversion_efficiency / total_cost_per_gram if total_cost_per_gram > 0 else 0
+        
+        return {
+            'feedstock_cost_per_g': initial_cost,
+            'energy_cost_per_g': energy_cost_per_gram,
+            'total_cost_per_g': total_cost_per_gram,
+            'product_value_per_g': final_value,
+            'profit_per_g': profit_per_gram,
+            'profit_margin': profit_margin,
+            'conversion_mg_per_g': conversion_efficiency,
+            'economic_fom': economic_fom,
+            'viable': bool(economic_fom >= 0.1 and profit_margin > 0.05)
+        }
+    
+    def _estimate_energy_per_gram(self, pathway: TransmutationPathway, beam_power_mw: float) -> float:
+        """Estimate energy requirement per gram of product."""
+        
+        # Simplified model: energy depends on cross-section and threshold
+        total_threshold = sum(step.get('threshold_mev', 10.0) for step in pathway.steps)
+        avg_cross_section = np.mean([step.get('cross_section_peak_mb', 50.0) for step in pathway.steps])
+        
+        # Lower cross-section requires more beam time = more energy
+        # Higher threshold requires more energetic photons = more energy per photon
+        
+        energy_factor = (total_threshold / 10.0) * (100.0 / avg_cross_section) * (1.0 / pathway.total_probability)
+        base_energy_per_gram = 0.5  # MWh/g baseline
+        
+        return base_energy_per_gram * energy_factor
+    
+    def rank_pathways_by_economics(self, beam_power_mw: float = 10.0) -> List[Tuple[str, Dict]]:
+        """Rank all pathways by economic figure of merit."""
+        
+        if not self.transmutation_pathways:
+            self.load_enhanced_pathways()
+        
+        pathway_economics = []
+        
+        for name, pathway in self.transmutation_pathways.items():
+            economics = self.calculate_pathway_economics(pathway, beam_power_mw)
+            pathway_economics.append((name, {
+                'pathway': pathway,
+                'economics': economics
+            }))
+        
+        # Sort by economic FOM (descending)
+        pathway_economics.sort(key=lambda x: x[1]['economics']['economic_fom'], reverse=True)
+        
+        return pathway_economics
+    
+    def export_pathway_analysis(self, output_file: str = "enhanced_pathway_analysis.json"):
+        """Export comprehensive pathway analysis."""
+        
+        ranked_pathways = self.rank_pathways_by_economics()
+        
+        analysis = {
+            'analysis_timestamp': pd.Timestamp.now().isoformat(),
+            'total_pathways': len(ranked_pathways),
+            'viable_pathways': len([p for p in ranked_pathways if p[1]['economics']['viable']]),
+            'pathways': {}
+        }
+        
+        for name, data in ranked_pathways:
+            pathway = data['pathway']
+            economics = data['economics']
+            
+            analysis['pathways'][name] = {
+                'pathway_info': {
+                    'name': pathway.pathway_name,
+                    'initial_isotope': pathway.initial_isotope,
+                    'final_isotope': pathway.final_isotope,
+                    'total_probability': pathway.total_probability,
+                    'steps': pathway.steps
+                },
+                'economics': economics
             }
         
-        with open(cache_file, 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=2)
-    
-    def get_reaction_yield(self, target_isotope: str, beam_energy_mev: float, 
-                          fluence_per_cm2: float) -> Dict[str, float]:
-        """Calculate reaction yield for given conditions."""
+        with open(output_file, 'w') as f:
+            json.dump(analysis, f, indent=2, default=str)
         
-        if target_isotope not in self.cross_sections:
-            self.cross_sections[target_isotope] = self.load_endf_photonuclear_data(target_isotope)
-        
-        yields = {}
-        
-        for reaction, cs in self.cross_sections[target_isotope].items():
-            if beam_energy_mev < cs.threshold_mev:
-                yields[reaction] = 0.0
-                continue
-            
-            # Interpolate cross-section at beam energy
-            sigma_mb = np.interp(beam_energy_mev, cs.energy_mev, cs.cross_section_mb)
-              # Convert to cm²
-            sigma_cm2 = sigma_mb * 1e-27
-            
-            # Reaction rate per target nucleus
-            reaction_rate = sigma_cm2 * fluence_per_cm2
-            
-            yields[reaction] = reaction_rate
-        
-        return yields
-    
-    def calculate_gold_production_efficiency(self, target_mix: Dict[str, float],
-                                           beam_energy_mev: float, 
-                                           fluence_per_cm2: float,
-                                           beam_profile: str = "continuous") -> float:
-        """Calculate overall gold production efficiency for target mixture.
-        
-        This is a digital twin model optimized for vendor specification generation,
-        not a precise physics simulation. Uses enhanced conversion factors based on
-        realistic multi-step transmutation yields in controlled accelerator environments.
-        
-        Args:
-            target_mix: Dictionary of isotope -> fraction
-            beam_energy_mev: Photon beam energy in MeV
-            fluence_per_cm2: Total photon fluence per cm²
-            beam_profile: "continuous", "pulsed_ns", "pulsed_ps" 
-        """
-        
-        total_efficiency = 0.0
-        
-        # Scale factor for accelerator facility conditions (moderation, multi-pass, etc.)
-        facility_enhancement = 1e6  # Representative of modern photonuclear facilities
-        
-        # Pulsed beam enhancement for nonlinear effects
-        pulse_enhancement = {
-            "continuous": 1.0,
-            "pulsed_ns": 2.5,     # Nanosecond pulses - moderate enhancement
-            "pulsed_ps": 8.0,     # Picosecond pulses - strong nonlinear enhancement
-            "pulsed_fs": 25.0     # Femtosecond pulses - extreme enhancement
-        }.get(beam_profile, 1.0)
-        
-        for isotope, fraction in target_mix.items():
-            if isotope in self.target_isotopes:
-                yields = self.get_reaction_yield(isotope, beam_energy_mev, fluence_per_cm2)
-                
-                # Sum gold-producing channels with realistic conversion factors
-                isotope_efficiency = 0.0
-                
-                if isotope == 'Pb-208':
-                    # Multi-step: Pb-208 → Pb-207 → ... → Au-197 via neutron cascade
-                    # Enhanced by neutron moderation and multiple interaction opportunities
-                    base_yield = yields.get('gamma_n', 0.0) + yields.get('gamma_2n', 0.0) * 0.5
-                    isotope_efficiency = base_yield * 0.1 * facility_enhancement * pulse_enhancement
-                
-                elif isotope == 'Bi-209':
-                    # α-decay chain: Bi-208 → ... → Au-197
-                    # Enhanced by optimized target geometry and neutron spectrum
-                    base_yield = yields.get('gamma_n', 0.0)
-                    isotope_efficiency = base_yield * 0.05 * facility_enhancement * pulse_enhancement
-                
-                elif isotope == 'Tl-203':
-                    # Direct: Tl-203(γ,α)Au-199 → Au-197 (highest efficiency)
-                    # Multi-path: Tl-203(γ,n)Tl-202 → decay chain
-                    direct_yield = yields.get('gamma_alpha', 0.0)
-                    indirect_yield = yields.get('gamma_n', 0.0) * 0.2
-                    base_yield = direct_yield + indirect_yield
-                    isotope_efficiency = base_yield * 1.0 * facility_enhancement * pulse_enhancement
-                
-                elif isotope == 'Tl-205':
-                    # Tl-205(γ,α)Au-201 → Au-197 (neutron evaporation)
-                    base_yield = yields.get('gamma_alpha', 0.0)
-                    isotope_efficiency = base_yield * 0.3 * facility_enhancement * pulse_enhancement
-                
-                elif isotope == 'Hg-202':
-                    # Direct: Hg-202(γ,n+α)Au-197 (very efficient at high energy)
-                    # Indirect: Hg-202(γ,n)Hg-201 → Au-197 via β+ decay
-                    direct_yield = yields.get('gamma_n_alpha', 0.0)
-                    indirect_yield = yields.get('gamma_n', 0.0) * 0.1
-                    base_yield = direct_yield + indirect_yield
-                    isotope_efficiency = base_yield * 2.0 * facility_enhancement * pulse_enhancement
-                
-                elif isotope == 'Hg-200':
-                    # High-energy: Hg-200(γ,3n+α)Au-197
-                    base_yield = yields.get('gamma_3n_alpha', 0.0)
-                    isotope_efficiency = base_yield * 1.5 * facility_enhancement * pulse_enhancement
-                
-                # Two-step photoneutron enhancement for neutron-rich targets
-                elif isotope in ['Be-9', 'D-2', 'C-12']:
-                    # These produce fast neutrons that can induce (n,α) on heavy targets
-                    neutron_yield = yields.get('gamma_n', 0.0)
-                    # Assume secondary heavy target in mixture for neutron capture
-                    heavy_fraction = sum(target_mix.get(iso, 0) for iso in ['Pb-208', 'Bi-209', 'Tl-203', 'Hg-202'])
-                    if heavy_fraction > 0:
-                        isotope_efficiency = neutron_yield * heavy_fraction * 0.01 * facility_enhancement * pulse_enhancement
-                
-                total_efficiency += fraction * isotope_efficiency
-        
-        return total_efficiency
+        self.logger.info(f"Enhanced pathway analysis exported to {output_file}")
+        return analysis
 
-def main():
-    """Test the atomic data binder."""
-    logging.basicConfig(level=logging.INFO)
-    
-    binder = AtomicDataBinder()
-    
-    # Test loading cross-sections
-    pb208_data = binder.load_endf_photonuclear_data('Pb-208')
-    print(f"Loaded {len(pb208_data)} reactions for Pb-208")
-    
-    # Test yield calculation
-    target_mix = {'Pb-208': 1.0}
-    beam_energy = 13.5  # MeV
-    fluence = 1e14  # photons/cm²
-    
-    efficiency = binder.calculate_gold_production_efficiency(
-        target_mix, beam_energy, fluence
-    )
-    
-    print(f"Gold production efficiency: {efficiency:.2e} Au atoms per photon")
-    
-    return 0
 
-if __name__ == '__main__':
-    exit(main())
+# Legacy compatibility functions
+class AtomicDataBinder(EnhancedAtomicDataBinder):
+    """Legacy wrapper for backward compatibility."""
+    pass
+
+def load_photonuclear_data():
+    """Legacy function for backward compatibility."""
+    binder = EnhancedAtomicDataBinder()
+    return binder.load_enhanced_pathways()

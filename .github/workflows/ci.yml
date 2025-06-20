@@ -98,11 +98,6 @@ jobs:
       run: |
         cd prototyping
         python outsourcing_cost_analyzer.py --budget=100 --target-roi=200
-    
-    - name: Generate monthly experiment plan
-      run: |
-        cd prototyping
-        python monthly_experiment_planner.py > monthly_plan.txt
       - name: Generate monthly experiment plan
       run: |
         cd prototyping
