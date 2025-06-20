@@ -1,0 +1,23 @@
+{
+  "parameters": {
+    "beam_energy_mev": 16.5,
+    "beam_current_ua": 10.0,
+    "target_composition": {
+      "Pb-208": 0.8,
+      "Bi-209": 0.15,
+      "Tl-203": 0.05
+    },
+    "target_mass_g": 4.0,
+    "irradiation_time_s": 12095.345830621614
+  },
+  "results": {
+    "total_reactions": 15094991596,
+    "gold_atoms_produced": 24372,
+    "energy_deposited_mev": 1868005210081.202
+  },
+  "simulation_info": {
+    "name": "sweep_826",
+    "timestamp": 1750391564.2436624,
+    "duration_s": 5.412101745605469e-05
+  }
+}

@@ -25,26 +25,20 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install numpy matplotlib scipy scikit-optimize
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      - name: Run Monte Carlo digital twin
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi    - name: Run digital twin optimization (Month 1)
       run: |
         cd prototyping
-        python monte_carlo_optimizer.py --iterations=50
+        python digital_twin_optimizer.py
     
-    - name: Generate vendor specifications
+    - name: Validate atomic data binding
       run: |
         cd prototyping
-        python vendor_spec_generator.py
+        python atomic_binder.py
     
-    - name: Generate outsourcing specifications
+    - name: Test simulation interface
       run: |
         cd prototyping
-        python vendor_spec_generator.py
-    
-    - name: Validate digital twin consistency
-      run: |
-        cd prototyping
-        python validation_test.py
+        python simulations.py
 
   micro-experiment-planning:
     runs-on: ubuntu-latest

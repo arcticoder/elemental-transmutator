@@ -1,0 +1,20 @@
+{
+  "feedstock_g": 4.0,
+  "beam_energy_mev": 14.5,
+  "total_dose_kgy": 100.0,
+  "target_composition": {
+    "Pb-208": 0.8,
+    "Bi-209": 0.15,
+    "Tl-203": 0.05
+  },
+  "predicted_au_mg": 3.8507156383476475e-26,
+  "predicted_cost_cad": 99.0,
+  "yield_per_cad": 3.8896117559067145e-28,
+  "confidence_interval_mg": [
+    2.695500946843353e-26,
+    5.005930329851942e-26
+  ],
+  "detection_probability": 0.0,
+  "optimization_timestamp": 1750391501.1036747,
+  "optimization_method": "physics_based_digital_twin"
+}
