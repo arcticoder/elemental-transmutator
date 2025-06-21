@@ -1,10 +1,10 @@
 name: Enhanced Transmutation CI
 
-on:
-  push:
-    branches: [ main, develop ]
-  pull_request:
-    branches: [ main ]
+# on:
+#   push:
+#     branches: [ main, develop ]
+#   pull_request:
+#     branches: [ main ]
 
 jobs:
   enhanced-pathway-analysis:
