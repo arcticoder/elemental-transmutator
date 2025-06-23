@@ -2,16 +2,16 @@
 
 A digital twin for photonuclear transmutation studying economically viable gold production from various feedstock materials. Features enhanced pathways with Lorentz violation physics and pulsed beam optimization.
 
-## 🎯 Latest Achievement: Enhanced Pathway Analysis (June 2025)
+## Latest Achievement: Enhanced Pathway Analysis (June 2025)
 
 **SUCCESS**: Identified **5 economically viable transmutation pathways** with profit margins up to **99.8%** for gold production.
 
-### 🏆 Top Performing Pathways:
+### Top Performing Pathways:
 1. **Uranium-Mercury Fission Stage**: 387.2 mg Au/g, FOM: 3,212.88, 99.8% profit
 2. **Thorium-Lead Converter Chain**: 378.0 mg Au/g, FOM: 279.63, 97.9% profit  
 3. **Tantalum-Mercury Two-Stage**: 322.0 mg Au/g, FOM: 198.03, 97.5% profit
 
-✅ **Ready for experimental validation and outsource micro-runs**
+**Ready for experimental validation and outsource micro-runs**
 
 ## Features
 
