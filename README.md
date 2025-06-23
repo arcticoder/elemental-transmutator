@@ -251,7 +251,7 @@ pip install -r requirements.txt
 
 ## License
 
-MIT License - Free for research and commercial use.
+The Unlicense - Free for research and commercial use.
 
 ---
 
