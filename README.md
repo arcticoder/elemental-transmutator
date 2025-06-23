@@ -1,6 +1,6 @@
 # Elemental Transmutator
 
-A comprehensive digital twin for photonuclear transmutation enabling economically viable gold production from various feedstock materials. Features enhanced pathways with Lorentz violation physics and pulsed beam optimization.
+A digital twin for photonuclear transmutation studying economically viable gold production from various feedstock materials. Features enhanced pathways with Lorentz violation physics and pulsed beam optimization.
 
 ## 🎯 Latest Achievement: Enhanced Pathway Analysis (June 2025)
 
