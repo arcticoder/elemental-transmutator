@@ -1,5 +1,13 @@
 # Elemental Transmutator
 
+## Related Repositories
+
+- [energy](https://github.com/arcticoder/energy): Central meta-repo for all energy and quantum research. The elemental transmutator is integrated for simulation, digital twin, and advanced energy applications.
+- [unified-gut-polymerization](https://github.com/arcticoder/unified-gut-polymerization): Shares theoretical models and simulation infrastructure for matter transmutation and GUT-scale processes.
+- [polymerized-lqg-matter-transporter](https://github.com/arcticoder/polymerized-lqg-matter-transporter): Related for matter transport and transformation at the quantum level.
+
+All repositories are part of the [arcticoder](https://github.com/arcticoder) ecosystem and link back to the energy framework for unified documentation and integration.
+
 A digital twin for photonuclear transmutation studying economically viable gold production from various feedstock materials. Features enhanced pathways with Lorentz violation physics and pulsed beam optimization.
 
 ## Latest Achievement: Enhanced Pathway Analysis (June 2025)
