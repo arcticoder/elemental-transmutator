@@ -1,3 +1,4 @@
 /src/__pycache__/*
 *.pyc
 __pycache__/
+.github/instructions/copilot-instructions.md
