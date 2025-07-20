@@ -2,3 +2,5 @@
 *.pyc
 __pycache__/
 .github/instructions/copilot-instructions.md
+
+.github/
