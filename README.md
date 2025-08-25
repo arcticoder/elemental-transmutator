@@ -8,29 +8,26 @@
 
 All repositories are part of the [arcticoder](https://github.com/arcticoder) ecosystem and link back to the energy framework for unified documentation and integration.
 
-A digital twin for photonuclear transmutation studying economically viable gold production from various feedstock materials. Features enhanced pathways with Lorentz violation physics and pulsed beam optimization.
+This repository contains research-stage code and simulation artifacts exploring photonuclear transmutation pathways. The included materials are intended for hypothesis exploration and reproducibility of simulation results rather than as validated experimental protocols or production-ready processes.
 
-## Latest Achievement: Enhanced Pathway Analysis (June 2025)
+## Summary — Research-Stage Results (June 2025)
 
-**SUCCESS**: Identified **5 economically viable transmutation pathways** with profit margins up to **99.8%** for gold production.
+Preliminary simulation runs identified candidate transmutation pathways under the models' stated assumptions. Reported metrics (yields, FOM, and profit estimates) are model outputs and subject to substantial uncertainty; they should be treated as provisional and used only to guide further study and experimental design.
 
-### Top Performing Pathways:
-1. **Uranium-Mercury Fission Stage**: 387.2 mg Au/g, FOM: 3,212.88, 99.8% profit
-2. **Thorium-Lead Converter Chain**: 378.0 mg Au/g, FOM: 279.63, 97.9% profit  
-3. **Tantalum-Mercury Two-Stage**: 322.0 mg Au/g, FOM: 198.03, 97.5% profit
+### Example Candidate Pathways (model outputs)
+- Reported candidate pathways include uranium-based, thorium-based, and tantalum-based chains. Detailed numeric results are simulation artifacts and require uncertainty quantification and experimental validation.
 
-**Ready for experimental validation and outsource micro-runs**
+**Note:** These results are not experimentally validated and are not an endorsement of operational feasibility.
 
-## Features
+## Features (research-stage)
 
-- **Enhanced Digital Twin**: 8 new economically viable transmutation pathways
-- **Multi-Stage Pathways**: Two-stage neutron capture and fission-driven chains
-- **Pulsed Beam Optimization**: Up to 4.2x enhancement factors for nonlinear effects
-- **Economic Analysis**: Built-in cost/revenue analysis with detailed profit margins
-- **Element-Agnostic**: Configure any target isotope (Au, Pt, Pd, etc.) from any feedstock
-- **LV-Enhanced**: Uses Lorentz violation physics for enhanced cross-sections
-- **Testing**: Full test suite with 100% pass rate
-- **CI/CD Pipeline**: Automated testing and validation via GitHub Actions
+- Digital twin & analysis prototypes for pathway exploration
+- Multi-stage pathway modeling for simulation studies
+- Pulsed-beam modeling (simulation outputs; not validated experimentally)
+- Economic scenario tools for illustrative analysis
+- Configurable isotope examples for simulation
+- Model-parameterized LV terms included for sensitivity studies
+- Unit tests and CI for software correctness (does not validate experimental claims)
 
 ## Quick Start
 
@@ -87,11 +84,13 @@ python __main__.py
 - **Converter chains**: Th-232 → neutron production → Pb transmutation
 
 ### Pulsed Beam Enhancements
-Enhancement factors for nonlinear photonuclear effects:
-- **U-238**: 4.2x photofission enhancement
-- **Ta-181**: 2.8-3.1x neutron production boost
-- **Bi-209**: 1.85-2.2x reaction rate increases
-- **Pt-195**: 1.4-2.15x cross-section enhancement
+Enhancement factors reported by the simulation models (examples):
+- U-238: model-reported values up to ~4.2× (simulation)
+- Ta-181: model-reported values ~2.8–3.1× (simulation)
+- Bi-209: model-reported values ~1.85–2.2× (simulation)
+- Pt-195: model-reported values ~1.4–2.15× (simulation)
+
+These enhancement factors are conditional on modeling assumptions and require experimental validation before use in operational planning.
 
 ## Supported Elements
 
@@ -160,17 +159,7 @@ The system provides automatic economic analysis including:
 
 ## Output
 
-Results are saved to `transmutation_results.json`:
-```json
-{
-  "target_isotope": "Au-197",
-  "feedstock_isotope": "Fe-56", 
-  "mass_produced_kg": 1.23e-9,
-  "atoms_bound": 3.76e+15,
-  "binding_efficiency": 0.99,
-  "energy_input_j": 767000000
-}
-```
+Simulation outputs are saved to `transmutation_results.json`. Example records included in the repository are model outputs and should be treated as simulation artifacts rather than experimental measurements. Maintain provenance information (seed, environment, parameters) in `docs/` to support reproducibility.
 
 ## Module Structure
 
@@ -259,8 +248,15 @@ pip install -r requirements.txt
 
 ## License
 
-The Unlicense - Free for research and commercial use.
+The Unlicense - Free for research and educational use. Users are responsible for complying with applicable laws and safety protocols.
 
 ---
 
-**Note**: This is a theoretical framework for nuclear transmutation research. Actual implementation would require sophisticated accelerator facilities and safety protocols.
+## Scope / Validation & Limitations
+
+- **Research-stage artifacts**: Content in this repository consists primarily of simulation code, example runs, and exploratory analyses. It is intended for research, reproducibility, and hypothesis generation.
+- **Uncertainty**: Reported numeric outputs should be accompanied by uncertainty quantification and sensitivity analysis before being used for decision-making. If maintainers publish numeric claims, attach UQ artifacts (confidence intervals, sensitivity results) under `docs/`.
+- **Experimental caution**: Physical experimentation with radiation-producing equipment requires institutional oversight, safety approvals, and regulatory compliance. Do not attempt any experimental work without appropriate facilities and authorizations.
+- **Provenance**: Re-run simulations using the provided scripts and document runtime environment, random seeds, and parameter files in `docs/` to enable independent verification.
+
+If you are a maintainer preparing public-facing summaries, prefer conservative phrasing and link to `docs/` artifacts that demonstrate reproducibility and UQ.
