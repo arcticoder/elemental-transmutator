@@ -94,18 +94,12 @@ These enhancement factors are conditional on modeling assumptions and require ex
 
 ## Supported Elements
 
-The system supports any element via atomic number mapping:
-- **Gold (Au)**: Au-197 - Premium precious metal
-- **Platinum (Pt)**: Pt-195 - Industrial catalyst applications  
-- **Palladium (Pd)**: Pd-105 - Automotive catalysts
-- **Rhodium (Rh)**: Rh-103 - High-value catalyst
-- **Iron (Fe)**: Fe-56 - Cheap feedstock material
-- And many more...
+The system supports many elements via atomic number mapping (examples listed below):
 
-## Configuration Examples
+- **`prototyping/test_enhanced_pathways.py`**: Comprehensive test suite (9 tests; currently passing in CI)
 
 ### Gold Production
-```json
+- **Rate enhancement**: Model-estimated rate enhancements reported up to 10^3–10^6× under certain parameterizations in simulation; these values are model outputs and require experimental validation and uncertainty quantification.
 {
   "target_isotope": "Au-197",
   "feedstock_isotope": "Fe-56",
