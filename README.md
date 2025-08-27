@@ -138,10 +138,11 @@ Where:
 - `β`: Energy dependence (0.3)  
 - `f_LV`: Lorentz violation enhancement factor
 
-### Decay Acceleration
-- **Rate enhancement**: 10³-10⁶× faster decay via LV field engineering
-- **Matrix elements**: Modified by μ coefficient
-- **Phase space**: Enhanced by β coefficient
+## Decay Acceleration
+
+- **Model-reported rate enhancement (simulation outputs):** Simulations indicate increases on the order of 10^3–10^6× under certain parameterizations. These values are model outputs and should be accompanied by uncertainty quantification and sensitivity analysis before being interpreted as physical or operational effects.
+- **Matrix elements:** Reported modifications depend on the assumed μ coefficient; include parameter sensitivity studies and provide CI/uncertainty artifacts in `docs/`.
+- **Phase space:** Changes attributed to β are model-dependent; publish sensitivity analyses and any confidence intervals alongside numeric claims.
 
 ## Economic Analysis
 
